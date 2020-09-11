@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cassettePlayerSimulator", "cassettePlayerSimulator\cassettePlayerSimulator.csproj", "{2D87261E-E535-42ED-BE7C-B09A214564A3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2D87261E-E535-42ED-BE7C-B09A214564A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D87261E-E535-42ED-BE7C-B09A214564A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D87261E-E535-42ED-BE7C-B09A214564A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D87261E-E535-42ED-BE7C-B09A214564A3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {06DD93DC-1294-4FA3-9017-B199D45B8D09}
+	EndGlobalSection
+EndGlobal

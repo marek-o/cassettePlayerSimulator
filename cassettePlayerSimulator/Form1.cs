@@ -23,7 +23,9 @@ namespace cassettePlayerSimulator
             player = new SoundWrapper(SoundWrapper.Mode.Play, 16, 1, 44100, 8*1024);
             player.NewDataRequested += Player_NewDataRequested;
 
-            sound = WAVFile.Load("../../sounds/stopDown.wav");
+            
+            sound = WAVFile.Load(Properties.Resources.stopDown);
+            //sound = WAVFile.Load("../../sounds/stopDown.wav");
 
             player.Start(0);
 

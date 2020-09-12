@@ -18,11 +18,11 @@ namespace Utils
 
         public short[] data;
 
-        public static WAVFile Load(string filename)
+        private static WAVFile Load(Stream stream)
         {
             var wav = new WAVFile();
 
-            using (BinaryReader reader = new BinaryReader(File.OpenRead(filename)))
+            using (BinaryReader reader = new BinaryReader(stream))
             {
                 if (reader.BaseStream.Length < 44)
                 {
@@ -42,7 +42,7 @@ namespace Utils
                 var magic3 = reader.ReadBytes(4);
                 wav.dataLength = reader.ReadInt32();
 
-                if (   Encoding.ASCII.GetString(magic1) != "RIFF"
+                if (Encoding.ASCII.GetString(magic1) != "RIFF"
                     || Encoding.ASCII.GetString(magic2) != "WAVEfmt "
                     || Encoding.ASCII.GetString(magic3) != "data"
                     || chunkSize != reader.BaseStream.Length - 8
@@ -53,7 +53,7 @@ namespace Utils
                     throw new ArgumentException("Invalid WAV file");
                 }
 
-                if (   wav.audioFormat != 1
+                if (wav.audioFormat != 1
                     || wav.channels < 1
                     || wav.channels > 2
                     || wav.bitsPerSample != 16)
@@ -70,6 +70,19 @@ namespace Utils
             }
 
             return wav;
+        }
+
+        public static WAVFile Load(System.IO.UnmanagedMemoryStream stream)
+        {
+            return Load(stream as Stream);
+        }
+
+        public static WAVFile Load(string filename)
+        {
+            using (var file = File.OpenRead(filename))
+            {
+                return Load(file);
+            }
         }
     }
 }

@@ -18,6 +18,8 @@ namespace cassettePlayerSimulator
             public float volume;
             public float speed;
 
+            public object locker = new object();
+
             public Sample(WAVFile wavFile, bool isPlaying, bool isLooped, float volume, float speed)
             {
                 this.wavFile = wavFile;
@@ -30,21 +32,26 @@ namespace cassettePlayerSimulator
 
             public void PlayIntoBuffer(short[] buffer)
             {
-                for (int i = 0; i < buffer.Length; ++i, ++position)
+                lock (locker)
                 {
-                    if (isPlaying)
+                    for (int i = 0; i < buffer.Length; ++i)
                     {
-                        if (position >= wavFile.data.Length)
+                        if (isPlaying)
                         {
-                            position = 0;
+                            buffer[i] += wavFile.data[position];
+                            ++position;
 
-                            if (!isLooped)
+                            if (position >= wavFile.data.Length)
                             {
-                                isPlaying = false;
-                            }
-                        }
+                                position = 0;
 
-                        buffer[i] += wavFile.data[position];
+                                if (!isLooped)
+                                {
+                                    isPlaying = false;
+                                }
+                            }
+
+                        }
                     }
                 }
             }

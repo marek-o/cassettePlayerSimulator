@@ -118,7 +118,64 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="casetteClose" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\casetteClose.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="casetteInsert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\casetteInsert.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ejectDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\ejectDown.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ejectUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\ejectUp.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ffDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\ffDown.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ffNoise" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\ffNoise.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ffUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\ffUp.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pauseDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\pauseDown.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pauseUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\pauseUp.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="playDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\playDown.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="playUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\playUp.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="recordDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\recordDown.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="recordUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\recordUp.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rewDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\rewDown.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rewNoise" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\rewNoise.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rewUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\rewUp.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="stopDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\sounds\stopDown.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="stopUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\stopUp.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="unpauseDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\unpauseDown.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="unpauseUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\unpauseUp.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

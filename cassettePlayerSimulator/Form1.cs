@@ -13,38 +13,21 @@ namespace cassettePlayerSimulator
 {
     public partial class Form1 : Form
     {
-        SoundWrapper player;
-        WAVFile sound;
+        SoundMixer mixer;
+        SoundMixer.Sample samp1, samp2;
 
         public Form1()
         {
             InitializeComponent();
 
-            player = new SoundWrapper(SoundWrapper.Mode.Play, 16, 1, 44100, 8*1024);
-            player.NewDataRequested += Player_NewDataRequested;
+            mixer = new SoundMixer(16, 1, 44100, 8*1024);
 
-            
-            sound = WAVFile.Load(Properties.Resources.stopDown);
-            //sound = WAVFile.Load("../../sounds/stopDown.wav");
+            samp1 = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopDown), true, false, 1.0f, 1.0f);
+            samp2 = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopUp), true, true, 1.0f, 1.0f);
 
-            player.Start(0);
-
-        }
-
-        int pos = 0;
-
-        private void Player_NewDataRequested(object sender, SoundWrapper.NewDataEventArgs e)
-        {
-            for (int i = 0; i < e.data.Length; ++i)
-            {
-                e.data[i] = sound.data[pos];
-
-                ++pos;
-                if (pos >= sound.data.Length)
-                {
-                    pos = sound.data.Length - 1;
-                }
-            }
+            mixer.AddSample(samp1);
+            mixer.AddSample(samp2);
+            mixer.Start();
         }
     }
 }

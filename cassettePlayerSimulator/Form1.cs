@@ -20,6 +20,8 @@ namespace cassettePlayerSimulator
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
             samp3.UpdatePlayback(true);
+
+            music.RampSpeed(0.5f, 1.0f, 44100*2/10);
             music.UpdatePlayback(true);
         }
 

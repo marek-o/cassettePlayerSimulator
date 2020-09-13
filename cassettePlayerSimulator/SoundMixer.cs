@@ -18,6 +18,10 @@ namespace cassettePlayerSimulator
             private float volume;
             private float speed;
 
+            private float destinationSpeed;
+            private int rampSampleCounter;
+            private float rampSlope;
+
             public object locker = new object();
 
             public Sample(WAVFile wavFile, bool isPlaying, bool isLooped, float volume, float speed)
@@ -61,6 +65,17 @@ namespace cassettePlayerSimulator
                 }
             }
 
+            public void RampSpeed(float startingSpeed, float destinationSpeed, int sampleCount)
+            {
+                lock (locker)
+                {
+                    this.speed = startingSpeed;
+                    this.destinationSpeed = destinationSpeed;
+                    rampSampleCounter = sampleCount;
+                    rampSlope = (destinationSpeed - startingSpeed) / sampleCount;
+                }
+            }
+
             public void PlayIntoBuffer(short[] buffer)
             {
                 lock (locker)
@@ -69,6 +84,17 @@ namespace cassettePlayerSimulator
                     {
                         if (isPlaying)
                         {
+                            if (rampSampleCounter > 0)
+                            {
+                                speed += rampSlope;
+                                --rampSampleCounter;
+
+                                if (rampSampleCounter == 0)
+                                {
+                                    speed = destinationSpeed;
+                                }
+                            }
+
                             var samp1 = wavFile.data[(int)position];
                             var samp2 = wavFile.data[(int)position + 2]; //next sample from this channel
                             var ratio = position - Math.Floor(position);

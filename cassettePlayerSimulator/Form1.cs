@@ -15,14 +15,39 @@ namespace cassettePlayerSimulator
     public partial class Form1 : Form
     {
         SoundMixer mixer;
-        SoundMixer.Sample samp1, samp2, music;
+        SoundMixer.Sample samp1, samp2, samp3, samp4, music;
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            lock (samp3.locker)
+            {
+                samp3.isPlaying = true;
+                music.isPlaying = true;
+            }
+        }
+
+        private void panel1_MouseUp(object sender, MouseEventArgs e)
+        {
+            lock (samp4.locker)
+            {
+                samp4.isPlaying = true;
+            }
+        }
+
+        private void panel2_MouseDown(object sender, MouseEventArgs e)
         {
             lock (samp1.locker)
             {
                 samp1.isPlaying = true;
                 music.isPlaying = false;
+            }
+        }
+
+        private void panel2_MouseUp(object sender, MouseEventArgs e)
+        {
+            lock (samp2.locker)
+            {
+                samp2.isPlaying = true;
             }
         }
 
@@ -79,14 +104,6 @@ namespace cassettePlayerSimulator
             mixer.AddSample(music);
         }
 
-        private void panel1_MouseUp(object sender, MouseEventArgs e)
-        {
-            lock (samp2.locker)
-            {
-                samp2.isPlaying = true;
-            }
-        }
-
         public Form1()
         {
             InitializeComponent();
@@ -96,8 +113,13 @@ namespace cassettePlayerSimulator
             samp1 = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopDown), false, false, 1.0f, 0.5f);
             samp2 = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopUp), false, false, 1.0f, 0.5f);
 
+            samp3 = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.playDown), false, false, 1.0f, 0.5f);
+            samp4 = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.playUp), false, false, 1.0f, 0.5f);
+
             mixer.AddSample(samp1);
             mixer.AddSample(samp2);
+            mixer.AddSample(samp3);
+            mixer.AddSample(samp4);
             mixer.Start();
         }
     }

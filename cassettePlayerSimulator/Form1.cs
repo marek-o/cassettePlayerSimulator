@@ -19,36 +19,24 @@ namespace cassettePlayerSimulator
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
-            lock (samp3.locker)
-            {
-                samp3.isPlaying = true;
-                music.isPlaying = true;
-            }
+            samp3.UpdatePlayback(true);
+            music.UpdatePlayback(true);
         }
 
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
-            lock (samp4.locker)
-            {
-                samp4.isPlaying = true;
-            }
+            samp4.UpdatePlayback(true);
         }
 
         private void panel2_MouseDown(object sender, MouseEventArgs e)
         {
-            lock (samp1.locker)
-            {
-                samp1.isPlaying = true;
-                music.isPlaying = false;
-            }
+            samp1.UpdatePlayback(true);
+            music.UpdatePlayback(false);
         }
 
         private void panel2_MouseUp(object sender, MouseEventArgs e)
         {
-            lock (samp2.locker)
-            {
-                samp2.isPlaying = true;
-            }
+            samp2.UpdatePlayback(true);
         }
 
         private string TapesDirectory =>

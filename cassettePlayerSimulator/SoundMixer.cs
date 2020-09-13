@@ -13,10 +13,10 @@ namespace cassettePlayerSimulator
         {
             public WAVFile wavFile;
             public double position;
-            public bool isPlaying;
-            public bool isLooped;
-            public float volume;
-            public float speed;
+            private bool isPlaying;
+            private bool isLooped;
+            private float volume;
+            private float speed;
 
             public object locker = new object();
 
@@ -24,10 +24,8 @@ namespace cassettePlayerSimulator
             {
                 this.wavFile = wavFile;
                 position = 0;
-                this.isPlaying = isPlaying;
-                this.isLooped = isLooped;
-                this.volume = volume;
-                this.speed = speed;
+
+                UpdatePlayback(isPlaying, isLooped, volume, speed);
             }
 
             private short Clamp(double sample)
@@ -42,6 +40,25 @@ namespace cassettePlayerSimulator
                 }
 
                 return (short)sample;
+            }
+
+            public void UpdatePlayback(bool isPlaying, bool isLooped, float volume, float speed)
+            {
+                lock (locker)
+                {
+                    this.isPlaying = isPlaying;
+                    this.isLooped = isLooped;
+                    this.volume = volume;
+                    this.speed = speed;
+                }
+            }
+
+            public void UpdatePlayback(bool isPlaying)
+            {
+                lock (locker)
+                {
+                    this.isPlaying = isPlaying;
+                }
             }
 
             public void PlayIntoBuffer(short[] buffer)
@@ -94,9 +111,10 @@ namespace cassettePlayerSimulator
         {
             if (samples.Contains(sample))
             {
+                sample.UpdatePlayback(false);
+
                 lock (sample.locker) //FIXME another lock for playing
                 {
-                    sample.isPlaying = false;
                     samples.Remove(sample);
                 }
             }

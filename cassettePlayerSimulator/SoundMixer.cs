@@ -12,7 +12,7 @@ namespace cassettePlayerSimulator
         public class Sample
         {
             public WAVFile wavFile;
-            public int position;
+            public double position;
             public bool isPlaying;
             public bool isLooped;
             public float volume;
@@ -38,10 +38,15 @@ namespace cassettePlayerSimulator
                     {
                         if (isPlaying)
                         {
-                            buffer[i] += wavFile.data[position];
-                            ++position;
+                            var samp1 = wavFile.data[(int)position];
+                            var samp2 = wavFile.data[(int)position + 2]; //next sample from this channel
+                            var ratio = position - Math.Floor(position);
+                            var interpolatedSample = samp1 * (1 - ratio) + samp2 * ratio;
 
-                            if (position >= wavFile.data.Length)
+                            buffer[i] += (short)(interpolatedSample * volume);
+                            position += speed;
+
+                            if (position >= wavFile.data.Length - 2)
                             {
                                 position = 0;
 

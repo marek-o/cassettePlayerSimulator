@@ -22,6 +22,7 @@ namespace cassettePlayerSimulator
             lock (samp1.locker)
             {
                 samp1.isPlaying = true;
+                music.isPlaying = false;
             }
         }
 
@@ -74,7 +75,7 @@ namespace cassettePlayerSimulator
         private void buttonLoadTape_Click(object sender, EventArgs e)
         {
             mixer.RemoveSample(music);
-            music = new SoundMixer.Sample(WAVFile.Load(TapeFile), true, false, 1.0f, 1.0f);
+            music = new SoundMixer.Sample(WAVFile.Load(TapeFile), true, false, 0.2f, 1.0f);
             mixer.AddSample(music);
         }
 
@@ -92,8 +93,8 @@ namespace cassettePlayerSimulator
 
             mixer = new SoundMixer(16, 2, 44100, 8*1024);
 
-            samp1 = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopDown), false, false, 1.0f, 1.0f);
-            samp2 = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopUp), false, false, 1.0f, 1.0f);
+            samp1 = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopDown), false, false, 1.0f, 0.5f);
+            samp2 = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopUp), false, false, 1.0f, 0.5f);
 
             mixer.AddSample(samp1);
             mixer.AddSample(samp2);

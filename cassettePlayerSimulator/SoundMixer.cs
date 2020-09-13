@@ -30,6 +30,20 @@ namespace cassettePlayerSimulator
                 this.speed = speed;
             }
 
+            private short Clamp(double sample)
+            {
+                if (sample > 32767.0)
+                {
+                    sample = 32767.0;
+                }
+                else if (sample < -32768.0)
+                {
+                    sample = -32768.0;
+                }
+
+                return (short)sample;
+            }
+
             public void PlayIntoBuffer(short[] buffer)
             {
                 lock (locker)
@@ -43,7 +57,7 @@ namespace cassettePlayerSimulator
                             var ratio = position - Math.Floor(position);
                             var interpolatedSample = samp1 * (1 - ratio) + samp2 * ratio;
 
-                            buffer[i] += (short)(interpolatedSample * volume);
+                            buffer[i] += Clamp(interpolatedSample * volume);
                             position += speed;
 
                             if (position >= wavFile.data.Length - 2)

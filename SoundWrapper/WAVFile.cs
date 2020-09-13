@@ -39,6 +39,9 @@ namespace Utils
                 int byteRate = reader.ReadInt32();
                 wav.blockAlign = reader.ReadInt16();
                 wav.bitsPerSample = reader.ReadInt16();
+
+                reader.BaseStream.Seek(20 + subchunkSize, SeekOrigin.Begin);
+
                 var magic3 = reader.ReadBytes(4);
                 wav.dataLength = reader.ReadInt32();
 
@@ -46,8 +49,6 @@ namespace Utils
                     || Encoding.ASCII.GetString(magic2) != "WAVEfmt "
                     || Encoding.ASCII.GetString(magic3) != "data"
                     || chunkSize != reader.BaseStream.Length - 8
-                    || subchunkSize != 16
-                    || wav.dataLength != reader.BaseStream.Length - 44
                     )
                 {
                     throw new ArgumentException("Invalid WAV file");

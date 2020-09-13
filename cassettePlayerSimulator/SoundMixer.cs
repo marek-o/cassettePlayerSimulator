@@ -76,6 +76,18 @@ namespace cassettePlayerSimulator
             samples.Add(sample);
         }
 
+        public void RemoveSample(Sample sample)
+        {
+            if (samples.Contains(sample))
+            {
+                lock (sample.locker) //FIXME another lock for playing
+                {
+                    sample.isPlaying = false;
+                    samples.Remove(sample);
+                }
+            }
+        }
+
         public void Start()
         {
             player.Start(0);

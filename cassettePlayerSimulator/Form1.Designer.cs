@@ -32,6 +32,7 @@
             this.buttonImport = new System.Windows.Forms.Button();
             this.buttonLoadTape = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.cassetteButton1 = new cassettePlayerSimulator.CassetteButton();
             this.SuspendLayout();
             // 
             // panel1
@@ -74,11 +75,19 @@
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDown);
             this.panel2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseUp);
             // 
+            // cassetteButton1
+            // 
+            this.cassetteButton1.Location = new System.Drawing.Point(210, 12);
+            this.cassetteButton1.Name = "cassetteButton1";
+            this.cassetteButton1.Size = new System.Drawing.Size(98, 92);
+            this.cassetteButton1.TabIndex = 4;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.cassetteButton1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.buttonLoadTape);
             this.Controls.Add(this.buttonImport);
@@ -95,6 +104,7 @@
         private System.Windows.Forms.Button buttonImport;
         private System.Windows.Forms.Button buttonLoadTape;
         private System.Windows.Forms.Panel panel2;
+        private CassetteButton cassetteButton1;
     }
 }
 

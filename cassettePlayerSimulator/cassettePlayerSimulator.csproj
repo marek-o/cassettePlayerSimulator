@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CassetteButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CassetteButton.Designer.cs">
+      <DependentUpon>CassetteButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

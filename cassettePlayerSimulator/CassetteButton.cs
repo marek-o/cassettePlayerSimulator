@@ -51,7 +51,24 @@ namespace cassettePlayerSimulator
                 case State.PRESSED_DOWN_UP: b = Brushes.DarkOrange; break;
             }
 
-            e.Graphics.FillRectangle(b, new RectangleF(0, 0, Width, Height));
+            Bitmap bmp = null;
+
+            switch (ButtonState)
+            {
+                case State.UP: bmp = Properties.Resources.buttonUp; break;
+                case State.PRESSED_UP_DOWN: bmp = Properties.Resources.buttonPressed; break;
+                case State.DOWN: bmp = Properties.Resources.buttonDown; break;
+                case State.PRESSED_DOWN_UP: bmp = Properties.Resources.buttonPressed; break;
+            }
+
+            if (bmp != null)
+            {
+                e.Graphics.DrawImage(bmp, Point.Empty);
+            }
+            else
+            {
+                e.Graphics.FillRectangle(b, new RectangleF(0, 0, Width, Height));
+            }
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

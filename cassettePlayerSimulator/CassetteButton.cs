@@ -41,34 +41,47 @@ namespace cassettePlayerSimulator
         {
             base.OnPaint(e);
 
-            Brush b = Brushes.Red;
+            const int depthUp = 18;
+            const int depthDown = 6;
+            const int depthPressed = 3;
 
-            switch (ButtonState)
+            int depth;
+
+            if (ButtonState == State.UP)
             {
-                case State.UP: b = Brushes.LightGray; break;
-                case State.PRESSED_UP_DOWN: b = Brushes.DarkRed; break;
-                case State.DOWN: b = Brushes.Gray; break;
-                case State.PRESSED_DOWN_UP: b = Brushes.DarkOrange; break;
+                depth = depthUp;
             }
-
-            Bitmap bmp = null;
-
-            switch (ButtonState)
+            else if (ButtonState == State.DOWN)
             {
-                case State.UP: bmp = Properties.Resources.buttonUp; break;
-                case State.PRESSED_UP_DOWN: bmp = Properties.Resources.buttonPressed; break;
-                case State.DOWN: bmp = Properties.Resources.buttonDown; break;
-                case State.PRESSED_DOWN_UP: bmp = Properties.Resources.buttonPressed; break;
-            }
-
-            if (bmp != null)
-            {
-                e.Graphics.DrawImage(bmp, Point.Empty);
+                depth = depthDown;
             }
             else
             {
-                e.Graphics.FillRectangle(b, new RectangleF(0, 0, Width, Height));
+                depth = depthPressed;
             }
+
+            int buttonFaceWidth = Width - depthUp;
+            int buttonFaceHeight = Height - depthUp;
+
+            e.Graphics.FillRectangle(Brushes.DarkGray, depth, depth, buttonFaceWidth, buttonFaceHeight);
+
+            //top face
+            e.Graphics.FillPolygon(Brushes.LightGray, new PointF[]
+            {
+                new PointF(0, 0),
+                new PointF(buttonFaceWidth, 0),
+                new PointF(buttonFaceWidth + depth, depth),
+                new PointF(depth, depth),
+            });
+
+            //left face
+            e.Graphics.FillPolygon(Brushes.Gray, new PointF[]
+            {
+                new PointF(0, 0),
+                new PointF(0, buttonFaceHeight),
+                new PointF(depth, buttonFaceHeight + depth),
+                new PointF(depth, depth),
+            });
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

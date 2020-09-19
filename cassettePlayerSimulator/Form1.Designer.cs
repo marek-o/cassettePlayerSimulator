@@ -85,54 +85,54 @@
             // 
             this.cassetteButton4.ButtonState = cassettePlayerSimulator.CassetteButton.State.UP;
             this.cassetteButton4.ButtonType = cassettePlayerSimulator.CassetteButton.Type.BISTABLE;
-            this.cassetteButton4.Location = new System.Drawing.Point(397, 328);
+            this.cassetteButton4.Location = new System.Drawing.Point(423, 327);
             this.cassetteButton4.Name = "cassetteButton4";
-            this.cassetteButton4.Size = new System.Drawing.Size(80, 81);
+            this.cassetteButton4.Size = new System.Drawing.Size(50, 81);
             this.cassetteButton4.TabIndex = 12;
             // 
             // cassetteButton5
             // 
             this.cassetteButton5.ButtonState = cassettePlayerSimulator.CassetteButton.State.UP;
             this.cassetteButton5.ButtonType = cassettePlayerSimulator.CassetteButton.Type.BISTABLE;
-            this.cassetteButton5.Location = new System.Drawing.Point(320, 328);
+            this.cassetteButton5.Location = new System.Drawing.Point(346, 327);
             this.cassetteButton5.Name = "cassetteButton5";
-            this.cassetteButton5.Size = new System.Drawing.Size(80, 81);
+            this.cassetteButton5.Size = new System.Drawing.Size(50, 81);
             this.cassetteButton5.TabIndex = 11;
             // 
             // cassetteButton6
             // 
             this.cassetteButton6.ButtonState = cassettePlayerSimulator.CassetteButton.State.UP;
             this.cassetteButton6.ButtonType = cassettePlayerSimulator.CassetteButton.Type.BISTABLE;
-            this.cassetteButton6.Location = new System.Drawing.Point(243, 328);
+            this.cassetteButton6.Location = new System.Drawing.Point(269, 327);
             this.cassetteButton6.Name = "cassetteButton6";
-            this.cassetteButton6.Size = new System.Drawing.Size(80, 81);
+            this.cassetteButton6.Size = new System.Drawing.Size(50, 81);
             this.cassetteButton6.TabIndex = 10;
             // 
             // cassetteButton2
             // 
             this.cassetteButton2.ButtonState = cassettePlayerSimulator.CassetteButton.State.UP;
             this.cassetteButton2.ButtonType = cassettePlayerSimulator.CassetteButton.Type.BISTABLE;
-            this.cassetteButton2.Location = new System.Drawing.Point(166, 328);
+            this.cassetteButton2.Location = new System.Drawing.Point(192, 327);
             this.cassetteButton2.Name = "cassetteButton2";
-            this.cassetteButton2.Size = new System.Drawing.Size(80, 81);
+            this.cassetteButton2.Size = new System.Drawing.Size(50, 81);
             this.cassetteButton2.TabIndex = 9;
             // 
             // cassetteButton1
             // 
             this.cassetteButton1.ButtonState = cassettePlayerSimulator.CassetteButton.State.UP;
             this.cassetteButton1.ButtonType = cassettePlayerSimulator.CassetteButton.Type.BISTABLE;
-            this.cassetteButton1.Location = new System.Drawing.Point(89, 328);
+            this.cassetteButton1.Location = new System.Drawing.Point(115, 327);
             this.cassetteButton1.Name = "cassetteButton1";
-            this.cassetteButton1.Size = new System.Drawing.Size(80, 81);
+            this.cassetteButton1.Size = new System.Drawing.Size(50, 81);
             this.cassetteButton1.TabIndex = 8;
             // 
             // cassetteButton3
             // 
             this.cassetteButton3.ButtonState = cassettePlayerSimulator.CassetteButton.State.UP;
             this.cassetteButton3.ButtonType = cassettePlayerSimulator.CassetteButton.Type.BISTABLE;
-            this.cassetteButton3.Location = new System.Drawing.Point(12, 328);
+            this.cassetteButton3.Location = new System.Drawing.Point(38, 327);
             this.cassetteButton3.Name = "cassetteButton3";
-            this.cassetteButton3.Size = new System.Drawing.Size(80, 81);
+            this.cassetteButton3.Size = new System.Drawing.Size(50, 81);
             this.cassetteButton3.TabIndex = 7;
             // 
             // cassetteControl1

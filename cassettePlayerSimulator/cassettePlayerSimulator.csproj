@@ -55,6 +55,12 @@
     <Compile Include="CassetteButton.Designer.cs">
       <DependentUpon>CassetteButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="CassetteControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CassetteControl.Designer.cs">
+      <DependentUpon>CassetteControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

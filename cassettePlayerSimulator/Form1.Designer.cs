@@ -32,13 +32,14 @@
             this.buttonImport = new System.Windows.Forms.Button();
             this.buttonLoadTape = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.cassetteControl1 = new cassettePlayerSimulator.CassetteControl();
             this.cassetteButton1 = new cassettePlayerSimulator.CassetteButton();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Location = new System.Drawing.Point(12, 285);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(93, 92);
             this.panel1.TabIndex = 0;
@@ -47,7 +48,7 @@
             // 
             // buttonImport
             // 
-            this.buttonImport.Location = new System.Drawing.Point(12, 110);
+            this.buttonImport.Location = new System.Drawing.Point(12, 383);
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(75, 23);
             this.buttonImport.TabIndex = 1;
@@ -57,7 +58,7 @@
             // 
             // buttonLoadTape
             // 
-            this.buttonLoadTape.Location = new System.Drawing.Point(12, 139);
+            this.buttonLoadTape.Location = new System.Drawing.Point(12, 412);
             this.buttonLoadTape.Name = "buttonLoadTape";
             this.buttonLoadTape.Size = new System.Drawing.Size(75, 23);
             this.buttonLoadTape.TabIndex = 2;
@@ -68,16 +69,25 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel2.Location = new System.Drawing.Point(111, 12);
+            this.panel2.Location = new System.Drawing.Point(111, 285);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(93, 92);
             this.panel2.TabIndex = 3;
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDown);
             this.panel2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseUp);
             // 
+            // cassetteControl1
+            // 
+            this.cassetteControl1.Location = new System.Drawing.Point(12, 12);
+            this.cassetteControl1.Name = "cassetteControl1";
+            this.cassetteControl1.Size = new System.Drawing.Size(422, 267);
+            this.cassetteControl1.TabIndex = 5;
+            // 
             // cassetteButton1
             // 
-            this.cassetteButton1.Location = new System.Drawing.Point(210, 12);
+            this.cassetteButton1.ButtonState = cassettePlayerSimulator.CassetteButton.State.UP;
+            this.cassetteButton1.ButtonType = cassettePlayerSimulator.CassetteButton.Type.BISTABLE;
+            this.cassetteButton1.Location = new System.Drawing.Point(210, 285);
             this.cassetteButton1.Name = "cassetteButton1";
             this.cassetteButton1.Size = new System.Drawing.Size(98, 92);
             this.cassetteButton1.TabIndex = 4;
@@ -87,6 +97,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.cassetteControl1);
             this.Controls.Add(this.cassetteButton1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.buttonLoadTape);
@@ -105,6 +116,7 @@
         private System.Windows.Forms.Button buttonLoadTape;
         private System.Windows.Forms.Panel panel2;
         private CassetteButton cassetteButton1;
+        private CassetteControl cassetteControl1;
     }
 }
 

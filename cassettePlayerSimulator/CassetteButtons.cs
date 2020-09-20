@@ -161,6 +161,78 @@ namespace cassettePlayerSimulator
                 e.Graphics.FillRectangle(Brushes.DarkGray, faceRect);
                 e.Graphics.DrawRectangle(Pens.Black, faceRect);
 
+                //symbols
+                var symbolRect = new Rectangle(faceRect.Left + faceRect.Width / 2, faceRect.Top + faceRect.Height / 2,
+                    buttonFaceWidth / 4, buttonFaceHeight / 4);
+                symbolRect.X -= symbolRect.Width / 2;
+                symbolRect.Y -= symbolRect.Height / 2;
+
+                if (button == RecButton)
+                {
+                    e.Graphics.FillEllipse(Brushes.Red, symbolRect);
+                }
+                else if (button == PlayButton)
+                {
+                    e.Graphics.FillPolygon(Brushes.Black, new PointF[]
+                    {
+                        new PointF(symbolRect.Left, symbolRect.Top),
+                        new PointF(symbolRect.Left, symbolRect.Bottom),
+                        new PointF(symbolRect.Right, symbolRect.Top + symbolRect.Width / 2),
+                    });
+                }
+                else if (button == RewButton)
+                {
+                    e.Graphics.FillPolygon(Brushes.Black, new PointF[]
+                    {
+                        new PointF(symbolRect.Right + symbolRect.Width / 2, symbolRect.Top),
+                        new PointF(symbolRect.Right - symbolRect.Width / 2, symbolRect.Top + symbolRect.Width / 2),
+                        new PointF(symbolRect.Right - symbolRect.Width / 2, symbolRect.Top),
+                        new PointF(symbolRect.Left - symbolRect.Width / 2, symbolRect.Top + symbolRect.Width / 2),
+                        new PointF(symbolRect.Right - symbolRect.Width / 2, symbolRect.Bottom),
+                        new PointF(symbolRect.Right - symbolRect.Width / 2, symbolRect.Top + symbolRect.Width / 2),
+                        new PointF(symbolRect.Right + symbolRect.Width / 2, symbolRect.Bottom),
+                    });
+                }
+                else if (button == FfButton)
+                {
+                    e.Graphics.FillPolygon(Brushes.Black, new PointF[]
+                    {
+                        new PointF(symbolRect.Left - symbolRect.Width / 2, symbolRect.Top),
+                        new PointF(symbolRect.Right - symbolRect.Width / 2, symbolRect.Top + symbolRect.Width / 2),
+                        new PointF(symbolRect.Right - symbolRect.Width / 2, symbolRect.Top),
+                        new PointF(symbolRect.Right + symbolRect.Width / 2, symbolRect.Top + symbolRect.Width / 2),
+                        new PointF(symbolRect.Right - symbolRect.Width / 2, symbolRect.Bottom),
+                        new PointF(symbolRect.Right - symbolRect.Width / 2, symbolRect.Top + symbolRect.Width / 2),
+                        new PointF(symbolRect.Left - symbolRect.Width / 2, symbolRect.Bottom),
+                    });
+                }
+                else if (button == StopEjectButton)
+                {
+                    var leftSymbolRect = symbolRect;
+                    leftSymbolRect.X -= symbolRect.Width;
+
+                    var rightSymbolRect = symbolRect;
+                    rightSymbolRect.X += symbolRect.Width;
+
+                    e.Graphics.FillRectangle(Brushes.Black, leftSymbolRect);
+
+                    e.Graphics.FillPolygon(Brushes.Black, new PointF[]
+                    {
+                        new PointF(rightSymbolRect.Left + rightSymbolRect.Width / 2, rightSymbolRect.Top),
+                        new PointF(rightSymbolRect.Left - 1, rightSymbolRect.Top + rightSymbolRect.Height / 2 + 1),
+                        new PointF(rightSymbolRect.Right + 1, rightSymbolRect.Top + rightSymbolRect.Height / 2 + 1),
+                    });
+                    e.Graphics.FillRectangle(Brushes.Black, rightSymbolRect.Left, rightSymbolRect.Top + 3 * rightSymbolRect.Height / 4,
+                        rightSymbolRect.Width, rightSymbolRect.Height / 4);
+                }
+                else if (button == PauseButton)
+                {
+                    e.Graphics.FillRectangle(Brushes.Black, symbolRect.Left, symbolRect.Top,
+                        symbolRect.Width / 3, symbolRect.Height);
+                    e.Graphics.FillRectangle(Brushes.Black, symbolRect.Left + 2 * symbolRect.Width / 3, symbolRect.Top,
+                        symbolRect.Width / 3, symbolRect.Height);
+                }
+
                 var topPolygon = new PointF[]
                 {
                 new PointF(button.Location.X, button.Location.Y),

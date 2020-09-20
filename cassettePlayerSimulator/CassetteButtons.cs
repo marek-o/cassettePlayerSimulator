@@ -83,15 +83,34 @@ namespace cassettePlayerSimulator
             Point buttonsOrigin = new Point(25, 25);
             int offset = 60;
 
-            buttons.Add(new Button() { Location = new Point(buttonsOrigin.X + offset * 0, buttonsOrigin.Y), Size = buttonSize });
-            buttons.Add(new Button() { Location = new Point(buttonsOrigin.X + offset * 1, buttonsOrigin.Y), Size = buttonSize });
-            buttons.Add(new Button() { Location = new Point(buttonsOrigin.X + offset * 2, buttonsOrigin.Y), Size = buttonSize });
-            buttons.Add(new Button() { Location = new Point(buttonsOrigin.X + offset * 3, buttonsOrigin.Y), Size = buttonSize });
-            buttons.Add(new Button() { Location = new Point(buttonsOrigin.X + offset * 4, buttonsOrigin.Y), Size = buttonSize });
-            buttons.Add(new Button() { Location = new Point(buttonsOrigin.X + offset * 5, buttonsOrigin.Y), Size = buttonSize });
+            RecButton.Location = new Point(buttonsOrigin.X + offset * 0, buttonsOrigin.Y);
+            PlayButton.Location = new Point(buttonsOrigin.X + offset * 1, buttonsOrigin.Y);
+            RewButton.Location = new Point(buttonsOrigin.X + offset * 2, buttonsOrigin.Y);
+            FfButton.Location = new Point(buttonsOrigin.X + offset * 3, buttonsOrigin.Y);
+            StopEjectButton.Location = new Point(buttonsOrigin.X + offset * 4, buttonsOrigin.Y);
+            PauseButton.Location = new Point(buttonsOrigin.X + offset * 5, buttonsOrigin.Y);
+
+            RecButton.Size = PlayButton.Size = RewButton.Size
+                = FfButton.Size = StopEjectButton.Size = PauseButton.Size = buttonSize;
+
+            RecButton.ButtonType = Button.Type.LOCKING;
+            PlayButton.ButtonType = Button.Type.LOCKING;
+            RewButton.ButtonType = Button.Type.LOCKING;
+            FfButton.ButtonType = Button.Type.LOCKING;
+            StopEjectButton.ButtonType = Button.Type.NOT_LOCKING;
+            PauseButton.ButtonType = Button.Type.BISTABLE;
+
+            buttons.AddRange(new Button[] { RecButton, PlayButton, RewButton, FfButton, StopEjectButton, PauseButton });
         }
 
         private List<Button> buttons = new List<Button>();
+
+        public Button RecButton { get; set; } = new Button();
+        public Button PlayButton { get; set; } = new Button();
+        public Button RewButton { get; set; } = new Button();
+        public Button FfButton { get; set; } = new Button();
+        public Button StopEjectButton { get; set; } = new Button();
+        public Button PauseButton { get; set; } = new Button();
 
         protected override void OnPaint(PaintEventArgs e)
         {

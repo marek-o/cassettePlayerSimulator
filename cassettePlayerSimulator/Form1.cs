@@ -15,31 +15,7 @@ namespace cassettePlayerSimulator
     public partial class Form1 : Form
     {
         SoundMixer mixer;
-        SoundMixer.Sample samp1, samp2, samp3, samp4, music;
-
-        private void panel1_MouseDown(object sender, MouseEventArgs e)
-        {
-            samp3.UpdatePlayback(true);
-
-            music.RampSpeed(0.5f, 1.0f, 44100*2/10);
-            music.UpdatePlayback(true);
-        }
-
-        private void panel1_MouseUp(object sender, MouseEventArgs e)
-        {
-            samp4.UpdatePlayback(true);
-        }
-
-        private void panel2_MouseDown(object sender, MouseEventArgs e)
-        {
-            samp1.UpdatePlayback(true);
-            music.UpdatePlayback(false);
-        }
-
-        private void panel2_MouseUp(object sender, MouseEventArgs e)
-        {
-            samp2.UpdatePlayback(true);
-        }
+        SoundMixer.Sample stopDown, stopUp, playDown, playUp, music;
 
         private string TapesDirectory =>
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -98,19 +74,88 @@ namespace cassettePlayerSimulator
         {
             InitializeComponent();
 
+            cassetteButtons.RecButton.MouseDown += RecButton_MouseDown;
+            cassetteButtons.RecButton.MouseUp += RecButton_MouseUp;
+            cassetteButtons.PlayButton.MouseDown += PlayButton_MouseDown;
+            cassetteButtons.PlayButton.MouseUp += PlayButton_MouseUp;
+            cassetteButtons.RewButton.MouseDown += RewButton_MouseDown;
+            cassetteButtons.RewButton.MouseUp += RewButton_MouseUp;
+            cassetteButtons.FfButton.MouseDown += FfButton_MouseDown;
+            cassetteButtons.FfButton.MouseUp += FfButton_MouseUp;
+            cassetteButtons.StopEjectButton.MouseDown += StopEjectButton_MouseDown;
+            cassetteButtons.StopEjectButton.MouseUp += StopEjectButton_MouseUp;
+            cassetteButtons.PauseButton.MouseDown += PauseButton_MouseDown;
+            cassetteButtons.PauseButton.MouseUp += PauseButton_MouseUp;
+
             mixer = new SoundMixer(16, 2, 44100, 8*1024);
 
-            samp1 = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopDown), false, false, 1.0f, 0.5f);
-            samp2 = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopUp), false, false, 1.0f, 0.5f);
+            stopDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopDown), false, false, 1.0f, 0.5f);
+            stopUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopUp), false, false, 1.0f, 0.5f);
 
-            samp3 = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.playDown), false, false, 1.0f, 0.5f);
-            samp4 = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.playUp), false, false, 1.0f, 0.5f);
+            playDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.playDown), false, false, 1.0f, 0.5f);
+            playUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.playUp), false, false, 1.0f, 0.5f);
 
-            mixer.AddSample(samp1);
-            mixer.AddSample(samp2);
-            mixer.AddSample(samp3);
-            mixer.AddSample(samp4);
+            mixer.AddSample(stopDown);
+            mixer.AddSample(stopUp);
+            mixer.AddSample(playDown);
+            mixer.AddSample(playUp);
             mixer.Start();
+        }
+
+        private void RecButton_MouseDown()
+        {
+        }
+
+        private void RecButton_MouseUp()
+        {
+        }
+
+        private void PlayButton_MouseDown()
+        {
+            playDown.UpdatePlayback(true);
+
+            music.RampSpeed(0.5f, 1.0f, 44100 * 2 / 10);
+            music.UpdatePlayback(true);
+        }
+
+        private void PlayButton_MouseUp()
+        {
+            playUp.UpdatePlayback(true);
+        }
+
+        private void RewButton_MouseDown()
+        {
+        }
+
+        private void RewButton_MouseUp()
+        {
+        }
+
+        private void FfButton_MouseDown()
+        {
+        }
+
+        private void FfButton_MouseUp()
+        {
+        }
+
+        private void StopEjectButton_MouseDown()
+        {
+            stopDown.UpdatePlayback(true);
+            music.RampSpeed(1.0f, 0.0f, 44100 * 2 / 10);
+        }
+
+        private void StopEjectButton_MouseUp()
+        {
+            stopUp.UpdatePlayback(true);
+        }
+
+        private void PauseButton_MouseDown()
+        {
+        }
+
+        private void PauseButton_MouseUp()
+        {
         }
     }
 }

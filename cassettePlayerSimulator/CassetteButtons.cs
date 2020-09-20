@@ -35,6 +35,9 @@ namespace cassettePlayerSimulator
             public Point Location { get; set; }
             public Size Size { get; set; }
 
+            public event Action MouseDown;
+            public event Action MouseUp;
+
             public void OnMouseDown(MouseEventArgs e)
             {
                 switch (ButtonState)
@@ -42,6 +45,8 @@ namespace cassettePlayerSimulator
                     case State.UP: ButtonState = State.PRESSED_UP_DOWN; break;
                     case State.DOWN: ButtonState = State.PRESSED_DOWN_UP; break;
                 }
+
+                MouseDown?.Invoke();
             }
 
             public void OnMouseUp(MouseEventArgs e)
@@ -70,6 +75,8 @@ namespace cassettePlayerSimulator
                         case State.PRESSED_DOWN_UP: ButtonState = State.UP; break;
                     }
                 }
+
+                MouseUp?.Invoke();
             }
         }
 
@@ -105,12 +112,12 @@ namespace cassettePlayerSimulator
 
         private List<Button> buttons = new List<Button>();
 
-        public Button RecButton { get; set; } = new Button();
-        public Button PlayButton { get; set; } = new Button();
-        public Button RewButton { get; set; } = new Button();
-        public Button FfButton { get; set; } = new Button();
-        public Button StopEjectButton { get; set; } = new Button();
-        public Button PauseButton { get; set; } = new Button();
+        internal Button RecButton { get; set; } = new Button();
+        internal Button PlayButton { get; set; } = new Button();
+        internal Button RewButton { get; set; } = new Button();
+        internal Button FfButton { get; set; } = new Button();
+        internal Button StopEjectButton { get; set; } = new Button();
+        internal Button PauseButton { get; set; } = new Button();
 
         protected override void OnPaint(PaintEventArgs e)
         {

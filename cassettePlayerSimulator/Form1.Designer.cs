@@ -32,8 +32,8 @@
             this.buttonImport = new System.Windows.Forms.Button();
             this.buttonLoadTape = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.cassetteControl1 = new cassettePlayerSimulator.CassetteControl();
             this.cassetteButton1 = new cassettePlayerSimulator.CassetteButtons();
+            this.cassetteControl1 = new cassettePlayerSimulator.CassetteControl();
             this.SuspendLayout();
             // 
             // panel1
@@ -76,6 +76,13 @@
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDown);
             this.panel2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseUp);
             // 
+            // cassetteButton1
+            // 
+            this.cassetteButton1.Location = new System.Drawing.Point(39, 311);
+            this.cassetteButton1.Name = "cassetteButton1";
+            this.cassetteButton1.Size = new System.Drawing.Size(422, 123);
+            this.cassetteButton1.TabIndex = 6;
+            // 
             // cassetteControl1
             // 
             this.cassetteControl1.Location = new System.Drawing.Point(39, 12);
@@ -83,19 +90,12 @@
             this.cassetteControl1.Size = new System.Drawing.Size(422, 267);
             this.cassetteControl1.TabIndex = 5;
             // 
-            // cassetteButton1
-            // 
-            this.cassetteButton1.Location = new System.Drawing.Point(39, 306);
-            this.cassetteButton1.Name = "cassetteButton1";
-            this.cassetteButton1.Size = new System.Drawing.Size(422, 90);
-            this.cassetteButton1.TabIndex = 6;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.BackColor = System.Drawing.Color.DarkGray;
+            this.ClientSize = new System.Drawing.Size(762, 507);
             this.Controls.Add(this.cassetteButton1);
             this.Controls.Add(this.cassetteControl1);
             this.Controls.Add(this.panel2);

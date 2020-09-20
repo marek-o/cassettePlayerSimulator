@@ -15,7 +15,9 @@ namespace cassettePlayerSimulator
     public partial class Form1 : Form
     {
         SoundMixer mixer;
-        SoundMixer.Sample stopDown, stopUp, playDown, playUp, music;
+        SoundMixer.Sample stopDown, stopUp, playDown, playUp, rewDown, rewNoise, rewUp, ffDown, ffNoise, ffUp, recordDown, recordUp,
+            pauseDown, pauseUp, unpauseDown, unpauseUp, ejectDown, ejectUp, cassetteClose, cassetteInsert;
+        SoundMixer.Sample music;
 
         private string TapesDirectory =>
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -95,6 +97,29 @@ namespace cassettePlayerSimulator
             playDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.playDown), false, false, 1.0f, 0.5f);
             playUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.playUp), false, false, 1.0f, 0.5f);
 
+            rewDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.rewDown), false, false, 1.0f, 0.5f);
+            rewUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.rewUp), false, false, 1.0f, 0.5f);
+            rewNoise = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.rewNoise), false, true, 1.0f, 0.5f);
+
+            ffDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ffDown), false, false, 1.0f, 0.5f);
+            ffUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ffUp), false, false, 1.0f, 0.5f);
+            ffNoise = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ffNoise), false, true, 1.0f, 0.5f);
+
+            recordDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.recordDown), false, false, 1.0f, 0.5f);
+            recordUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.recordUp), false, false, 1.0f, 0.5f);
+
+            pauseDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.pauseDown), false, false, 1.0f, 0.5f);
+            pauseUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.pauseUp), false, false, 1.0f, 0.5f);
+
+            unpauseDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.unpauseDown), false, false, 1.0f, 0.5f);
+            unpauseUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.unpauseUp), false, false, 1.0f, 0.5f);
+
+            ejectDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ejectDown), false, false, 1.0f, 0.5f);
+            ejectUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ejectUp), false, false, 1.0f, 0.5f);
+
+            cassetteClose = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.casetteClose), false, false, 1.0f, 0.5f);
+            cassetteInsert = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.casetteInsert), false, false, 1.0f, 0.5f);
+
             mixer.AddSample(stopDown);
             mixer.AddSample(stopUp);
             mixer.AddSample(playDown);
@@ -112,10 +137,13 @@ namespace cassettePlayerSimulator
 
         private void PlayButton_MouseDown()
         {
-            playDown.UpdatePlayback(true);
+            if (cassetteButtons.PlayButton.ButtonState == CassetteButtons.Button.State.PRESSED_UP_DOWN)
+            {
+                playDown.UpdatePlayback(true);
 
-            music.RampSpeed(0.5f, 1.0f, 44100 * 2 / 10);
-            music.UpdatePlayback(true);
+                music.RampSpeed(0.5f, 1.0f, 44100 * 2 / 10);
+                music.UpdatePlayback(true);
+            }
         }
 
         private void PlayButton_MouseUp()
@@ -133,6 +161,7 @@ namespace cassettePlayerSimulator
 
         private void FfButton_MouseDown()
         {
+            
         }
 
         private void FfButton_MouseUp()
@@ -141,8 +170,13 @@ namespace cassettePlayerSimulator
 
         private void StopEjectButton_MouseDown()
         {
-            stopDown.UpdatePlayback(true);
-            music.RampSpeed(1.0f, 0.0f, 44100 * 2 / 10);
+            if (cassetteButtons.PlayButton.ButtonState == CassetteButtons.Button.State.DOWN)
+            {
+                stopDown.UpdatePlayback(true);
+                music.RampSpeed(1.0f, 0.0f, 44100 * 2 / 10);
+
+                cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.UP;
+            }
         }
 
         private void StopEjectButton_MouseUp()

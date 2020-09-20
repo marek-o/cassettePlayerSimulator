@@ -33,7 +33,7 @@
             this.buttonLoadTape = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.cassetteControl1 = new cassettePlayerSimulator.CassetteControl();
-            this.cassetteButton1 = new cassettePlayerSimulator.CassetteButton();
+            this.cassetteButton1 = new cassettePlayerSimulator.CassetteButtons();
             this.SuspendLayout();
             // 
             // panel1
@@ -115,7 +115,7 @@
         private System.Windows.Forms.Button buttonLoadTape;
         private System.Windows.Forms.Panel panel2;
         private CassetteControl cassetteControl1;
-        private CassetteButton cassetteButton1;
+        private CassetteButtons cassetteButton1;
     }
 }
 

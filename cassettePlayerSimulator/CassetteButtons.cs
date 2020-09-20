@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace cassettePlayerSimulator
 {
-    public partial class CassetteButton : UserControl
+    public partial class CassetteButtons : UserControl
     {
         public class Button
         {
@@ -73,7 +73,7 @@ namespace cassettePlayerSimulator
             }
         }
 
-        public CassetteButton()
+        public CassetteButtons()
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 

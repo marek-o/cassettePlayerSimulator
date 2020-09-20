@@ -1,6 +1,6 @@
 ﻿namespace cassettePlayerSimulator
 {
-    partial class CassetteButton
+    partial class CassetteButtons
     {
         /// <summary> 
         /// Required designer variable.

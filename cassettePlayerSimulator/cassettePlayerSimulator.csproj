@@ -49,11 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CassetteButton.cs">
+    <Compile Include="CassetteButtons.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CassetteButton.Designer.cs">
-      <DependentUpon>CassetteButton.cs</DependentUpon>
+    <Compile Include="CassetteButtons.Designer.cs">
+      <DependentUpon>CassetteButtons.cs</DependentUpon>
     </Compile>
     <Compile Include="CassetteControl.cs">
       <SubType>UserControl</SubType>

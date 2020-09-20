@@ -65,11 +65,16 @@ namespace cassettePlayerSimulator
             MessageBox.Show("Import finished");
         }
 
-        private void buttonLoadTape_Click(object sender, EventArgs e)
+        private void LoadTape()
         {
             mixer.RemoveSample(music);
-            music = new SoundMixer.Sample(WAVFile.Load(TapeFile), true, false, 0.2f, 1.0f);
+            music = new SoundMixer.Sample(WAVFile.Load(TapeFile), false, false, 0.2f, 1.0f);
             mixer.AddSample(music);
+        }
+
+        private void buttonLoadTape_Click(object sender, EventArgs e)
+        {
+            LoadTape();
         }
 
         public Form1()
@@ -124,6 +129,9 @@ namespace cassettePlayerSimulator
             mixer.AddSample(stopUp);
             mixer.AddSample(playDown);
             mixer.AddSample(playUp);
+
+            LoadTape();
+
             mixer.Start();
         }
 

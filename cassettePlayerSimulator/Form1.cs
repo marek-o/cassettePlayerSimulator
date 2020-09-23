@@ -171,10 +171,42 @@ namespace cassettePlayerSimulator
             mixer.Start();
         }
 
+        private void DisengageButtons()
+        {
+            if (cassetteButtons.RecButton.ButtonState == CassetteButtons.Button.State.DOWN)
+            {
+                cassetteButtons.RecButton.ButtonState = CassetteButtons.Button.State.UP;
+                stopDown.UpdatePlayback(true);
+            }
+
+            if (cassetteButtons.PlayButton.ButtonState == CassetteButtons.Button.State.DOWN)
+            {
+                cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.UP;
+                music.UpdatePlayback(false);
+                stopDown.UpdatePlayback(true);
+            }
+
+            if (cassetteButtons.RewButton.ButtonState == CassetteButtons.Button.State.DOWN)
+            {
+                cassetteButtons.RewButton.ButtonState = CassetteButtons.Button.State.UP;
+                rewNoise.UpdatePlayback(false);
+                stopDown.UpdatePlayback(true);
+            }
+
+            if (cassetteButtons.FfButton.ButtonState == CassetteButtons.Button.State.DOWN)
+            {
+                cassetteButtons.FfButton.ButtonState = CassetteButtons.Button.State.UP;
+                ffNoise.UpdatePlayback(false);
+                stopDown.UpdatePlayback(true);
+            }
+        }
+
         private void RecButton_MouseDown()
         {
             if (State != PlayerState.PLAYING && State != PlayerState.RECORDING)
             {
+                DisengageButtons();
+
                 recordDown.UpdatePlayback(true);
 
                 cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.DOWN;
@@ -192,6 +224,8 @@ namespace cassettePlayerSimulator
         {
             if (State != PlayerState.PLAYING && State != PlayerState.RECORDING)
             {
+                DisengageButtons();
+
                 playDown.UpdatePlayback(true);
 
                 music.RampSpeed(0.5f, 1.0f, 44100 * 2 / 10);
@@ -210,6 +244,8 @@ namespace cassettePlayerSimulator
         {
             if (State != PlayerState.REWIND)
             {
+                DisengageButtons();
+
                 rewDown.UpdatePlayback(true);
                 rewNoise.UpdatePlayback(true);
 
@@ -226,6 +262,8 @@ namespace cassettePlayerSimulator
         {
             if (State != PlayerState.FF)
             {
+                DisengageButtons();
+
                 ffDown.UpdatePlayback(true);
                 ffNoise.UpdatePlayback(true);
 

@@ -25,7 +25,7 @@ namespace cassettePlayerSimulator
         }
 
         private PlayerState State = PlayerState.STOPPED;
-        private bool isPaused = false;
+        private bool isPaused = false; //is pause button engaged, this is different from playback pause
 
         private string TapesDirectory =>
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -161,20 +161,31 @@ namespace cassettePlayerSimulator
 
         private void RecButton_MouseDown()
         {
+            if (State != PlayerState.PLAYING && State != PlayerState.RECORDING)
+            {
+                recordDown.UpdatePlayback(true);
+
+                cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.DOWN;
+
+                State = PlayerState.RECORDING;
+            }
         }
 
         private void RecButton_MouseUp()
         {
+            recordUp.UpdatePlayback(true);
         }
 
         private void PlayButton_MouseDown()
         {
-            if (cassetteButtons.PlayButton.ButtonState == CassetteButtons.Button.State.PRESSED_UP_DOWN)
+            if (State != PlayerState.PLAYING && State != PlayerState.RECORDING)
             {
                 playDown.UpdatePlayback(true);
 
                 music.RampSpeed(0.5f, 1.0f, 44100 * 2 / 10);
                 music.UpdatePlayback(true);
+
+                State = PlayerState.PLAYING;
             }
         }
 
@@ -185,29 +196,69 @@ namespace cassettePlayerSimulator
 
         private void RewButton_MouseDown()
         {
+            if (State != PlayerState.REWIND)
+            {
+                rewDown.UpdatePlayback(true);
+                rewNoise.UpdatePlayback(true);
+
+                State = PlayerState.REWIND;
+            }
         }
 
         private void RewButton_MouseUp()
         {
+            rewUp.UpdatePlayback(true);
         }
 
         private void FfButton_MouseDown()
         {
-            
+            if (State != PlayerState.FF)
+            {
+                ffDown.UpdatePlayback(true);
+                ffNoise.UpdatePlayback(true);
+
+                State = PlayerState.FF;
+            }
         }
 
         private void FfButton_MouseUp()
         {
+            ffUp.UpdatePlayback(true);
         }
 
         private void StopEjectButton_MouseDown()
         {
-            if (cassetteButtons.PlayButton.ButtonState == CassetteButtons.Button.State.DOWN)
+            if (State == PlayerState.PLAYING)
             {
                 stopDown.UpdatePlayback(true);
                 music.RampSpeed(1.0f, 0.0f, 44100 * 2 / 10);
 
                 cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.UP;
+                State = PlayerState.STOPPED;
+            }
+            else if (State == PlayerState.RECORDING)
+            {
+                stopDown.UpdatePlayback(true);
+
+                cassetteButtons.RecButton.ButtonState = CassetteButtons.Button.State.UP;
+                cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.UP;
+                State = PlayerState.STOPPED;
+            }
+            else if (State == PlayerState.REWIND)
+            {
+                stopDown.UpdatePlayback(true);
+                rewNoise.UpdatePlayback(false);
+
+                cassetteButtons.RewButton.ButtonState = CassetteButtons.Button.State.UP;
+                State = PlayerState.STOPPED;
+            }
+            else if (State == PlayerState.FF)
+            {
+                stopDown.UpdatePlayback(true);
+                ffNoise.UpdatePlayback(false);
+
+                cassetteButtons.FfButton.ButtonState = CassetteButtons.Button.State.UP;
+                State = PlayerState.STOPPED;
             }
         }
 
@@ -218,10 +269,28 @@ namespace cassettePlayerSimulator
 
         private void PauseButton_MouseDown()
         {
+            if (!isPaused)
+            {
+                pauseDown.UpdatePlayback(true);
+            }
+            else
+            {
+                unpauseDown.UpdatePlayback(true);
+            }
         }
 
         private void PauseButton_MouseUp()
         {
+            if (!isPaused)
+            {
+                pauseUp.UpdatePlayback(true);
+                isPaused = true;
+            }
+            else
+            {
+                unpauseUp.UpdatePlayback(true);
+                isPaused = false;
+            }
         }
     }
 }

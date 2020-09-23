@@ -19,6 +19,14 @@ namespace cassettePlayerSimulator
             pauseDown, pauseUp, unpauseDown, unpauseUp, ejectDown, ejectUp, cassetteClose, cassetteInsert;
         SoundMixer.Sample music;
 
+        public enum PlayerState
+        {
+            OPEN, STOPPED, PLAYING, RECORDING, FF, REWIND
+        }
+
+        private PlayerState State = PlayerState.STOPPED;
+        private bool isPaused = false;
+
         private string TapesDirectory =>
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "Cassette Player Simulator");

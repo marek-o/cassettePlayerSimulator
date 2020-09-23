@@ -129,6 +129,22 @@ namespace cassettePlayerSimulator
             mixer.AddSample(stopUp);
             mixer.AddSample(playDown);
             mixer.AddSample(playUp);
+            mixer.AddSample(rewDown);
+            mixer.AddSample(rewNoise);
+            mixer.AddSample(rewUp);
+            mixer.AddSample(ffDown);
+            mixer.AddSample(ffNoise);
+            mixer.AddSample(ffUp);
+            mixer.AddSample(recordDown);
+            mixer.AddSample(recordUp);
+            mixer.AddSample(pauseDown);
+            mixer.AddSample(pauseUp);
+            mixer.AddSample(unpauseDown);
+            mixer.AddSample(unpauseUp);
+            mixer.AddSample(ejectDown);
+            mixer.AddSample(ejectUp);
+            mixer.AddSample(cassetteClose);
+            mixer.AddSample(cassetteInsert);
 
             LoadTape();
 

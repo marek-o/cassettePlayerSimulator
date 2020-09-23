@@ -35,22 +35,28 @@ namespace cassettePlayerSimulator
             public Point Location { get; set; }
             public Size Size { get; set; }
 
-            public event Action MouseDown;
+            public event Action<CancelEventArgs> MouseDown;
             public event Action MouseUp;
 
             public void OnMouseDown(MouseEventArgs e)
             {
-                switch (ButtonState)
-                {
-                    case State.UP: ButtonState = State.PRESSED_UP_DOWN; break;
-                    case State.DOWN: ButtonState = State.PRESSED_DOWN_UP; break;
-                }
+                var cancel = new CancelEventArgs();
+                MouseDown?.Invoke(cancel);
 
-                MouseDown?.Invoke();
+                if (!cancel.Cancel)
+                {
+                    switch (ButtonState)
+                    {
+                        case State.UP: ButtonState = State.PRESSED_UP_DOWN; break;
+                        case State.DOWN: ButtonState = State.PRESSED_DOWN_UP; break;
+                    }
+                }
             }
 
             public void OnMouseUp(MouseEventArgs e)
             {
+                MouseUp?.Invoke();
+
                 if (ButtonType == Type.NOT_LOCKING)
                 {
                     switch (ButtonState)
@@ -75,8 +81,6 @@ namespace cassettePlayerSimulator
                         case State.PRESSED_DOWN_UP: ButtonState = State.UP; break;
                     }
                 }
-
-                MouseUp?.Invoke();
             }
         }
 

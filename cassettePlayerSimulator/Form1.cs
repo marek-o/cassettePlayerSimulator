@@ -201,7 +201,7 @@ namespace cassettePlayerSimulator
             }
         }
 
-        private void RecButton_MouseDown()
+        private void RecButton_MouseDown(CancelEventArgs e)
         {
             if (State != PlayerState.PLAYING && State != PlayerState.RECORDING)
             {
@@ -213,6 +213,10 @@ namespace cassettePlayerSimulator
 
                 State = PlayerState.RECORDING;
             }
+            else if (State == PlayerState.PLAYING)
+            {
+                e.Cancel = true;
+            }
         }
 
         private void RecButton_MouseUp()
@@ -220,7 +224,7 @@ namespace cassettePlayerSimulator
             recordUp.UpdatePlayback(true);
         }
 
-        private void PlayButton_MouseDown()
+        private void PlayButton_MouseDown(CancelEventArgs e)
         {
             if (State != PlayerState.PLAYING && State != PlayerState.RECORDING)
             {
@@ -240,7 +244,7 @@ namespace cassettePlayerSimulator
             playUp.UpdatePlayback(true);
         }
 
-        private void RewButton_MouseDown()
+        private void RewButton_MouseDown(CancelEventArgs e)
         {
             if (State != PlayerState.REWIND)
             {
@@ -258,7 +262,7 @@ namespace cassettePlayerSimulator
             rewUp.UpdatePlayback(true);
         }
 
-        private void FfButton_MouseDown()
+        private void FfButton_MouseDown(CancelEventArgs e)
         {
             if (State != PlayerState.FF)
             {
@@ -276,7 +280,7 @@ namespace cassettePlayerSimulator
             ffUp.UpdatePlayback(true);
         }
 
-        private void StopEjectButton_MouseDown()
+        private void StopEjectButton_MouseDown(CancelEventArgs e)
         {
             if (State == PlayerState.PLAYING)
             {
@@ -317,7 +321,7 @@ namespace cassettePlayerSimulator
             stopUp.UpdatePlayback(true);
         }
 
-        private void PauseButton_MouseDown()
+        private void PauseButton_MouseDown(CancelEventArgs e)
         {
             if (!isPaused)
             {

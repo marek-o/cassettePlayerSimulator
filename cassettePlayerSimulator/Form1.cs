@@ -232,7 +232,7 @@ namespace cassettePlayerSimulator
 
                 playDown.UpdatePlayback(true);
 
-                music.RampSpeed(0.5f, 1.0f, 44100 * 2 / 10);
+                music.RampSpeed(0.5f, 1.0f, 44100 * 2 / 20);
                 music.UpdatePlayback(true);
 
                 State = PlayerState.PLAYING;
@@ -285,7 +285,7 @@ namespace cassettePlayerSimulator
             if (State == PlayerState.PLAYING)
             {
                 stopDown.UpdatePlayback(true);
-                music.RampSpeed(1.0f, 0.0f, 44100 * 2 / 10);
+                music.RampSpeed(1.0f, 0.0f, 44100 * 2 / 20);
 
                 cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.UP;
                 State = PlayerState.STOPPED;
@@ -326,6 +326,11 @@ namespace cassettePlayerSimulator
             if (!isPaused)
             {
                 pauseDown.UpdatePlayback(true);
+
+                if (State == PlayerState.PLAYING)
+                {
+                    music.RampSpeed(1.0f, 0.0f, 44100 * 2 / 5);
+                }
             }
             else
             {
@@ -344,6 +349,11 @@ namespace cassettePlayerSimulator
             {
                 unpauseUp.UpdatePlayback(true);
                 isPaused = false;
+
+                if (State == PlayerState.PLAYING)
+                {
+                    music.RampSpeed(0.0f, 1.0f, 44100 * 2 / 5);
+                }
             }
         }
     }

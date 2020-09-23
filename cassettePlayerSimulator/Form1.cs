@@ -25,6 +25,12 @@ namespace cassettePlayerSimulator
         }
 
         private PlayerState State = PlayerState.STOPPED;
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            labelDebug.Text = string.Format("{0} paused:{1}", State.ToString(), isPaused.ToString());
+        }
+
         private bool isPaused = false; //is pause button engaged, this is different from playback pause
 
         private string TapesDirectory =>
@@ -88,6 +94,12 @@ namespace cassettePlayerSimulator
         public Form1()
         {
             InitializeComponent();
+
+#if DEBUG
+            timer1.Enabled = true;
+#else
+            labelDebug.Visible = false;
+#endif
 
             cassetteButtons.RecButton.MouseDown += RecButton_MouseDown;
             cassetteButtons.RecButton.MouseUp += RecButton_MouseUp;

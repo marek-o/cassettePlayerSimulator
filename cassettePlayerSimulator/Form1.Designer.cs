@@ -28,10 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.buttonImport = new System.Windows.Forms.Button();
             this.buttonLoadTape = new System.Windows.Forms.Button();
             this.cassetteButtons = new cassettePlayerSimulator.CassetteButtons();
             this.cassetteControl1 = new cassettePlayerSimulator.CassetteControl();
+            this.labelDebug = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // buttonImport
@@ -68,12 +71,26 @@
             this.cassetteControl1.Size = new System.Drawing.Size(422, 267);
             this.cassetteControl1.TabIndex = 5;
             // 
+            // labelDebug
+            // 
+            this.labelDebug.AutoSize = true;
+            this.labelDebug.Location = new System.Drawing.Point(501, 22);
+            this.labelDebug.Name = "labelDebug";
+            this.labelDebug.Size = new System.Drawing.Size(57, 13);
+            this.labelDebug.TabIndex = 7;
+            this.labelDebug.Text = "debug info";
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
             this.ClientSize = new System.Drawing.Size(762, 507);
+            this.Controls.Add(this.labelDebug);
             this.Controls.Add(this.cassetteButtons);
             this.Controls.Add(this.cassetteControl1);
             this.Controls.Add(this.buttonLoadTape);
@@ -81,6 +98,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -89,6 +107,8 @@
         private System.Windows.Forms.Button buttonLoadTape;
         private CassetteControl cassetteControl1;
         private CassetteButtons cassetteButtons;
+        private System.Windows.Forms.Label labelDebug;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

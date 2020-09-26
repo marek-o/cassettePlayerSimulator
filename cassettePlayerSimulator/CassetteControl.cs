@@ -60,7 +60,7 @@ namespace cassettePlayerSimulator
 
         private void DrawTapeSpool(Graphics g, PointF center, float outerRadius)
         {
-            float spoolInnerRadius = 67 * scale;
+            float spoolInnerRadius = 68 * scale;
             float spoolMinRadius = 135 * scale;
             float spoolMaxRadius = 295 * scale;
 

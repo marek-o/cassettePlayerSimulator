@@ -116,6 +116,8 @@ namespace cassettePlayerSimulator
 
         private List<Button> buttons = new List<Button>();
 
+        private Button buttonPendingMouseUp = null;
+
         internal Button RecButton { get; set; } = new Button();
         internal Button PlayButton { get; set; } = new Button();
         internal Button RewButton { get; set; } = new Button();
@@ -279,6 +281,7 @@ namespace cassettePlayerSimulator
                 if (new Rectangle(button.Location, button.Size).Contains(e.Location))
                 {
                     button.OnMouseDown(e);
+                    buttonPendingMouseUp = button;
                     break;
                 }
             }
@@ -290,13 +293,23 @@ namespace cassettePlayerSimulator
         {
             base.OnMouseUp(e);
 
-            foreach (var button in buttons)
+            if (buttonPendingMouseUp != null)
             {
-                if (new Rectangle(button.Location, button.Size).Contains(e.Location))
-                {
-                    button.OnMouseUp(e);
-                    break;
-                }
+                buttonPendingMouseUp.OnMouseUp(null);
+                buttonPendingMouseUp = null;
+            }
+
+            Invalidate();
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+
+            if (buttonPendingMouseUp != null)
+            {
+                buttonPendingMouseUp.OnMouseUp(null);
+                buttonPendingMouseUp = null;
             }
 
             Invalidate();

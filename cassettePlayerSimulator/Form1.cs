@@ -31,6 +31,12 @@ namespace cassettePlayerSimulator
             labelDebug.Text = string.Format("{0} paused:{1}", State.ToString(), isPaused.ToString());
         }
 
+        private void timerAnimation_Tick(object sender, EventArgs e)
+        {
+            cassetteControl1.angle = -DateTime.Now.Millisecond / 1000.0f * 360.0f / 3;
+            cassetteControl1.Invalidate();
+        }
+
         private bool isPaused = false; //is pause button engaged, this is different from playback pause
 
         private string TapesDirectory =>

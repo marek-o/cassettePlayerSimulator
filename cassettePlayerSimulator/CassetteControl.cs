@@ -26,6 +26,15 @@ namespace cassettePlayerSimulator
 
         private float scale;
 
+        public float angle = 0;
+
+        internal float spoolInnerRadius => 68 * scale;
+        internal float spoolMinRadius => 135 * scale;
+        internal float spoolMaxRadius => 295 * scale;
+
+        internal PointF centerLeft => new PointF(371 * scale, 377 * scale);
+        internal PointF centerRight => new PointF(899 * scale, 377 * scale);
+
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -40,11 +49,8 @@ namespace cassettePlayerSimulator
 
             RectangleF destRect = new RectangleF(0, 0, img.Width * scale, img.Height * scale);
 
-            PointF centerLeft = new PointF(371 * scale, 377 * scale);
-            PointF centerRight = new PointF(899 * scale, 377 * scale);
-
-            DrawTapeSpool(e.Graphics, centerLeft, 295 * scale);
-            DrawTapeSpool(e.Graphics, centerRight, 135 * scale);
+            DrawTapeSpool(e.Graphics, centerLeft, 295 * scale, angle);
+            DrawTapeSpool(e.Graphics, centerRight, 135 * scale, 0);
 
             e.Graphics.DrawImage(img, destRect, new RectangleF(0, 0, img.Width, img.Height), GraphicsUnit.Pixel);
         }
@@ -58,12 +64,8 @@ namespace cassettePlayerSimulator
             );
         }
 
-        private void DrawTapeSpool(Graphics g, PointF center, float outerRadius)
+        private void DrawTapeSpool(Graphics g, PointF center, float outerRadius, float angle)
         {
-            float spoolInnerRadius = 68 * scale;
-            float spoolMinRadius = 135 * scale;
-            float spoolMaxRadius = 295 * scale;
-
             g.FillEllipse(tapeBrush, center.X - outerRadius, center.Y - outerRadius,
                 outerRadius * 2, outerRadius * 2);
             g.FillEllipse(spoolBrush, center.X - spoolMinRadius, center.Y - spoolMinRadius,
@@ -73,14 +75,13 @@ namespace cassettePlayerSimulator
 
             for (int i = 0; i < 6; ++i)
             {
-                float angle = 60 * i;
-
+                float a = 60 * i + angle;
                 g.FillPolygon(spoolBrush, new PointF[]
                 {
-                    PolarToCartesian(center, 55 * scale, angle),
-                    PolarToCartesian(center, 55 * scale, angle + 20),
-                    PolarToCartesian(center, 80 * scale, angle + 20),
-                    PolarToCartesian(center, 80 * scale, angle),
+                    PolarToCartesian(center, 55 * scale, a),
+                    PolarToCartesian(center, 55 * scale, a + 20),
+                    PolarToCartesian(center, 80 * scale, a + 20),
+                    PolarToCartesian(center, 80 * scale, a),
                 });
             }
         }

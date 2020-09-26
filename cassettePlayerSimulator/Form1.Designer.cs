@@ -35,6 +35,7 @@
             this.cassetteControl1 = new cassettePlayerSimulator.CassetteControl();
             this.labelDebug = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timerAnimation = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // buttonImport
@@ -84,6 +85,12 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // timerAnimation
+            // 
+            this.timerAnimation.Enabled = true;
+            this.timerAnimation.Interval = 16;
+            this.timerAnimation.Tick += new System.EventHandler(this.timerAnimation_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -109,6 +116,7 @@
         private CassetteButtons cassetteButtons;
         private System.Windows.Forms.Label labelDebug;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timerAnimation;
     }
 }
 

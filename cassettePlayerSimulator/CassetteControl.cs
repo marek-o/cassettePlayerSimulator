@@ -81,5 +81,15 @@ namespace cassettePlayerSimulator
             g.FillEllipse(spoolBrush, center.X - spoolMinRadius, center.Y - spoolMinRadius,
                 spoolMinRadius * 2, spoolMinRadius * 2);
         }
+
+        public void AnimateSpools(float seconds)
+        {
+            float angle = -DateTime.Now.Millisecond / 1000.0f * 360.0f / 3;
+
+            spoolControl1.angle = angle;
+            spoolControl1.Invalidate();
+            spoolControl2.angle = angle;
+            spoolControl2.Invalidate();
+        }
     }
 }

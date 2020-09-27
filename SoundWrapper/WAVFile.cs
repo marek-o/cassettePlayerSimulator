@@ -9,12 +9,12 @@ namespace Utils
 {
     public class WAVFile
     {
-        int audioFormat = 0;
-        int channels = 0;
-        int sampleRate = 0;
-        int blockAlign = 0;
-        int bitsPerSample = 0;
-        int dataLength = 0;
+        public int audioFormat = 0;
+        public int channels = 0;
+        public int sampleRate = 0;
+        public int blockAlign = 0;
+        public int bitsPerSample = 0;
+        public int dataLength = 0;
 
         public short[] data;
 

@@ -28,13 +28,12 @@ namespace cassettePlayerSimulator
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            labelDebug.Text = string.Format("{0} paused:{1}", State.ToString(), isPaused.ToString());
+            labelDebug.Text = string.Format("{0} paused:{1} {2:F2}", State.ToString(), isPaused.ToString(), music.GetCurrentPositionSeconds());
         }
 
         private void timerAnimation_Tick(object sender, EventArgs e)
         {
-            cassetteControl1.spoolControl1.angle = -DateTime.Now.Millisecond / 1000.0f * 360.0f / 3;
-            cassetteControl1.spoolControl1.Invalidate();
+            cassetteControl1.AnimateSpools(music.GetCurrentPositionSeconds());
         }
 
         private bool isPaused = false; //is pause button engaged, this is different from playback pause

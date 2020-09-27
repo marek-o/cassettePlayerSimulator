@@ -75,6 +75,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SoundMixer.cs" />
+    <Compile Include="SpoolControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SpoolControl.Designer.cs">
+      <DependentUpon>SpoolControl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

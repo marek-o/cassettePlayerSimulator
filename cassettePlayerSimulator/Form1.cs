@@ -33,8 +33,8 @@ namespace cassettePlayerSimulator
 
         private void timerAnimation_Tick(object sender, EventArgs e)
         {
-            cassetteControl1.angle = -DateTime.Now.Millisecond / 1000.0f * 360.0f / 3;
-            cassetteControl1.Invalidate();
+            spoolControl1.angle = -DateTime.Now.Millisecond / 1000.0f * 360.0f / 3;
+            spoolControl1.Invalidate();
         }
 
         private bool isPaused = false; //is pause button engaged, this is different from playback pause

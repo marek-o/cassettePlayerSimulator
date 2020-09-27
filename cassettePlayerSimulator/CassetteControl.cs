@@ -28,8 +28,11 @@ namespace cassettePlayerSimulator
 
         public float scale;
 
-        internal float spoolMinRadius => 135 * scale;
-        internal float spoolMaxRadius => 295 * scale;
+        internal float spoolMinRadius => 144 * scale;
+        internal float spoolMaxRadius => 323 * scale;
+
+        private float spoolLeftRadius;
+        private float spoolRightRadius;
 
         internal PointF centerLeft => new PointF(371 * scale, 377 * scale);
         internal PointF centerRight => new PointF(899 * scale, 377 * scale);
@@ -68,8 +71,8 @@ namespace cassettePlayerSimulator
 
             RectangleF destRect = new RectangleF(0, 0, img.Width * scale, img.Height * scale);
 
-            DrawTapeSpoolOuter(e.Graphics, centerLeft, 295 * scale);
-            DrawTapeSpoolOuter(e.Graphics, centerRight, 135 * scale);
+            DrawTapeSpoolOuter(e.Graphics, centerLeft, spoolLeftRadius);
+            DrawTapeSpoolOuter(e.Graphics, centerRight, spoolRightRadius);
 
             e.Graphics.DrawImage(img, destRect, new RectangleF(0, 0, img.Width, img.Height), GraphicsUnit.Pixel);
         }
@@ -84,6 +87,27 @@ namespace cassettePlayerSimulator
 
         public void AnimateSpools(float seconds)
         {
+            float tapeDuration = 2700; //s, C90 one side
+            float tapeVelocity = 4.76f; //cm/s
+            float radiusMin = 1.11f; //cm
+            float radiusMax = 2.49f; //cm
+
+            float tapePercent = seconds / tapeDuration;
+
+            float radiusLeft = (float)Math.Sqrt(
+                (1 - tapePercent) * Math.Pow(radiusMax, 2)
+                + tapePercent * Math.Pow(radiusMin, 2));
+
+            float radiusRight = (float)Math.Sqrt(
+                tapePercent * Math.Pow(radiusMax, 2)
+                + (1 - tapePercent) * Math.Pow(radiusMin, 2));
+
+            float pixelsPerCm = 130;
+
+            spoolLeftRadius = radiusLeft * pixelsPerCm * scale;
+            spoolRightRadius = radiusRight * pixelsPerCm * scale;
+            Invalidate(); //debug
+
             float angle = -DateTime.Now.Millisecond / 1000.0f * 360.0f / 3;
 
             spoolControl1.angle = angle;

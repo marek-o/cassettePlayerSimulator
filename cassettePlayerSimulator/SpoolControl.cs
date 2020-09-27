@@ -21,7 +21,9 @@ namespace cassettePlayerSimulator
 
         private Brush spoolBrush = new SolidBrush(Color.FromArgb(240, 240, 240));
 
-        private Brush backgroundBrush = new SolidBrush(Color.FromArgb(128, 128, 128));
+        private Brush backgroundBrush = new SolidBrush(Color.FromArgb(169, 169, 169));
+
+        private Brush cassetteBrush = new SolidBrush(Color.FromArgb(0, 0, 0));
 
         public float scale;
 
@@ -37,7 +39,7 @@ namespace cassettePlayerSimulator
         {
             base.OnPaint(e);
 
-            e.Graphics.FillRectangle(Brushes.DarkGreen, new RectangleF(0, 0, Width, Height));
+            e.Graphics.FillRectangle(cassetteBrush, new RectangleF(0, 0, Width, Height));
             DrawTapeSpool(e.Graphics, new PointF(Width / 2, Height / 2), 295 * scale, angle);
         }
 
@@ -62,8 +64,8 @@ namespace cassettePlayerSimulator
                 {
                     PolarToCartesian(center, 55 * scale, a),
                     PolarToCartesian(center, 55 * scale, a + 20),
-                    PolarToCartesian(center, 80 * scale, a + 20),
-                    PolarToCartesian(center, 80 * scale, a),
+                    PolarToCartesian(center, spoolInnerRadius, a + 20),
+                    PolarToCartesian(center, spoolInnerRadius, a),
                 });
             }
         }

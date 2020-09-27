@@ -23,7 +23,7 @@ namespace cassettePlayerSimulator
 
         private Brush backgroundBrush = new SolidBrush(Color.FromArgb(128, 128, 128));
 
-        private float scale;
+        public float scale;
 
         public float angle = 0;
 
@@ -36,8 +36,6 @@ namespace cassettePlayerSimulator
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-
-            scale = 0.3f; //FIXME
 
             e.Graphics.FillRectangle(Brushes.DarkGreen, new RectangleF(0, 0, Width, Height));
             DrawTapeSpool(e.Graphics, new PointF(Width / 2, Height / 2), 295 * scale, angle);

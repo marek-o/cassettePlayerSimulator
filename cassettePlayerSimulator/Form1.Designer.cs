@@ -34,10 +34,8 @@
             this.labelDebug = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timerAnimation = new System.Windows.Forms.Timer(this.components);
-            this.spoolControl1 = new cassettePlayerSimulator.SpoolControl();
             this.cassetteButtons = new cassettePlayerSimulator.CassetteButtons();
             this.cassetteControl1 = new cassettePlayerSimulator.CassetteControl();
-            this.spoolControl2 = new cassettePlayerSimulator.SpoolControl();
             this.SuspendLayout();
             // 
             // buttonImport
@@ -79,13 +77,6 @@
             this.timerAnimation.Interval = 16;
             this.timerAnimation.Tick += new System.EventHandler(this.timerAnimation_Tick);
             // 
-            // spoolControl1
-            // 
-            this.spoolControl1.Location = new System.Drawing.Point(134, 109);
-            this.spoolControl1.Name = "spoolControl1";
-            this.spoolControl1.Size = new System.Drawing.Size(50, 50);
-            this.spoolControl1.TabIndex = 8;
-            // 
             // cassetteButtons
             // 
             this.cassetteButtons.Location = new System.Drawing.Point(39, 311);
@@ -100,21 +91,12 @@
             this.cassetteControl1.Size = new System.Drawing.Size(422, 267);
             this.cassetteControl1.TabIndex = 5;
             // 
-            // spoolControl2
-            // 
-            this.spoolControl2.Location = new System.Drawing.Point(304, 109);
-            this.spoolControl2.Name = "spoolControl2";
-            this.spoolControl2.Size = new System.Drawing.Size(50, 50);
-            this.spoolControl2.TabIndex = 9;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
             this.ClientSize = new System.Drawing.Size(762, 507);
-            this.Controls.Add(this.spoolControl2);
-            this.Controls.Add(this.spoolControl1);
             this.Controls.Add(this.labelDebug);
             this.Controls.Add(this.cassetteButtons);
             this.Controls.Add(this.cassetteControl1);
@@ -135,8 +117,6 @@
         private System.Windows.Forms.Label labelDebug;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Timer timerAnimation;
-        private SpoolControl spoolControl1;
-        private SpoolControl spoolControl2;
     }
 }
 

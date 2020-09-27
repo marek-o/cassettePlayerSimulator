@@ -85,6 +85,8 @@ namespace cassettePlayerSimulator
                 spoolMinRadius * 2, spoolMinRadius * 2);
         }
 
+        private int animationFrame = 0;
+
         public void AnimateSpools(float seconds)
         {
             float tapeDuration = 2700; //s, C90 one side
@@ -106,7 +108,12 @@ namespace cassettePlayerSimulator
 
             spoolLeftRadius = radiusLeft * pixelsPerCm * scale;
             spoolRightRadius = radiusRight * pixelsPerCm * scale;
-            Invalidate(); //debug
+
+            if (animationFrame >= 60)
+            {
+                animationFrame = 0;
+                Invalidate();
+            }
 
             float angleLeft = (float)(2 * tapeVelocity * tapeDuration * (radiusLeft - radiusMin) / (Math.Pow(radiusMax, 2) - Math.Pow(radiusMin, 2)));
             float angleRight = (float)(2 * tapeVelocity * tapeDuration * (radiusRight - radiusMin) / (Math.Pow(radiusMax, 2) - Math.Pow(radiusMin, 2)));
@@ -118,6 +125,8 @@ namespace cassettePlayerSimulator
             spoolControl1.Invalidate();
             spoolControl2.angle = -angleRight * 180 / (float)Math.PI;
             spoolControl2.Invalidate();
+
+            animationFrame++;
         }
     }
 }

@@ -108,11 +108,15 @@ namespace cassettePlayerSimulator
             spoolRightRadius = radiusRight * pixelsPerCm * scale;
             Invalidate(); //debug
 
-            float angle = -DateTime.Now.Millisecond / 1000.0f * 360.0f / 3;
+            float angleLeft = (float)(2 * tapeVelocity * tapeDuration * (radiusLeft - radiusMin) / (Math.Pow(radiusMax, 2) - Math.Pow(radiusMin, 2)));
+            float angleRight = (float)(2 * tapeVelocity * tapeDuration * (radiusRight - radiusMin) / (Math.Pow(radiusMax, 2) - Math.Pow(radiusMin, 2)));
 
-            spoolControl1.angle = angle;
+            angleLeft = (float)Math.IEEERemainder(angleLeft, 2 * Math.PI);
+            angleRight = (float)Math.IEEERemainder(angleRight, 2 * Math.PI);
+
+            spoolControl1.angle = angleLeft * 180 / (float)Math.PI;
             spoolControl1.Invalidate();
-            spoolControl2.angle = angle;
+            spoolControl2.angle = -angleRight * 180 / (float)Math.PI;
             spoolControl2.Invalidate();
         }
     }

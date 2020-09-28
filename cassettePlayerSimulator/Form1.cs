@@ -178,31 +178,33 @@ namespace cassettePlayerSimulator
 
         private void DisengageButtons()
         {
-            if (cassetteButtons.RecButton.ButtonState == CassetteButtons.Button.State.DOWN)
+            if (State == PlayerState.PLAYING)
             {
-                cassetteButtons.RecButton.ButtonState = CassetteButtons.Button.State.UP;
                 stopDown.UpdatePlayback(true);
-            }
-
-            if (cassetteButtons.PlayButton.ButtonState == CassetteButtons.Button.State.DOWN)
-            {
-                cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.UP;
                 SetPlayback(false, false);
-                stopDown.UpdatePlayback(true);
-            }
 
-            if (cassetteButtons.RewButton.ButtonState == CassetteButtons.Button.State.DOWN)
+                cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.UP;
+            }
+            else if (State == PlayerState.RECORDING)
             {
-                cassetteButtons.RewButton.ButtonState = CassetteButtons.Button.State.UP;
+                stopDown.UpdatePlayback(true);
+
+                cassetteButtons.RecButton.ButtonState = CassetteButtons.Button.State.UP;
+                cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.UP;
+            }
+            else if (State == PlayerState.REWIND)
+            {
+                stopDown.UpdatePlayback(true);
                 rewNoise.UpdatePlayback(false);
-                stopDown.UpdatePlayback(true);
-            }
 
-            if (cassetteButtons.FfButton.ButtonState == CassetteButtons.Button.State.DOWN)
+                cassetteButtons.RewButton.ButtonState = CassetteButtons.Button.State.UP;
+            }
+            else if (State == PlayerState.FF)
             {
-                cassetteButtons.FfButton.ButtonState = CassetteButtons.Button.State.UP;
-                ffNoise.UpdatePlayback(false);
                 stopDown.UpdatePlayback(true);
+                ffNoise.UpdatePlayback(false);
+
+                cassetteButtons.FfButton.ButtonState = CassetteButtons.Button.State.UP;
             }
         }
 
@@ -304,36 +306,10 @@ namespace cassettePlayerSimulator
 
         private void StopEjectButton_MouseDown(CancelEventArgs e)
         {
-            if (State == PlayerState.PLAYING)
-            {
-                stopDown.UpdatePlayback(true);
-                SetPlayback(false, false);
+            DisengageButtons();
 
-                cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.UP;
-                State = PlayerState.STOPPED;
-            }
-            else if (State == PlayerState.RECORDING)
+            if (State != PlayerState.OPEN)
             {
-                stopDown.UpdatePlayback(true);
-
-                cassetteButtons.RecButton.ButtonState = CassetteButtons.Button.State.UP;
-                cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.UP;
-                State = PlayerState.STOPPED;
-            }
-            else if (State == PlayerState.REWIND)
-            {
-                stopDown.UpdatePlayback(true);
-                rewNoise.UpdatePlayback(false);
-
-                cassetteButtons.RewButton.ButtonState = CassetteButtons.Button.State.UP;
-                State = PlayerState.STOPPED;
-            }
-            else if (State == PlayerState.FF)
-            {
-                stopDown.UpdatePlayback(true);
-                ffNoise.UpdatePlayback(false);
-
-                cassetteButtons.FfButton.ButtonState = CassetteButtons.Button.State.UP;
                 State = PlayerState.STOPPED;
             }
         }

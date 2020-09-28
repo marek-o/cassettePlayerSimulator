@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -31,8 +32,19 @@ namespace cassettePlayerSimulator
             labelDebug.Text = string.Format("{0} paused:{1} {2:F2}", State.ToString(), isPaused.ToString(), music.GetCurrentPositionSeconds());
         }
 
+        private Stopwatch rewindStopwatch = new Stopwatch();
+
         private void timerAnimation_Tick(object sender, EventArgs e)
         {
+            if (State == PlayerState.FF)
+            {
+                var elapsed = (float)rewindStopwatch.Elapsed.TotalSeconds;
+                rewindStopwatch.Restart();
+
+                var newPosition = music.GetCurrentPositionSeconds() + elapsed * 3.0f;
+                music.SetCurrentPositionSeconds(newPosition);
+            }
+
             cassetteControl1.AnimateSpools(music.GetCurrentPositionSeconds());
         }
 
@@ -203,6 +215,7 @@ namespace cassettePlayerSimulator
             {
                 stopDown.UpdatePlayback(true);
                 ffNoise.UpdatePlayback(false);
+                rewindStopwatch.Stop();
 
                 cassetteButtons.FfButton.ButtonState = CassetteButtons.Button.State.UP;
             }
@@ -294,6 +307,7 @@ namespace cassettePlayerSimulator
 
                 ffDown.UpdatePlayback(true);
                 ffNoise.UpdatePlayback(true);
+                rewindStopwatch.Restart();
 
                 State = PlayerState.FF;
             }

@@ -51,6 +51,19 @@ namespace cassettePlayerSimulator
                 return (float)(position / wavFile.sampleRate / wavFile.channels);
             }
 
+            public void SetCurrentPositionSeconds(float seconds)
+            {
+                lock (locker)
+                {
+                    position = (int)(seconds * wavFile.sampleRate * wavFile.channels);
+
+                    if (position < 0 || position >= wavFile.data.Length - 2)
+                    {
+                        position = 0;
+                    }
+                }
+            }
+
             public void UpdatePlayback(bool isPlaying, bool isLooped, float volume, float speed)
             {
                 lock (locker)

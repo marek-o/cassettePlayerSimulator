@@ -1,6 +1,6 @@
 ﻿namespace cassettePlayerSimulator
 {
-    partial class Form1
+    partial class SimulatorForm
     {
         /// <summary>
         /// Required designer variable.

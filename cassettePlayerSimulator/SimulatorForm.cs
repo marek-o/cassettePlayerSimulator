@@ -13,7 +13,7 @@ using Utils;
 
 namespace cassettePlayerSimulator
 {
-    public partial class Form1 : Form
+    public partial class SimulatorForm : Form
     {
         SoundMixer mixer;
         SoundMixer.Sample stopDown, stopUp, playDown, playUp, rewDown, rewNoise, rewUp, ffDown, ffNoise, ffUp, recordDown, recordUp,
@@ -109,7 +109,7 @@ namespace cassettePlayerSimulator
             LoadTape();
         }
 
-        public Form1()
+        public SimulatorForm()
         {
             InitializeComponent();
 

@@ -40,7 +40,7 @@ namespace cassettePlayerSimulator
             base.OnPaint(e);
 
             e.Graphics.FillRectangle(cassetteBrush, new RectangleF(0, 0, Width, Height));
-            DrawTapeSpool(e.Graphics, new PointF(Width / 2, Height / 2), 295 * scale, angle);
+            DrawTapeSpool(e.Graphics, new PointF(Width / 2, Height / 2), angle);
         }
 
         private PointF PolarToCartesian(PointF center, float r, float a)
@@ -52,7 +52,7 @@ namespace cassettePlayerSimulator
             );
         }
 
-        private void DrawTapeSpool(Graphics g, PointF center, float outerRadius, float angle)
+        private void DrawTapeSpool(Graphics g, PointF center, float angle)
         {
             g.FillEllipse(backgroundBrush, center.X - spoolInnerRadius, center.Y - spoolInnerRadius,
                 spoolInnerRadius * 2, spoolInnerRadius * 2);

@@ -17,10 +17,10 @@ namespace cassettePlayerSimulator
             SetStyle(ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
             InitializeComponent();
-            spoolControl1 = new SpoolControl();
-            spoolControl2 = new SpoolControl();
-            Controls.Add(spoolControl1);
-            Controls.Add(spoolControl2);
+            spoolControlLeft = new SpoolControl();
+            spoolControlRight = new SpoolControl();
+            Controls.Add(spoolControlLeft);
+            Controls.Add(spoolControlRight);
         }
 
         private Brush tapeBrush = new SolidBrush(Color.FromArgb(128, 64, 0));
@@ -34,14 +34,14 @@ namespace cassettePlayerSimulator
         private float spoolLeftRadius;
         private float spoolRightRadius;
 
-        private float radiusLeft;
-        private float radiusRight;
+        private float spoolLeftRadiusReal;
+        private float spoolRightRadiusReal;
 
         internal PointF centerLeft => new PointF(371 * scale, 377 * scale);
         internal PointF centerRight => new PointF(899 * scale, 377 * scale);
 
-        internal SpoolControl spoolControl1;
-        internal SpoolControl spoolControl2;
+        internal SpoolControl spoolControlLeft;
+        internal SpoolControl spoolControlRight;
 
         protected override void OnResize(EventArgs e)
         {
@@ -57,13 +57,13 @@ namespace cassettePlayerSimulator
 
             var spoolSize = new Size((int)(160 * scale), (int)(160 * scale));
             
-            spoolControl1.scale = scale;
-            spoolControl1.Location = new Point((int)centerLeft.X - spoolSize.Width / 2, (int)centerLeft.Y - spoolSize.Height / 2);
-            spoolControl1.Size = spoolSize;
+            spoolControlLeft.scale = scale;
+            spoolControlLeft.Location = new Point((int)centerLeft.X - spoolSize.Width / 2, (int)centerLeft.Y - spoolSize.Height / 2);
+            spoolControlLeft.Size = spoolSize;
 
-            spoolControl2.scale = scale;
-            spoolControl2.Location = new Point((int)centerRight.X - spoolSize.Width / 2, (int)centerRight.Y - spoolSize.Height / 2);
-            spoolControl2.Size = spoolSize;
+            spoolControlRight.scale = scale;
+            spoolControlRight.Location = new Point((int)centerRight.X - spoolSize.Width / 2, (int)centerRight.Y - spoolSize.Height / 2);
+            spoolControlRight.Size = spoolSize;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -92,39 +92,46 @@ namespace cassettePlayerSimulator
 
         private const float tapeDuration = 2700; //s, C90 one side
         private const float tapeVelocity = 4.76f; //cm/s
-        private const float radiusMin = 1.11f; //cm
-        private const float radiusMax = 2.49f; //cm
+        private const float spoolMinRadiusReal = 1.11f; //cm
+        private const float spoolMaxRadiusReal = 2.49f; //cm
 
         private const float pixelsPerCm = 130;
 
-        private void UpdateRadiusOfSpools(float seconds)
+        private void UpdateRadiusesOfSpools(float seconds)
         {
             float tapePercent = seconds / tapeDuration;
 
-            radiusLeft = (float)Math.Sqrt(
-                (1 - tapePercent) * Math.Pow(radiusMax, 2)
-                + tapePercent * Math.Pow(radiusMin, 2));
+            spoolLeftRadiusReal = (float)Math.Sqrt(
+                (1 - tapePercent) * Math.Pow(spoolMaxRadiusReal, 2)
+                + tapePercent * Math.Pow(spoolMinRadiusReal, 2));
 
-            radiusRight = (float)Math.Sqrt(
-                tapePercent * Math.Pow(radiusMax, 2)
-                + (1 - tapePercent) * Math.Pow(radiusMin, 2));
+            spoolRightRadiusReal = (float)Math.Sqrt(
+                tapePercent * Math.Pow(spoolMaxRadiusReal, 2)
+                + (1 - tapePercent) * Math.Pow(spoolMinRadiusReal, 2));
 
-            spoolLeftRadius = radiusLeft * pixelsPerCm * scale;
-            spoolRightRadius = radiusRight * pixelsPerCm * scale;
+            spoolLeftRadius = spoolLeftRadiusReal * pixelsPerCm * scale;
+            spoolRightRadius = spoolRightRadiusReal * pixelsPerCm * scale;
         }
 
         public float AngularToLinear(float seconds, float angularOffset)
         {
             //right spool for now
-            UpdateRadiusOfSpools(seconds);
+            UpdateRadiusesOfSpools(seconds);
 
-            var linearOffset = radiusRight * (float)(angularOffset * Math.PI / 180);
+            var linearOffset = spoolRightRadiusReal * (float)(angularOffset * Math.PI / 180);
             return linearOffset / tapeVelocity;
+        }
+
+        private float SpoolAngle(float spoolRadiusReal)
+        {
+            var angle = 2 * tapeVelocity * tapeDuration * (spoolRadiusReal - spoolMinRadiusReal)
+                / (Math.Pow(spoolMaxRadiusReal, 2) - Math.Pow(spoolMinRadiusReal, 2));
+            return (float)Math.IEEERemainder(angle, 2 * Math.PI);
         }
 
         public void AnimateSpools(float seconds)
         {
-            UpdateRadiusOfSpools(seconds);
+            UpdateRadiusesOfSpools(seconds);
 
             if (animationFrame >= 60)
             {
@@ -132,16 +139,10 @@ namespace cassettePlayerSimulator
                 Invalidate();
             }
 
-            float angleLeft = (float)(2 * tapeVelocity * tapeDuration * (radiusLeft - radiusMin) / (Math.Pow(radiusMax, 2) - Math.Pow(radiusMin, 2)));
-            float angleRight = (float)(2 * tapeVelocity * tapeDuration * (radiusRight - radiusMin) / (Math.Pow(radiusMax, 2) - Math.Pow(radiusMin, 2)));
-
-            angleLeft = (float)Math.IEEERemainder(angleLeft, 2 * Math.PI);
-            angleRight = (float)Math.IEEERemainder(angleRight, 2 * Math.PI);
-
-            spoolControl1.angle = angleLeft * 180 / (float)Math.PI;
-            spoolControl1.Invalidate();
-            spoolControl2.angle = -angleRight * 180 / (float)Math.PI;
-            spoolControl2.Invalidate();
+            spoolControlLeft.angle = SpoolAngle(spoolLeftRadiusReal) * 180 / (float)Math.PI;
+            spoolControlLeft.Invalidate();
+            spoolControlRight.angle = -SpoolAngle(spoolRightRadiusReal) * 180 / (float)Math.PI;
+            spoolControlRight.Invalidate();
 
             animationFrame++;
         }

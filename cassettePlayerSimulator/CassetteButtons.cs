@@ -16,9 +16,9 @@ namespace cassettePlayerSimulator
         {
             public enum State
             {
-                UP, //pause when paused
+                UP, //pause when unpaused
                 PRESSED_UP_DOWN, //pause when pausing
-                DOWN, //pause when unpaused
+                DOWN, //pause when paused
                 PRESSED_DOWN_UP //pause when unpausing
             }
 
@@ -125,6 +125,15 @@ namespace cassettePlayerSimulator
         internal Button StopEjectButton { get; set; } = new Button();
         internal Button PauseButton { get; set; } = new Button();
 
+        private Pen borderPen = new Pen(Color.FromArgb(0, 0, 0));
+        private Brush coverBrush = new SolidBrush(Color.FromArgb(169, 169, 169));
+        private Brush buttonFaceBrush = new SolidBrush(Color.FromArgb(169, 169, 169));
+        private Brush buttonTopBrush = new SolidBrush(Color.FromArgb(211, 211, 211));
+        private Brush buttonLeftBrush = new SolidBrush(Color.FromArgb(128, 128, 128));
+
+        private Brush symbolBlackBrush = new SolidBrush(Color.FromArgb(0, 0, 0));
+        private Brush symbolRedBrush = new SolidBrush(Color.FromArgb(255, 0, 0));
+
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -137,11 +146,11 @@ namespace cassettePlayerSimulator
 
             Rectangle hole = new Rectangle(28, 28, 354, 54);
             //cover bottom
-            e.Graphics.FillRectangle(Brushes.DarkGray, 0, hole.Bottom, Width, Height - hole.Bottom);
-            e.Graphics.DrawLine(Pens.Black, hole.Left, hole.Bottom, hole.Right, hole.Bottom);
+            e.Graphics.FillRectangle(coverBrush, 0, hole.Bottom, Width, Height - hole.Bottom);
+            e.Graphics.DrawLine(borderPen, hole.Left, hole.Bottom, hole.Right, hole.Bottom);
             //cover right
-            e.Graphics.FillRectangle(Brushes.DarkGray, hole.Right, 0, Width - hole.Right, Height);
-            e.Graphics.DrawLine(Pens.Black, hole.Right, hole.Top, hole.Right, hole.Bottom);
+            e.Graphics.FillRectangle(coverBrush, hole.Right, 0, Width - hole.Right, Height);
+            e.Graphics.DrawLine(borderPen, hole.Right, hole.Top, hole.Right, hole.Bottom);
 
             foreach (var button in buttons.Reverse<Button>())
             {
@@ -164,8 +173,8 @@ namespace cassettePlayerSimulator
                 var faceRect = new Rectangle(button.Location.X + depth, button.Location.Y + depth, buttonFaceWidth, buttonFaceHeight);
 
                 //front face
-                e.Graphics.FillRectangle(Brushes.DarkGray, faceRect);
-                e.Graphics.DrawRectangle(Pens.Black, faceRect);
+                e.Graphics.FillRectangle(buttonFaceBrush, faceRect);
+                e.Graphics.DrawRectangle(borderPen, faceRect);
 
                 //symbols
                 var symbolRect = new Rectangle(faceRect.Left + faceRect.Width / 2, faceRect.Top + faceRect.Height / 2,
@@ -175,11 +184,11 @@ namespace cassettePlayerSimulator
 
                 if (button == RecButton)
                 {
-                    e.Graphics.FillEllipse(Brushes.Red, symbolRect);
+                    e.Graphics.FillEllipse(symbolRedBrush, symbolRect);
                 }
                 else if (button == PlayButton)
                 {
-                    e.Graphics.FillPolygon(Brushes.Black, new PointF[]
+                    e.Graphics.FillPolygon(symbolBlackBrush, new PointF[]
                     {
                         new PointF(symbolRect.Left, symbolRect.Top),
                         new PointF(symbolRect.Left, symbolRect.Bottom),
@@ -188,7 +197,7 @@ namespace cassettePlayerSimulator
                 }
                 else if (button == RewButton)
                 {
-                    e.Graphics.FillPolygon(Brushes.Black, new PointF[]
+                    e.Graphics.FillPolygon(symbolBlackBrush, new PointF[]
                     {
                         new PointF(symbolRect.Right + symbolRect.Width / 2, symbolRect.Top),
                         new PointF(symbolRect.Right - symbolRect.Width / 2, symbolRect.Top + symbolRect.Width / 2),
@@ -201,7 +210,7 @@ namespace cassettePlayerSimulator
                 }
                 else if (button == FfButton)
                 {
-                    e.Graphics.FillPolygon(Brushes.Black, new PointF[]
+                    e.Graphics.FillPolygon(symbolBlackBrush, new PointF[]
                     {
                         new PointF(symbolRect.Left - symbolRect.Width / 2, symbolRect.Top),
                         new PointF(symbolRect.Right - symbolRect.Width / 2, symbolRect.Top + symbolRect.Width / 2),
@@ -220,22 +229,22 @@ namespace cassettePlayerSimulator
                     var rightSymbolRect = symbolRect;
                     rightSymbolRect.X += symbolRect.Width;
 
-                    e.Graphics.FillRectangle(Brushes.Black, leftSymbolRect);
+                    e.Graphics.FillRectangle(symbolBlackBrush, leftSymbolRect);
 
-                    e.Graphics.FillPolygon(Brushes.Black, new PointF[]
+                    e.Graphics.FillPolygon(symbolBlackBrush, new PointF[]
                     {
                         new PointF(rightSymbolRect.Left + rightSymbolRect.Width / 2, rightSymbolRect.Top),
                         new PointF(rightSymbolRect.Left - 1, rightSymbolRect.Top + rightSymbolRect.Height / 2 + 1),
                         new PointF(rightSymbolRect.Right + 1, rightSymbolRect.Top + rightSymbolRect.Height / 2 + 1),
                     });
-                    e.Graphics.FillRectangle(Brushes.Black, rightSymbolRect.Left, rightSymbolRect.Top + 3 * rightSymbolRect.Height / 4,
+                    e.Graphics.FillRectangle(symbolBlackBrush, rightSymbolRect.Left, rightSymbolRect.Top + 3 * rightSymbolRect.Height / 4,
                         rightSymbolRect.Width, rightSymbolRect.Height / 4);
                 }
                 else if (button == PauseButton)
                 {
-                    e.Graphics.FillRectangle(Brushes.Black, symbolRect.Left, symbolRect.Top,
+                    e.Graphics.FillRectangle(symbolBlackBrush, symbolRect.Left, symbolRect.Top,
                         symbolRect.Width / 3, symbolRect.Height);
-                    e.Graphics.FillRectangle(Brushes.Black, symbolRect.Left + 2 * symbolRect.Width / 3, symbolRect.Top,
+                    e.Graphics.FillRectangle(symbolBlackBrush, symbolRect.Left + 2 * symbolRect.Width / 3, symbolRect.Top,
                         symbolRect.Width / 3, symbolRect.Height);
                 }
 
@@ -248,8 +257,8 @@ namespace cassettePlayerSimulator
                 };
 
                 //top face
-                e.Graphics.FillPolygon(Brushes.LightGray, topPolygon);
-                e.Graphics.DrawPolygon(Pens.Black, topPolygon);
+                e.Graphics.FillPolygon(buttonTopBrush, topPolygon);
+                e.Graphics.DrawPolygon(borderPen, topPolygon);
 
                 var leftPolygon = new PointF[]
                 {
@@ -260,16 +269,16 @@ namespace cassettePlayerSimulator
                 };
 
                 //left face
-                e.Graphics.FillPolygon(Brushes.Gray, leftPolygon);
-                e.Graphics.DrawPolygon(Pens.Black, leftPolygon);
+                e.Graphics.FillPolygon(buttonLeftBrush, leftPolygon);
+                e.Graphics.DrawPolygon(borderPen, leftPolygon);
             }
 
             //cover left
-            e.Graphics.FillRectangle(Brushes.DarkGray, 0, 0, hole.Left, Height);
-            e.Graphics.DrawLine(Pens.Black, hole.Left, hole.Top, hole.Left, hole.Bottom);
+            e.Graphics.FillRectangle(coverBrush, 0, 0, hole.Left, Height);
+            e.Graphics.DrawLine(borderPen, hole.Left, hole.Top, hole.Left, hole.Bottom);
             //cover top
-            e.Graphics.FillRectangle(Brushes.DarkGray, 0, 0, Width, hole.Top);
-            e.Graphics.DrawLine(Pens.Black, hole.Left, hole.Top, hole.Right, hole.Top);
+            e.Graphics.FillRectangle(coverBrush, 0, 0, Width, hole.Top);
+            e.Graphics.DrawLine(borderPen, hole.Left, hole.Top, hole.Right, hole.Top);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

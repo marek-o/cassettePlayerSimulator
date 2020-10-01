@@ -145,6 +145,8 @@ namespace cassettePlayerSimulator
         SoundWrapper player;
         List<Sample> samples = new List<Sample>();
 
+        private object playingLocker = new object();
+
         public SoundMixer(ushort bitsPerSample, ushort channels, uint sampleRate, uint bufferLengthBytes)
         {
             player = new SoundWrapper(SoundWrapper.Mode.Play, bitsPerSample, channels, sampleRate, bufferLengthBytes);
@@ -162,7 +164,7 @@ namespace cassettePlayerSimulator
             {
                 sample.UpdatePlayback(false);
 
-                lock (sample.locker) //FIXME another lock for playing
+                lock (playingLocker)
                 {
                     samples.Remove(sample);
                 }
@@ -176,9 +178,12 @@ namespace cassettePlayerSimulator
 
         private void Player_NewDataRequested(object sender, Utils.SoundWrapper.NewDataEventArgs e)
         {
-            foreach (var sample in samples)
+            lock (playingLocker)
             {
-                sample.PlayIntoBuffer(e.data);
+                foreach (var sample in samples)
+                {
+                    sample.PlayIntoBuffer(e.data);
+                }
             }
         }
     }

@@ -41,8 +41,9 @@ namespace cassettePlayerSimulator
                 var elapsed = (float)rewindStopwatch.Elapsed.TotalSeconds;
                 rewindStopwatch.Restart();
 
-                var newPosition = music.GetCurrentPositionSeconds() + elapsed * 3.0f;
-                music.SetCurrentPositionSeconds(newPosition);
+                var pos = music.GetCurrentPositionSeconds();
+                var timeOffset = cassetteControl1.AngularToLinear(pos, elapsed * 360 * 5);
+                music.SetCurrentPositionSeconds(pos + timeOffset);
             }
 
             cassetteControl1.AnimateSpools(music.GetCurrentPositionSeconds());

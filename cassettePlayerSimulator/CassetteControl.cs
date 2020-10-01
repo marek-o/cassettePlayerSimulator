@@ -34,6 +34,9 @@ namespace cassettePlayerSimulator
         private float spoolLeftRadius;
         private float spoolRightRadius;
 
+        private float radiusLeft;
+        private float radiusRight;
+
         internal PointF centerLeft => new PointF(371 * scale, 377 * scale);
         internal PointF centerRight => new PointF(899 * scale, 377 * scale);
 
@@ -87,27 +90,41 @@ namespace cassettePlayerSimulator
 
         private int animationFrame = 0;
 
-        public void AnimateSpools(float seconds)
-        {
-            float tapeDuration = 2700; //s, C90 one side
-            float tapeVelocity = 4.76f; //cm/s
-            float radiusMin = 1.11f; //cm
-            float radiusMax = 2.49f; //cm
+        private const float tapeDuration = 2700; //s, C90 one side
+        private const float tapeVelocity = 4.76f; //cm/s
+        private const float radiusMin = 1.11f; //cm
+        private const float radiusMax = 2.49f; //cm
 
+        private const float pixelsPerCm = 130;
+
+        private void UpdateRadiusOfSpools(float seconds)
+        {
             float tapePercent = seconds / tapeDuration;
 
-            float radiusLeft = (float)Math.Sqrt(
+            radiusLeft = (float)Math.Sqrt(
                 (1 - tapePercent) * Math.Pow(radiusMax, 2)
                 + tapePercent * Math.Pow(radiusMin, 2));
 
-            float radiusRight = (float)Math.Sqrt(
+            radiusRight = (float)Math.Sqrt(
                 tapePercent * Math.Pow(radiusMax, 2)
                 + (1 - tapePercent) * Math.Pow(radiusMin, 2));
 
-            float pixelsPerCm = 130;
-
             spoolLeftRadius = radiusLeft * pixelsPerCm * scale;
             spoolRightRadius = radiusRight * pixelsPerCm * scale;
+        }
+
+        public float AngularToLinear(float seconds, float angularOffset)
+        {
+            //right spool for now
+            UpdateRadiusOfSpools(seconds);
+
+            var linearOffset = radiusRight * (float)(angularOffset * Math.PI / 180);
+            return linearOffset / tapeVelocity;
+        }
+
+        public void AnimateSpools(float seconds)
+        {
+            UpdateRadiusOfSpools(seconds);
 
             if (animationFrame >= 60)
             {

@@ -91,10 +91,11 @@
             this.cassetteControl1.Size = new System.Drawing.Size(422, 267);
             this.cassetteControl1.TabIndex = 5;
             // 
-            // Form1
+            // SimulatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.DarkGray;
             this.ClientSize = new System.Drawing.Size(762, 507);
             this.Controls.Add(this.labelDebug);
@@ -102,8 +103,11 @@
             this.Controls.Add(this.cassetteControl1);
             this.Controls.Add(this.buttonLoadTape);
             this.Controls.Add(this.buttonImport);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.MaximizeBox = false;
+            this.Name = "SimulatorForm";
+            this.ShowIcon = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.Text = "Cassette Player Simulator";
             this.ResumeLayout(false);
             this.PerformLayout();
 

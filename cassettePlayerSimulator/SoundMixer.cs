@@ -118,8 +118,13 @@ namespace cassettePlayerSimulator
                             var ratio = position - Math.Floor(position);
                             var interpolatedSample = samp1 * (1 - ratio) + samp2 * ratio;
 
-                            buffer[i] += Clamp(interpolatedSample * volume);
+                            buffer[i] += Clamp(interpolatedSample * volume * speed);
                             position += speed;
+
+                            if (speed == 0.0f)
+                            {
+                                isPlaying = false;
+                            }
 
                             if (position >= wavFile.data.Length - 2)
                             {

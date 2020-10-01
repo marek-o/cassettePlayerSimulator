@@ -10,13 +10,12 @@ using System.Windows.Forms;
 
 namespace cassettePlayerSimulator
 {
-    public partial class CassetteControl : UserControl
+    public class CassetteControl : Control
     {
         public CassetteControl()
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
-            InitializeComponent();
             spoolControlLeft = new SpoolControl();
             spoolControlRight = new SpoolControl();
             Controls.Add(spoolControlLeft);

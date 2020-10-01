@@ -10,13 +10,11 @@ using System.Windows.Forms;
 
 namespace cassettePlayerSimulator
 {
-    public partial class SpoolControl : UserControl
+    public class SpoolControl : Control
     {
         public SpoolControl()
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
-
-            InitializeComponent();
         }
 
         private Brush spoolBrush = new SolidBrush(Color.FromArgb(240, 240, 240));

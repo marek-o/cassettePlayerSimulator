@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace cassettePlayerSimulator
 {
-    public partial class CassetteButtons : UserControl
+    public class CassetteButtons : Control
     {
         public class Button
         {
@@ -87,8 +87,6 @@ namespace cassettePlayerSimulator
         public CassetteButtons()
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
-
-            InitializeComponent();
 
             Size buttonSize = new Size(65, 65);
             Point buttonsOrigin = new Point(25, 25);

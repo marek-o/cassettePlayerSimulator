@@ -55,6 +55,9 @@
     <Compile Include="CassetteControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Counter.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SimulatorForm.cs">
       <SubType>Form</SubType>
     </Compile>

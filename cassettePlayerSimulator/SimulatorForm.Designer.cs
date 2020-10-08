@@ -94,9 +94,9 @@
             // 
             // counter1
             // 
-            this.counter1.Location = new System.Drawing.Point(504, 340);
+            this.counter1.Location = new System.Drawing.Point(586, 246);
             this.counter1.Name = "counter1";
-            this.counter1.Size = new System.Drawing.Size(125, 58);
+            this.counter1.Size = new System.Drawing.Size(82, 33);
             this.counter1.TabIndex = 8;
             this.counter1.Text = "counter1";
             // 

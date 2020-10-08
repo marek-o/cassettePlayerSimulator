@@ -47,6 +47,10 @@ namespace cassettePlayerSimulator
             }
 
             cassetteControl1.AnimateSpools(music.GetCurrentPositionSeconds());
+
+            //debug
+            counter1.Position = music.GetCurrentPositionSeconds() * 0.2f;
+            counter1.Invalidate();
         }
 
         private bool isPaused = false; //is pause button engaged, this is different from playback pause

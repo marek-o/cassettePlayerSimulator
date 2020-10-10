@@ -16,6 +16,11 @@ namespace cassettePlayerSimulator
         private int digitWidth;
         private int digitHeight;
 
+        private Pen borderPen = new Pen(Color.FromArgb(0, 0, 0));
+        private Brush coverBrush = new SolidBrush(Color.FromArgb(169, 169, 169));
+        private Brush buttonTopBrush = new SolidBrush(Color.FromArgb(211, 211, 211));
+        private Brush buttonLeftBrush = new SolidBrush(Color.FromArgb(128, 128, 128));
+
         public Counter()
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
@@ -67,8 +72,6 @@ namespace cassettePlayerSimulator
         {
             base.OnPaint(e);
 
-            e.Graphics.FillRectangle(Brushes.Brown, new RectangleF(0, 0, Width, Height));
-
             if (mouseIsDown)
             {
                 ZeroPosition = Position;
@@ -100,18 +103,57 @@ namespace cassettePlayerSimulator
                 }
             }
 
+            int counterDepth = 5;
+            var counterRect = new RectangleF(0, 0, digitWidth * 3 + counterDepth, digitHeight + counterDepth);
+            e.Graphics.FillRectangle(Brushes.Black, counterRect);
+
+            var counterOrigin = new PointF(counterDepth, counterDepth);
+
+            //wheels
             e.Graphics.DrawImage(wheelBitmap,
-                new RectangleF(digitWidth * 0, 0, digitWidth, digitHeight),
+                new RectangleF(counterOrigin.X + digitWidth * 0, counterOrigin.Y, digitWidth, digitHeight),
                 new RectangleF(0, digitHeight * position100, digitWidth, digitHeight),
                 GraphicsUnit.Pixel);
             e.Graphics.DrawImage(wheelBitmap,
-                new RectangleF(digitWidth * 1, 0, digitWidth, digitHeight),
+                new RectangleF(counterOrigin.X + digitWidth * 1, counterOrigin.Y, digitWidth, digitHeight),
                 new RectangleF(0, digitHeight * position010, digitWidth, digitHeight),
                 GraphicsUnit.Pixel);
             e.Graphics.DrawImage(wheelBitmap,
-                new RectangleF(digitWidth * 2, 0, digitWidth, digitHeight),
+                new RectangleF(counterOrigin.X + digitWidth * 2, counterOrigin.Y, digitWidth, digitHeight),
                 new RectangleF(0, digitHeight * position001, digitWidth, digitHeight),
                 GraphicsUnit.Pixel);
+
+            var bottomPolygon = new PointF[]
+            {
+                new PointF(0, counterRect.Height),
+                new PointF(counterRect.Width, counterRect.Height),
+                new PointF(counterRect.Width + counterDepth, counterRect.Height + counterDepth),
+                new PointF(counterDepth, counterRect.Height + counterDepth),
+            };
+
+            //bottom face
+            e.Graphics.FillPolygon(buttonTopBrush, bottomPolygon);
+            e.Graphics.DrawPolygon(borderPen, bottomPolygon);
+
+            var rightPolygon = new PointF[]
+            {
+                new PointF(counterRect.Width, 0),
+                new PointF(counterRect.Width, counterRect.Height),
+                new PointF(counterRect.Width + counterDepth, counterRect.Height + counterDepth),
+                new PointF(counterRect.Width + counterDepth, counterDepth),
+            };
+
+            //right face
+            e.Graphics.FillPolygon(buttonLeftBrush, rightPolygon);
+            e.Graphics.DrawPolygon(borderPen, rightPolygon);
+
+            //cover top
+            e.Graphics.FillRectangle(coverBrush, 0, 0, Width, counterDepth);
+            e.Graphics.DrawLine(borderPen, counterDepth, counterDepth, counterRect.Width + counterDepth, counterDepth);
+
+            //cover left
+            e.Graphics.FillRectangle(coverBrush, 0, 0, counterDepth, Height);
+            e.Graphics.DrawLine(borderPen, counterDepth, counterDepth, counterDepth, counterRect.Height + counterDepth);
         }
 
         private bool mouseIsDown = false;

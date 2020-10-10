@@ -34,9 +34,9 @@
             this.labelDebug = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timerAnimation = new System.Windows.Forms.Timer(this.components);
+            this.counter1 = new cassettePlayerSimulator.Counter();
             this.cassetteButtons = new cassettePlayerSimulator.CassetteButtons();
             this.cassetteControl1 = new cassettePlayerSimulator.CassetteControl();
-            this.counter1 = new cassettePlayerSimulator.Counter();
             this.SuspendLayout();
             // 
             // buttonImport
@@ -78,6 +78,14 @@
             this.timerAnimation.Interval = 16;
             this.timerAnimation.Tick += new System.EventHandler(this.timerAnimation_Tick);
             // 
+            // counter1
+            // 
+            this.counter1.Location = new System.Drawing.Point(504, 249);
+            this.counter1.Name = "counter1";
+            this.counter1.Size = new System.Drawing.Size(147, 62);
+            this.counter1.TabIndex = 8;
+            this.counter1.Text = "counter1";
+            // 
             // cassetteButtons
             // 
             this.cassetteButtons.Location = new System.Drawing.Point(39, 311);
@@ -91,14 +99,6 @@
             this.cassetteControl1.Name = "cassetteControl1";
             this.cassetteControl1.Size = new System.Drawing.Size(422, 267);
             this.cassetteControl1.TabIndex = 5;
-            // 
-            // counter1
-            // 
-            this.counter1.Location = new System.Drawing.Point(586, 246);
-            this.counter1.Name = "counter1";
-            this.counter1.Size = new System.Drawing.Size(82, 33);
-            this.counter1.TabIndex = 8;
-            this.counter1.Text = "counter1";
             // 
             // SimulatorForm
             // 

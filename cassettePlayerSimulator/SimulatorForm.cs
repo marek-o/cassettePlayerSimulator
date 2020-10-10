@@ -49,8 +49,7 @@ namespace cassettePlayerSimulator
 
             cassetteControl1.AnimateSpools(music.GetCurrentPositionSeconds());
 
-            //debug
-            counter1.Position = music.GetCurrentPositionSeconds() * 0.2f;
+            counter1.Position = -cassetteControl1.GetSpoolAngle(false, music.GetCurrentPositionSeconds()) / 360 / 2;
             counter1.Invalidate();
         }
 

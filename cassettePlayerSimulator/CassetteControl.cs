@@ -122,10 +122,22 @@ namespace cassettePlayerSimulator
             return linearOffset / tapeVelocity;
         }
 
+        public float GetSpoolAngle(bool rightSpool, float seconds)
+        {
+            UpdateRadiusesOfSpools(seconds);
+            var angle = SpoolAngle(rightSpool ? spoolRightRadiusReal : spoolLeftRadiusReal);
+            return angle * 180 / (float)Math.PI;
+        }
+
         private float SpoolAngle(float spoolRadiusReal)
         {
             var angle = 2 * tapeVelocity * tapeDuration * (spoolRadiusReal - spoolMinRadiusReal)
-                / (Math.Pow(spoolMaxRadiusReal, 2) - Math.Pow(spoolMinRadiusReal, 2));
+                / (float)(Math.Pow(spoolMaxRadiusReal, 2) - Math.Pow(spoolMinRadiusReal, 2));
+            return angle;
+        }
+
+        private float AngleRemainder(float angle)
+        {
             return (float)Math.IEEERemainder(angle, 2 * Math.PI);
         }
 
@@ -139,9 +151,9 @@ namespace cassettePlayerSimulator
                 Invalidate();
             }
 
-            spoolControlLeft.angle = SpoolAngle(spoolLeftRadiusReal) * 180 / (float)Math.PI;
+            spoolControlLeft.angle = AngleRemainder(SpoolAngle(spoolLeftRadiusReal)) * 180 / (float)Math.PI;
             spoolControlLeft.Invalidate();
-            spoolControlRight.angle = -SpoolAngle(spoolRightRadiusReal) * 180 / (float)Math.PI;
+            spoolControlRight.angle = -AngleRemainder(SpoolAngle(spoolRightRadiusReal)) * 180 / (float)Math.PI;
             spoolControlRight.Invalidate();
 
             animationFrame++;

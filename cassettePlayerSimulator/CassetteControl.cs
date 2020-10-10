@@ -112,12 +112,13 @@ namespace cassettePlayerSimulator
             spoolRightRadius = spoolRightRadiusReal * pixelsPerCm * scale;
         }
 
-        public float AngularToLinear(float seconds, float angularOffset)
+        public float AngularToLinear(bool rightSpool, float seconds, float angularOffset)
         {
-            //right spool for now
             UpdateRadiusesOfSpools(seconds);
 
-            var linearOffset = spoolRightRadiusReal * (float)(angularOffset * Math.PI / 180);
+            var spoolRadiusReal = rightSpool ? spoolRightRadiusReal : spoolLeftRadiusReal;
+
+            var linearOffset = spoolRadiusReal * (float)(angularOffset * Math.PI / 180);
             return linearOffset / tapeVelocity;
         }
 

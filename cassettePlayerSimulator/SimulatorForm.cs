@@ -36,13 +36,14 @@ namespace cassettePlayerSimulator
 
         private void timerAnimation_Tick(object sender, EventArgs e)
         {
-            if (State == PlayerState.FF)
+            if (State == PlayerState.FF || State == PlayerState.REWIND)
             {
                 var elapsed = (float)rewindStopwatch.Elapsed.TotalSeconds;
                 rewindStopwatch.Restart();
 
                 var pos = music.GetCurrentPositionSeconds();
-                var timeOffset = cassetteControl1.AngularToLinear(pos, elapsed * 360 * 5);
+                var timeOffset = cassetteControl1.AngularToLinear(State == PlayerState.FF, pos, elapsed * 360 * 5);
+                timeOffset *= (State == PlayerState.REWIND) ? -1 : 1;
                 music.SetCurrentPositionSeconds(pos + timeOffset);
             }
 

@@ -67,10 +67,17 @@ namespace cassettePlayerSimulator
 
             e.Graphics.FillRectangle(Brushes.Brown, new RectangleF(0, 0, Width, Height));
 
-            var positionFractional = Position % 1.0f;
-            var position001 = (float)Math.Floor(Position / 1.0f) % 10.0f;
-            var position010 = (float)Math.Floor(Position / 10.0f) % 10.0f;
-            var position100 = (float)Math.Floor(Position / 100.0f) % 10.0f;
+            var pos = Math.Abs(Position) % 1000.0f;
+
+            if (Position < 0.0f)
+            {
+                pos = 1000.0f - pos;
+            }
+
+            var positionFractional = pos % 1.0f;
+            var position001 = (float)Math.Floor(pos / 1.0f) % 10.0f;
+            var position010 = (float)Math.Floor(pos / 10.0f) % 10.0f;
+            var position100 = (float)Math.Floor(pos / 100.0f) % 10.0f;
 
             position001 += positionFractional;
 

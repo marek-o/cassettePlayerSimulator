@@ -18,6 +18,7 @@ namespace cassettePlayerSimulator
 
         private Pen borderPen = new Pen(Color.FromArgb(0, 0, 0));
         private Brush coverBrush = new SolidBrush(Color.FromArgb(169, 169, 169));
+        private Brush buttonFaceBrush = new SolidBrush(Color.FromArgb(169, 169, 169));
         private Brush buttonTopBrush = new SolidBrush(Color.FromArgb(211, 211, 211));
         private Brush buttonLeftBrush = new SolidBrush(Color.FromArgb(128, 128, 128));
 
@@ -154,6 +155,47 @@ namespace cassettePlayerSimulator
             //cover left
             e.Graphics.FillRectangle(coverBrush, 0, 0, counterDepth, Height);
             e.Graphics.DrawLine(borderPen, counterDepth, counterDepth, counterDepth, counterRect.Height + counterDepth);
+
+            //drawing button
+            int depth = 8;
+            if (mouseIsDown)
+            {
+                depth = 2;
+            }
+
+            var buttonOrigin = new Point((int)counterRect.Right + counterDepth * 2, counterDepth);
+            int buttonFaceWidth = digitWidth + counterDepth;
+            int buttonFaceHeight = digitWidth + counterDepth;
+
+            var faceRect = new Rectangle(buttonOrigin.X + depth, buttonOrigin.Y + depth, buttonFaceWidth, buttonFaceHeight);
+
+            //front face
+            e.Graphics.FillRectangle(buttonFaceBrush, faceRect);
+            e.Graphics.DrawRectangle(borderPen, faceRect);
+
+            var topPolygon = new PointF[]
+            {
+                new PointF(buttonOrigin.X, buttonOrigin.Y),
+                new PointF(buttonOrigin.X + buttonFaceWidth, buttonOrigin.Y),
+                new PointF(buttonOrigin.X + buttonFaceWidth + depth, buttonOrigin.Y + depth),
+                new PointF(buttonOrigin.X + depth, buttonOrigin.Y + depth),
+            };
+
+            //top face
+            e.Graphics.FillPolygon(buttonTopBrush, topPolygon);
+            e.Graphics.DrawPolygon(borderPen, topPolygon);
+
+            var leftPolygon = new PointF[]
+            {
+                new PointF(buttonOrigin.X, buttonOrigin.Y),
+                new PointF(buttonOrigin.X, buttonOrigin.Y + buttonFaceHeight),
+                new PointF(buttonOrigin.X + depth, buttonOrigin.Y + buttonFaceHeight + depth),
+                new PointF(buttonOrigin.X + depth, buttonOrigin.Y + depth),
+            };
+
+            //left face
+            e.Graphics.FillPolygon(buttonLeftBrush, leftPolygon);
+            e.Graphics.DrawPolygon(borderPen, leftPolygon);
         }
 
         private bool mouseIsDown = false;

@@ -11,6 +11,8 @@ namespace cassettePlayerSimulator
 
         public float Position = 0.0f;
 
+        public float ZeroPosition = 0.0f;
+
         private int digitWidth;
         private int digitHeight;
 
@@ -67,17 +69,24 @@ namespace cassettePlayerSimulator
 
             e.Graphics.FillRectangle(Brushes.Brown, new RectangleF(0, 0, Width, Height));
 
-            var pos = Math.Abs(Position) % 1000.0f;
-
-            if (Position < 0.0f)
+            if (mouseIsDown)
             {
-                pos = 1000.0f - pos;
+                ZeroPosition = Position;
             }
 
-            var positionFractional = pos % 1.0f;
-            var position001 = (float)Math.Floor(pos / 1.0f) % 10.0f;
-            var position010 = (float)Math.Floor(pos / 10.0f) % 10.0f;
-            var position100 = (float)Math.Floor(pos / 100.0f) % 10.0f;
+            var posAfterReset = Position - ZeroPosition;
+
+            var posNormalized = Math.Abs(posAfterReset) % 1000.0f;
+
+            if (posAfterReset < 0.0f)
+            {
+                posNormalized = 1000.0f - posNormalized;
+            }
+
+            var positionFractional = posNormalized % 1.0f;
+            var position001 = (float)Math.Floor(posNormalized / 1.0f) % 10.0f;
+            var position010 = (float)Math.Floor(posNormalized / 10.0f) % 10.0f;
+            var position100 = (float)Math.Floor(posNormalized / 100.0f) % 10.0f;
 
             position001 += positionFractional;
 
@@ -103,6 +112,21 @@ namespace cassettePlayerSimulator
                 new RectangleF(digitWidth * 2, 0, digitWidth, digitHeight),
                 new RectangleF(0, digitHeight * position001, digitWidth, digitHeight),
                 GraphicsUnit.Pixel);
+        }
+
+        private bool mouseIsDown = false;
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            mouseIsDown = true;
+            Invalidate();
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            base.OnMouseUp(e);
+            mouseIsDown = false;
         }
     }
 }

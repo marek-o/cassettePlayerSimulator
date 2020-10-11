@@ -16,6 +16,15 @@ namespace cassettePlayerSimulator
         private int digitWidth;
         private int digitHeight;
 
+        private int counterDepth = 5;
+        private RectangleF counterRect;
+        private PointF counterOrigin;
+        private Point buttonOrigin;
+        private int buttonFaceWidth;
+        private int buttonFaceHeight;
+        private int buttonDepthUp = 8;
+        private int buttonDepthDown = 2;
+
         private Pen borderPen = new Pen(Color.FromArgb(0, 0, 0));
         private Brush coverBrush = new SolidBrush(Color.FromArgb(169, 169, 169));
         private Brush buttonFaceBrush = new SolidBrush(Color.FromArgb(169, 169, 169));
@@ -67,6 +76,12 @@ namespace cassettePlayerSimulator
                     new RectangleF(digitWidth * 0.0f, 7 * digitHeight + digitHeight * 0.5f,
                     digitWidth * 0.1f, digitHeight * 0.25f));
             }
+
+            counterRect = new RectangleF(0, 0, digitWidth * 3 + counterDepth, digitHeight + counterDepth);
+            counterOrigin = new PointF(counterDepth, counterDepth);
+            buttonOrigin = new Point((int)counterRect.Right + counterDepth * 2, counterDepth);
+            buttonFaceWidth = digitWidth + counterDepth;
+            buttonFaceHeight = digitWidth + counterDepth;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -104,11 +119,7 @@ namespace cassettePlayerSimulator
                 }
             }
 
-            int counterDepth = 5;
-            var counterRect = new RectangleF(0, 0, digitWidth * 3 + counterDepth, digitHeight + counterDepth);
             e.Graphics.FillRectangle(Brushes.Black, counterRect);
-
-            var counterOrigin = new PointF(counterDepth, counterDepth);
 
             //wheels
             e.Graphics.DrawImage(wheelBitmap,
@@ -157,15 +168,11 @@ namespace cassettePlayerSimulator
             e.Graphics.DrawLine(borderPen, counterDepth, counterDepth, counterDepth, counterRect.Height + counterDepth);
 
             //drawing button
-            int depth = 8;
+            int depth = buttonDepthUp;
             if (mouseIsDown)
             {
-                depth = 2;
+                depth = buttonDepthDown;
             }
-
-            var buttonOrigin = new Point((int)counterRect.Right + counterDepth * 2, counterDepth);
-            int buttonFaceWidth = digitWidth + counterDepth;
-            int buttonFaceHeight = digitWidth + counterDepth;
 
             var faceRect = new Rectangle(buttonOrigin.X + depth, buttonOrigin.Y + depth, buttonFaceWidth, buttonFaceHeight);
 
@@ -203,8 +210,15 @@ namespace cassettePlayerSimulator
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            mouseIsDown = true;
-            Invalidate();
+
+            var buttonRect = new Rectangle(buttonOrigin.X, buttonOrigin.Y,
+                buttonFaceWidth + buttonDepthUp, buttonFaceHeight + buttonDepthUp);
+
+            if (buttonRect.Contains(e.Location))
+            {
+                mouseIsDown = true;
+                Invalidate();
+            }
         }
 
         protected override void OnMouseUp(MouseEventArgs e)

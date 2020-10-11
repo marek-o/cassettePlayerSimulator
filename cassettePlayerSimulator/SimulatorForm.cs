@@ -243,6 +243,7 @@ namespace cassettePlayerSimulator
             {
                 stopDown.UpdatePlayback(true);
                 rewNoise.UpdatePlayback(false);
+                rewindStopwatch.Stop();
 
                 cassetteButtons.RewButton.ButtonState = CassetteButtons.Button.State.UP;
             }
@@ -324,6 +325,7 @@ namespace cassettePlayerSimulator
 
                 rewDown.UpdatePlayback(true);
                 rewNoise.UpdatePlayback(true);
+                rewindStopwatch.Restart();
 
                 State = PlayerState.REWIND;
             }

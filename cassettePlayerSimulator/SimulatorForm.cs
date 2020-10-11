@@ -29,7 +29,7 @@ namespace cassettePlayerSimulator
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            labelDebug.Text = string.Format("{0} paused:{1} {2:F2}", State.ToString(), isPaused.ToString(), music.GetCurrentPositionSeconds());
+            labelDebug.Text = string.Format("{0}\r\npaused:{1}\r\n{2:F2}", State.ToString(), isPaused.ToString(), music.GetCurrentPositionSeconds());
         }
 
         private Stopwatch rewindStopwatch = new Stopwatch();
@@ -133,6 +133,7 @@ namespace cassettePlayerSimulator
             mixer.RemoveSample(music);
             music = new SoundMixer.Sample(WAVFile.Load(TapeFile), false, false, false, 0.2f, 1.0f);
             mixer.AddSample(music);
+            mixer.SetRecordingSample(music);
         }
 
         private void buttonLoadTape_Click(object sender, EventArgs e)
@@ -235,6 +236,8 @@ namespace cassettePlayerSimulator
             else if (State == PlayerState.RECORDING)
             {
                 stopDown.UpdatePlayback(true);
+                music.UpdateRecording(false);
+                mixer.StopRecording();
 
                 cassetteButtons.RecButton.ButtonState = CassetteButtons.Button.State.UP;
                 cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.UP;
@@ -282,6 +285,8 @@ namespace cassettePlayerSimulator
                 DisengageButtons();
 
                 recordDown.UpdatePlayback(true);
+                music.UpdateRecording(true);
+                mixer.StartRecording();
 
                 cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.DOWN;
 

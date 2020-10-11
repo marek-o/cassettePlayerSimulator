@@ -14,6 +14,7 @@ namespace cassettePlayerSimulator
             public WAVFile wavFile;
             public double position;
             private bool isPlaying;
+            private bool isRecording;
             private bool isLooped;
             private bool autoRewind;
             private float volume;
@@ -87,6 +88,14 @@ namespace cassettePlayerSimulator
                 }
             }
 
+            public void UpdateRecording(bool isRecording)
+            {
+                lock (locker)
+                {
+                    this.isRecording = isRecording;
+                }
+            }
+
             public void RampSpeed(float startingSpeed, float destinationSpeed, int sampleCount)
             {
                 lock (locker)
@@ -144,10 +153,32 @@ namespace cassettePlayerSimulator
                     }
                 }
             }
+
+            public void RecordFromBuffer(short[] buffer)
+            {
+                lock (locker)
+                {
+                    for (int i = 0; i < buffer.Length; ++i)
+                    {
+                        if (isRecording)
+                        {
+                            wavFile.data[(int)position] = buffer[i];
+                            position += 1.0;
+
+                            if (position > LastSafePosition())
+                            {
+                                position = LastSafePosition();
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         SoundWrapper player;
+        SoundWrapper recorder;
         List<Sample> samples = new List<Sample>();
+        Sample recordingSample;
 
         private object playingLocker = new object();
 
@@ -155,6 +186,9 @@ namespace cassettePlayerSimulator
         {
             player = new SoundWrapper(SoundWrapper.Mode.Play, bitsPerSample, channels, sampleRate, bufferLengthBytes);
             player.NewDataRequested += Player_NewDataRequested;
+            
+            recorder = new SoundWrapper(SoundWrapper.Mode.Record, bitsPerSample, channels, sampleRate, bufferLengthBytes);
+            recorder.NewDataPresent += Recorder_NewDataPresent;
         }
 
         public void AddSample(Sample sample)
@@ -175,9 +209,24 @@ namespace cassettePlayerSimulator
             }
         }
 
+        public void SetRecordingSample(Sample sample)
+        {
+            recordingSample = sample;
+        }
+
         public void Start()
         {
             player.Start(0);
+        }
+
+        public void StartRecording()
+        {
+            recorder.Start(0);
+        }
+
+        public void StopRecording()
+        {
+            recorder.Stop();
         }
 
         private void Player_NewDataRequested(object sender, Utils.SoundWrapper.NewDataEventArgs e)
@@ -188,6 +237,14 @@ namespace cassettePlayerSimulator
                 {
                     sample.PlayIntoBuffer(e.data);
                 }
+            }
+        }
+
+        private void Recorder_NewDataPresent(object sender, SoundWrapper.NewDataEventArgs e)
+        {
+            if (recordingSample != null)
+            {
+                recordingSample.RecordFromBuffer(e.data);
             }
         }
     }

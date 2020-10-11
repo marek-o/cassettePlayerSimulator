@@ -104,7 +104,7 @@ namespace cassettePlayerSimulator
         private void LoadTape()
         {
             mixer.RemoveSample(music);
-            music = new SoundMixer.Sample(WAVFile.Load(TapeFile), false, false, 0.2f, 1.0f);
+            music = new SoundMixer.Sample(WAVFile.Load(TapeFile), false, false, false, 0.2f, 1.0f);
             mixer.AddSample(music);
         }
 
@@ -141,34 +141,34 @@ namespace cassettePlayerSimulator
             float vol = 2.0f;
             float speed = 0.5f;
 
-            stopDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopDown), false, false, vol, speed);
-            stopUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopUp), false, false, vol, speed);
+            stopDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopDown), false, false, true, vol, speed);
+            stopUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopUp), false, false, true, vol, speed);
 
-            playDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.playDown), false, false, vol, speed);
-            playUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.playUp), false, false, vol, speed);
+            playDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.playDown), false, false, true, vol, speed);
+            playUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.playUp), false, false, true, vol, speed);
 
-            rewDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.rewDown), false, false, vol, speed);
-            rewUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.rewUp), false, false, vol, speed);
-            rewNoise = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.rewNoise), false, true, vol, speed);
+            rewDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.rewDown), false, false, true, vol, speed);
+            rewUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.rewUp), false, false, true, vol, speed);
+            rewNoise = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.rewNoise), false, true, true, vol, speed);
 
-            ffDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ffDown), false, false, vol, speed);
-            ffUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ffUp), false, false, vol, speed);
-            ffNoise = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ffNoise), false, true, vol, speed);
+            ffDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ffDown), false, false, true, vol, speed);
+            ffUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ffUp), false, false, true, vol, speed);
+            ffNoise = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ffNoise), false, true, true, vol, speed);
 
-            recordDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.recordDown), false, false, vol, speed);
-            recordUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.recordUp), false, false, vol, speed);
+            recordDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.recordDown), false, false, true, vol, speed);
+            recordUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.recordUp), false, false, true, vol, speed);
 
-            pauseDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.pauseDown), false, false, vol, speed);
-            pauseUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.pauseUp), false, false, vol, speed);
+            pauseDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.pauseDown), false, false, true, vol, speed);
+            pauseUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.pauseUp), false, false, true, vol, speed);
 
-            unpauseDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.unpauseDown), false, false, vol, speed);
-            unpauseUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.unpauseUp), false, false, vol, speed);
+            unpauseDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.unpauseDown), false, false, true, vol, speed);
+            unpauseUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.unpauseUp), false, false, true, vol, speed);
 
-            ejectDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ejectDown), false, false, vol, speed);
-            ejectUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ejectUp), false, false, vol, speed);
+            ejectDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ejectDown), false, false, true, vol, speed);
+            ejectUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ejectUp), false, false, true, vol, speed);
 
-            cassetteClose = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.casetteClose), false, false, vol, speed);
-            cassetteInsert = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.casetteInsert), false, false, vol, speed);
+            cassetteClose = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.casetteClose), false, false, true, vol, speed);
+            cassetteInsert = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.casetteInsert), false, false, true, vol, speed);
 
             mixer.AddSample(stopDown);
             mixer.AddSample(stopUp);

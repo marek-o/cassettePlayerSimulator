@@ -15,6 +15,7 @@ namespace cassettePlayerSimulator
             public double position;
             private bool isPlaying;
             private bool isLooped;
+            private bool autoRewind;
             private float volume;
             private float speed;
 
@@ -24,12 +25,12 @@ namespace cassettePlayerSimulator
 
             public object locker = new object();
 
-            public Sample(WAVFile wavFile, bool isPlaying, bool isLooped, float volume, float speed)
+            public Sample(WAVFile wavFile, bool isPlaying, bool isLooped, bool autoRewind, float volume, float speed)
             {
                 this.wavFile = wavFile;
                 position = 0;
 
-                UpdatePlayback(isPlaying, isLooped, volume, speed);
+                UpdatePlayback(isPlaying, isLooped, autoRewind, volume, speed);
             }
 
             private short Clamp(double sample)
@@ -46,6 +47,11 @@ namespace cassettePlayerSimulator
                 return (short)sample;
             }
 
+            private int LastSafePosition()
+            {
+                return wavFile.data.Length - 3;
+            }
+
             public float GetCurrentPositionSeconds()
             {
                 return (float)(position / wavFile.sampleRate / wavFile.channels);
@@ -57,19 +63,17 @@ namespace cassettePlayerSimulator
                 {
                     position = (int)(seconds * wavFile.sampleRate * wavFile.channels);
 
-                    if (position < 0 || position >= wavFile.data.Length - 2)
-                    {
-                        position = 0;
-                    }
+                    position = Math.Max(0, Math.Min(LastSafePosition(), position));
                 }
             }
 
-            public void UpdatePlayback(bool isPlaying, bool isLooped, float volume, float speed)
+            public void UpdatePlayback(bool isPlaying, bool isLooped, bool autoRewind, float volume, float speed)
             {
                 lock (locker)
                 {
                     this.isPlaying = isPlaying;
                     this.isLooped = isLooped;
+                    this.autoRewind = autoRewind;
                     this.volume = volume;
                     this.speed = speed;
                 }
@@ -126,9 +130,9 @@ namespace cassettePlayerSimulator
                                 isPlaying = false;
                             }
 
-                            if (position >= wavFile.data.Length - 2)
+                            if (position > LastSafePosition())
                             {
-                                position = 0;
+                                position = autoRewind ? 0 : LastSafePosition();
 
                                 if (!isLooped)
                                 {

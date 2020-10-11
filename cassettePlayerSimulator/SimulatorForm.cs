@@ -236,7 +236,7 @@ namespace cassettePlayerSimulator
             else if (State == PlayerState.RECORDING)
             {
                 stopDown.UpdatePlayback(true);
-                music.UpdateRecording(false);
+                SetRecording(false);
                 mixer.StopRecording();
 
                 cassetteButtons.RecButton.ButtonState = CassetteButtons.Button.State.UP;
@@ -278,6 +278,14 @@ namespace cassettePlayerSimulator
             }
         }
 
+        private void SetRecording(bool isRecording)
+        {
+            if (!isPaused)
+            {
+                music.UpdateRecording(isRecording);
+            }
+        }
+
         private void RecButton_MouseDown(CancelEventArgs e)
         {
             if (State != PlayerState.PLAYING && State != PlayerState.RECORDING)
@@ -285,7 +293,7 @@ namespace cassettePlayerSimulator
                 DisengageButtons();
 
                 recordDown.UpdatePlayback(true);
-                music.UpdateRecording(true);
+                SetRecording(true);
                 mixer.StartRecording();
 
                 cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.DOWN;
@@ -385,6 +393,10 @@ namespace cassettePlayerSimulator
                 {
                     SetPlayback(false, true);
                 }
+                else if (State == PlayerState.RECORDING)
+                {
+                    SetRecording(false);
+                }
             }
             else
             {
@@ -407,6 +419,10 @@ namespace cassettePlayerSimulator
                 if (State == PlayerState.PLAYING)
                 {
                     SetPlayback(true, true);
+                }
+                else if (State == PlayerState.RECORDING)
+                {
+                    SetRecording(true);
                 }
             }
         }

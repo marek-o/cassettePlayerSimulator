@@ -47,7 +47,7 @@ namespace cassettePlayerSimulator
                 return (short)sample;
             }
 
-            private int LastSafePosition()
+            public int LastSafePosition()
             {
                 return wavFile.data.Length - 3;
             }

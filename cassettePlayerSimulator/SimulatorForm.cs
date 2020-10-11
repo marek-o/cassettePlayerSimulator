@@ -33,6 +33,7 @@ namespace cassettePlayerSimulator
         }
 
         private Stopwatch rewindStopwatch = new Stopwatch();
+        private Stopwatch autoStopStopwatch = new Stopwatch();
 
         private void timerAnimation_Tick(object sender, EventArgs e)
         {
@@ -51,6 +52,32 @@ namespace cassettePlayerSimulator
 
             counter1.Position = -cassetteControl1.GetSpoolAngle(false, music.GetCurrentPositionSeconds()) / 360 / 2;
             counter1.Invalidate();
+
+            if ((State == PlayerState.FF
+                || State == PlayerState.REWIND
+                || (State == PlayerState.RECORDING && !isPaused)
+                || (State == PlayerState.PLAYING && !isPaused))
+                &&
+                (music.position == 0.0
+                || music.position == music.LastSafePosition()))
+            {
+                if (!autoStopStopwatch.IsRunning)
+                {
+                    autoStopStopwatch.Restart();
+                }
+                else if (autoStopStopwatch.Elapsed.TotalSeconds >= 4.0)
+                {
+                    autoStopStopwatch.Stop();
+
+                    DisengageButtons();
+                    State = PlayerState.STOPPED;
+                    cassetteButtons.Invalidate();
+                }
+            }
+            else
+            {
+                autoStopStopwatch.Stop();
+            }
         }
 
         private bool isPaused = false; //is pause button engaged, this is different from playback pause

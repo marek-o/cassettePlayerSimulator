@@ -18,7 +18,7 @@ namespace Utils
 
         public short[] data;
 
-        private static WAVFile Load(Stream stream)
+        private static WAVFile Load(Stream stream, IProgress<float> progress = null)
         {
             var wav = new WAVFile();
 
@@ -64,9 +64,20 @@ namespace Utils
 
                 wav.data = new short[wav.dataLength / 2];
 
+                int stepSize = wav.data.Length / 100;
+                int nextStep = 0;
+                int stepCount = 0;
+
                 for (int i = 0; i < wav.data.Length; ++i)
                 {
                     wav.data[i] = reader.ReadInt16();
+
+                    if (progress != null && i >= nextStep)
+                    {
+                        nextStep += stepSize;
+                        progress.Report(stepCount / 100.0f);
+                        stepCount++;
+                    }
                 }
             }
 
@@ -78,11 +89,11 @@ namespace Utils
             return Load(stream as Stream);
         }
 
-        public static WAVFile Load(string filename)
+        public static WAVFile Load(string filename, IProgress<float> progress = null)
         {
             using (var file = File.OpenRead(filename))
             {
-                return Load(file);
+                return Load(file, progress);
             }
         }
     }

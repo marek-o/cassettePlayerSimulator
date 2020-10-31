@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Utils;
@@ -29,7 +30,7 @@ namespace cassettePlayerSimulator
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            labelDebug.Text = string.Format("{0}\r\npaused:{1}\r\n{2:F2}", State.ToString(), isPaused.ToString(), music.GetCurrentPositionSeconds());
+            labelDebug.Text = string.Format("{0}\r\npaused:{1}\r\n{2:F2}", State.ToString(), isPaused.ToString(), music != null ? music.GetCurrentPositionSeconds() : 0.0f);
         }
 
         private Stopwatch rewindStopwatch = new Stopwatch();
@@ -37,6 +38,11 @@ namespace cassettePlayerSimulator
 
         private void timerAnimation_Tick(object sender, EventArgs e)
         {
+            if (music == null)
+            {
+                return;
+            }
+
             if (State == PlayerState.FF || State == PlayerState.REWIND)
             {
                 var elapsed = (float)rewindStopwatch.Elapsed.TotalSeconds;
@@ -130,8 +136,20 @@ namespace cassettePlayerSimulator
 
         private void LoadTape()
         {
+            WAVFile wav = null;
+            ProgressForm progressForm = new ProgressForm("Loading tape...");
+
+            var thread = new Thread(() =>
+            {
+                wav = WAVFile.Load(TapeFile, progressForm);
+                progressForm.Finish();
+            });
+
+            thread.Start();
+            progressForm.ShowDialog();
+
             mixer.RemoveSample(music);
-            music = new SoundMixer.Sample(WAVFile.Load(TapeFile), false, false, false, 0.2f, 1.0f);
+            music = new SoundMixer.Sample(wav, false, false, false, 0.2f, 1.0f);
             mixer.AddSample(music);
             mixer.SetRecordingSample(music);
         }

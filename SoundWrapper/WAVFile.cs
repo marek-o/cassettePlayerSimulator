@@ -64,19 +64,21 @@ namespace Utils
 
                 wav.data = new short[wav.dataLength / 2];
 
+                int totalBytes = wav.data.Length * 2;
+
                 int step = 0;
                 int stepCount = 100;
-                int stepSize = wav.data.Length / stepCount;
+                int stepSize = totalBytes / stepCount;
                 int nextStep = 0;
 
                 int bufSize = 1024 * 128;
                 byte[] buffer = new byte[bufSize];
 
-                for (int i = 0; i < wav.data.Length;)
+                for (int i = 0; i < totalBytes;)
                 {
-                    int blockBytes = Math.Min(bufSize, (wav.data.Length - i) * 2);
+                    int blockBytes = Math.Min(bufSize, totalBytes - i);
                     reader.BaseStream.Read(buffer, 0, blockBytes);
-                    Buffer.BlockCopy(buffer, 0, wav.data, i * 2, blockBytes);
+                    Buffer.BlockCopy(buffer, 0, wav.data, i, blockBytes);
 
                     if (progress != null && i >= nextStep)
                     {
@@ -85,7 +87,7 @@ namespace Utils
                         step++;
                     }
 
-                    i += blockBytes / 2;
+                    i += blockBytes;
                 }
             }
 

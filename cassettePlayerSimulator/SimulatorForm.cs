@@ -101,7 +101,12 @@ namespace cassettePlayerSimulator
             using (var dialog = new OpenFileDialog())
             {
                 dialog.Filter = "Audio files (*.mp3;*.wma;*.wav)|*.mp3;*.wma;*.wav|All files (*.*)|*.*";
-                dialog.ShowDialog();
+                var result = dialog.ShowDialog();
+                if (result == DialogResult.Cancel)
+                {
+                    return;
+                }
+
                 inputFileFullPath = dialog.FileName;
             }
 

@@ -116,22 +116,45 @@ namespace cassettePlayerSimulator
                 }
             }
 
-            float[] buffer = new float[1024*128];
+            ProgressForm progressForm = new ProgressForm(string.Format("Importing {0}...", Path.GetFileName(inputFileFullPath)));
+            var thread = new Thread(() =>
+            {
+                Import(inputFileFullPath, progressForm);
+                progressForm.Finish();
+            });
 
-            using (var reader = new NAudio.Wave.AudioFileReader(inputFileFullPath))
+            thread.Start();
+            progressForm.ShowDialog();
+        }
+
+        private void Import(string inputFilePath, IProgress<float> progress = null)
+        {
+            float[] buffer = new float[1024 * 128];
+
+            using (var reader = new NAudio.Wave.AudioFileReader(inputFilePath))
             using (var writer = new NAudio.Wave.WaveFileWriter(TapeFile, new NAudio.Wave.WaveFormat(44100, 16, 2)))
             {
                 int readCount = 0;
+
+                int stepCount = 100;
+                int step = 0;
+                int stepSize = (int)(reader.Length / stepCount);
+                int nextStep = 0;
 
                 do
                 {
                     readCount = reader.Read(buffer, 0, buffer.Length);
                     writer.WriteSamples(buffer, 0, readCount);
+
+                    if (progress != null && reader.Position >= nextStep)
+                    {
+                        nextStep += stepSize;
+                        progress.Report(step / (float)stepCount);
+                        step++;
+                    }
                 }
                 while (readCount > 0);
             }
-
-            MessageBox.Show("Import finished");
         }
 
         private void LoadTape()

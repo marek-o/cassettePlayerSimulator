@@ -41,7 +41,6 @@
             this.progressBar1.Size = new System.Drawing.Size(430, 23);
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar1.TabIndex = 0;
-            this.progressBar1.Value = 500;
             // 
             // label1
             // 

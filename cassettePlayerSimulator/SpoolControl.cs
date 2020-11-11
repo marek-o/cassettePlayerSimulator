@@ -32,12 +32,8 @@ namespace cassettePlayerSimulator
         public float angle = 0;
 
         internal float spoolInnerRadius => 68 * scale;
-        internal float spoolMinRadius => 135 * scale;
-        internal float spoolMaxRadius => 295 * scale;
         internal float blackWheelRadius => 50 * scale;
         internal float axisRadius => 10 * scale;
-
-        internal PointF centerLeft => new PointF(371 * scale, 377 * scale);
 
         protected override void OnPaint(PaintEventArgs e)
         {

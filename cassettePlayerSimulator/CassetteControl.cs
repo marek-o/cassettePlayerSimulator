@@ -30,7 +30,6 @@ namespace cassettePlayerSimulator
         public float scale;
 
         internal float spoolMinRadius => 144 * scale;
-        internal float spoolMaxRadius => 323 * scale;
 
         private float spoolLeftRadius;
         private float spoolRightRadius;

@@ -265,9 +265,14 @@ namespace cassettePlayerSimulator
             mixer.AddSample(cassetteClose);
             mixer.AddSample(cassetteInsert);
 
-            LoadTape();
+            Shown += SimulatorForm_Shown;
 
             mixer.Start();
+        }
+
+        private void SimulatorForm_Shown(object sender, EventArgs e)
+        {
+            LoadTape();
         }
 
         private void DisengageButtons()

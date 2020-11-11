@@ -20,6 +20,8 @@ namespace cassettePlayerSimulator
             spoolControlRight = new SpoolControl();
             Controls.Add(spoolControlLeft);
             Controls.Add(spoolControlRight);
+
+            img = Properties.Resources.cassette;
         }
 
         private Brush tapeBrush = new SolidBrush(Color.FromArgb(128, 64, 0));
@@ -42,11 +44,12 @@ namespace cassettePlayerSimulator
         internal SpoolControl spoolControlLeft;
         internal SpoolControl spoolControlRight;
 
+        private Bitmap img;
+
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
 
-            var img = Properties.Resources.cassette;
             scale = (float)Width / img.Width;
 
             if (img.Height * scale > Height)
@@ -68,8 +71,6 @@ namespace cassettePlayerSimulator
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-
-            var img = Properties.Resources.cassette;
 
             RectangleF destRect = new RectangleF(0, 0, img.Width * scale, img.Height * scale);
 

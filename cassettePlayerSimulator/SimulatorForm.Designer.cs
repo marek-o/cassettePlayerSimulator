@@ -75,7 +75,7 @@
             // timerAnimation
             // 
             this.timerAnimation.Enabled = true;
-            this.timerAnimation.Interval = 16;
+            this.timerAnimation.Interval = 10;
             this.timerAnimation.Tick += new System.EventHandler(this.timerAnimation_Tick);
             // 
             // counter1

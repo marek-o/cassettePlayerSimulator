@@ -73,6 +73,7 @@ namespace cassettePlayerSimulator
 
             RectangleF destRect = new RectangleF(0, 0, img.Width * scale, img.Height * scale);
 
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             DrawTapeSpoolOuter(e.Graphics, centerLeft, spoolLeftRadius);
             DrawTapeSpoolOuter(e.Graphics, centerRight, spoolRightRadius);
 
@@ -145,7 +146,7 @@ namespace cassettePlayerSimulator
         {
             UpdateRadiusesOfSpools(seconds);
 
-            if (animationFrame >= 60)
+            if (animationFrame >= 20)
             {
                 animationFrame = 0;
                 Invalidate();

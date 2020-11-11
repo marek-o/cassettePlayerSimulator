@@ -58,6 +58,8 @@ namespace cassettePlayerSimulator
 
         private void DrawTapeSpool(Graphics g, PointF center, float angle)
         {
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+
             g.FillEllipse(backgroundBrush, center.X - spoolInnerRadius, center.Y - spoolInnerRadius,
                 spoolInnerRadius * 2, spoolInnerRadius * 2);
 

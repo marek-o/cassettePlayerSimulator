@@ -22,6 +22,10 @@ namespace cassettePlayerSimulator
         private Brush backgroundBrush = new SolidBrush(Color.FromArgb(169, 169, 169));
 
         private Brush cassetteBrush = new SolidBrush(Color.FromArgb(0, 0, 0));
+        
+        private Brush blackWheelBrush = new SolidBrush(Color.FromArgb(64, 64, 64));
+        
+        private Brush axisBrush = new SolidBrush(Color.FromArgb(192, 192, 192));
 
         public float scale;
 
@@ -30,6 +34,8 @@ namespace cassettePlayerSimulator
         internal float spoolInnerRadius => 68 * scale;
         internal float spoolMinRadius => 135 * scale;
         internal float spoolMaxRadius => 295 * scale;
+        internal float blackWheelRadius => 50 * scale;
+        internal float axisRadius => 10 * scale;
 
         internal PointF centerLeft => new PointF(371 * scale, 377 * scale);
 
@@ -55,15 +61,29 @@ namespace cassettePlayerSimulator
             g.FillEllipse(backgroundBrush, center.X - spoolInnerRadius, center.Y - spoolInnerRadius,
                 spoolInnerRadius * 2, spoolInnerRadius * 2);
 
+            g.FillEllipse(blackWheelBrush, center.X - blackWheelRadius, center.Y - blackWheelRadius,
+                blackWheelRadius * 2, blackWheelRadius * 2);
+
+            g.FillEllipse(axisBrush, center.X - axisRadius, center.Y - axisRadius,
+                axisRadius * 2, axisRadius * 2);
+
             for (int i = 0; i < 6; ++i)
             {
                 float a = 60 * i + angle;
                 g.FillPolygon(spoolBrush, new PointF[]
                 {
-                    PolarToCartesian(center, 55 * scale, a),
-                    PolarToCartesian(center, 55 * scale, a + 20),
+                    PolarToCartesian(center, 55 * scale, a - 2),
+                    PolarToCartesian(center, 55 * scale, a + 22),
                     PolarToCartesian(center, spoolInnerRadius, a + 20),
                     PolarToCartesian(center, spoolInnerRadius, a),
+                });
+
+                g.FillPolygon(blackWheelBrush, new PointF[]
+                {
+                    PolarToCartesian(center, 60 * scale, a + 30),
+                    PolarToCartesian(center, 60 * scale, a + 50),
+                    PolarToCartesian(center, blackWheelRadius, a + 55),
+                    PolarToCartesian(center, blackWheelRadius, a + 25),
                 });
             }
         }

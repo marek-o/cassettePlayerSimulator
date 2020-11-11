@@ -35,11 +35,17 @@ namespace cassettePlayerSimulator
         internal float blackWheelRadius => 50 * scale;
         internal float axisRadius => 10 * scale;
 
+        public bool CassetteInserted { get; set; }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
 
-            e.Graphics.FillRectangle(cassetteBrush, new RectangleF(0, 0, Width, Height));
+            if (CassetteInserted)
+            {
+                e.Graphics.FillRectangle(cassetteBrush, new RectangleF(0, 0, Width, Height));
+            }
+
             DrawTapeSpool(e.Graphics, new PointF(Width / 2, Height / 2), angle);
         }
 
@@ -68,13 +74,16 @@ namespace cassettePlayerSimulator
             for (int i = 0; i < 6; ++i)
             {
                 float a = 60 * i + angle;
-                g.FillPolygon(spoolBrush, new PointF[]
+                if (CassetteInserted)
                 {
-                    PolarToCartesian(center, 55 * scale, a - 2),
-                    PolarToCartesian(center, 55 * scale, a + 22),
-                    PolarToCartesian(center, spoolInnerRadius, a + 20),
-                    PolarToCartesian(center, spoolInnerRadius, a),
-                });
+                    g.FillPolygon(spoolBrush, new PointF[]
+                    {
+                        PolarToCartesian(center, 55 * scale, a - 2),
+                        PolarToCartesian(center, 55 * scale, a + 22),
+                        PolarToCartesian(center, spoolInnerRadius, a + 20),
+                        PolarToCartesian(center, spoolInnerRadius, a),
+                    });
+                }
 
                 g.FillPolygon(blackWheelBrush, new PointF[]
                 {

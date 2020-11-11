@@ -26,6 +26,9 @@ namespace cassettePlayerSimulator
 
         private Brush tapeBrush = new SolidBrush(Color.FromArgb(128, 64, 0));
         private Brush spoolBrush = new SolidBrush(Color.FromArgb(240, 240, 240));
+        private Brush blackWheelBrush = new SolidBrush(Color.FromArgb(64, 64, 64));
+        private Brush axisBrush = new SolidBrush(Color.FromArgb(192, 192, 192));
+        private Pen tapePen = new Pen(Color.FromArgb(128, 64, 0));
 
         public float scale;
 
@@ -40,11 +43,32 @@ namespace cassettePlayerSimulator
         internal PointF centerLeft => new PointF(371 * scale, 377 * scale);
         internal PointF centerRight => new PointF(899 * scale, 377 * scale);
 
+        internal PointF capstan => new PointF(942 * scale, 774 * scale);
+        internal PointF roller => new PointF(942 * scale, 813 * scale);
+
+        internal float capstanRadius => 10 * scale;
+        internal float rollerRadius => 30 * scale;
+
         internal SpoolControl spoolControlLeft;
         internal SpoolControl spoolControlRight;
 
         private Bitmap img;
         private Bitmap imgScaled;
+
+        private bool cassetteInserted = false;
+        public bool CassetteInserted
+        {
+            get
+            {
+                return cassetteInserted;
+            }
+            set
+            {
+                cassetteInserted = value;
+                spoolControlLeft.CassetteInserted = value;
+                spoolControlRight.CassetteInserted = value;
+            }
+        }
 
         protected override void OnResize(EventArgs e)
         {
@@ -75,8 +99,20 @@ namespace cassettePlayerSimulator
             RectangleF destRect = new RectangleF(0, 0, img.Width * scale, img.Height * scale);
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            DrawTapeSpoolOuter(e.Graphics, centerLeft, spoolLeftRadius);
-            DrawTapeSpoolOuter(e.Graphics, centerRight, spoolRightRadius);
+
+            if (CassetteInserted)
+            {
+                DrawTapeSpoolOuter(e.Graphics, centerLeft, spoolLeftRadius);
+                DrawTapeSpoolOuter(e.Graphics, centerRight, spoolRightRadius);
+
+                e.Graphics.DrawLine(tapePen, 0.1f * Width, (int)(capstan.Y + capstanRadius),
+                    0.9f * Width, (int)(capstan.Y + capstanRadius));
+            }
+
+            e.Graphics.FillEllipse(axisBrush, capstan.X - capstanRadius, capstan.Y - capstanRadius,
+                capstanRadius * 2, capstanRadius * 2);
+            e.Graphics.FillEllipse(blackWheelBrush, roller.X - rollerRadius, roller.Y - rollerRadius,
+                rollerRadius * 2, rollerRadius * 2);
 
             if (imgScaled == null || imgScaled.Width != (int)destRect.Width || imgScaled.Height != (int)destRect.Height)
             {
@@ -89,7 +125,10 @@ namespace cassettePlayerSimulator
                 }
             }
 
-            e.Graphics.DrawImage(imgScaled, Point.Empty);
+            if (CassetteInserted)
+            {
+                e.Graphics.DrawImage(imgScaled, Point.Empty);
+            }
         }
 
         private void DrawTapeSpoolOuter(Graphics g, PointF center, float outerRadius)

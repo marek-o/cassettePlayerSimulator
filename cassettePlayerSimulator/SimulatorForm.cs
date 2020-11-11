@@ -191,6 +191,8 @@ namespace cassettePlayerSimulator
         {
             InitializeComponent();
 
+            cassetteControl1.CassetteInserted = true;
+
 #if DEBUG
             timer1.Enabled = true;
 #else

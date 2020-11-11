@@ -45,6 +45,7 @@ namespace cassettePlayerSimulator
         internal SpoolControl spoolControlRight;
 
         private Bitmap img;
+        private Bitmap imgScaled;
 
         protected override void OnResize(EventArgs e)
         {
@@ -78,7 +79,18 @@ namespace cassettePlayerSimulator
             DrawTapeSpoolOuter(e.Graphics, centerLeft, spoolLeftRadius);
             DrawTapeSpoolOuter(e.Graphics, centerRight, spoolRightRadius);
 
-            e.Graphics.DrawImage(img, destRect, new RectangleF(0, 0, img.Width, img.Height), GraphicsUnit.Pixel);
+            if (imgScaled == null || imgScaled.Width != (int)destRect.Width || imgScaled.Height != (int)destRect.Height)
+            {
+                imgScaled?.Dispose();
+                imgScaled = new Bitmap((int)destRect.Width, (int)destRect.Height);
+
+                using (Graphics g = Graphics.FromImage(imgScaled))
+                {
+                    g.DrawImage(img, destRect, new RectangleF(0, 0, img.Width, img.Height), GraphicsUnit.Pixel);
+                }
+            }
+
+            e.Graphics.DrawImage(imgScaled, Point.Empty);
         }
 
         private void DrawTapeSpoolOuter(Graphics g, PointF center, float outerRadius)

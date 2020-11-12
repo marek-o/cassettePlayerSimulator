@@ -142,24 +142,22 @@ namespace cassettePlayerSimulator
 
         private int animationFrame = 0;
 
-        private const float tapeDuration = 2700; //s, C90 one side
+        private float tapeDuration = 2700; //s, (default for C90 tape)
         private const float tapeVelocity = 4.76f; //cm/s
         private const float spoolMinRadiusReal = 1.11f; //cm
-        private const float spoolMaxRadiusReal = 2.49f; //cm
+        private const float tapeThickness = 0.0012f; //cm
 
         private const float pixelsPerCm = 130;
 
         private void UpdateRadiusesOfSpools(float seconds)
         {
-            float tapePercent = seconds / tapeDuration;
-
             spoolLeftRadiusReal = (float)Math.Sqrt(
-                (1 - tapePercent) * Math.Pow(spoolMaxRadiusReal, 2)
-                + tapePercent * Math.Pow(spoolMinRadiusReal, 2));
+                (tapeDuration - seconds) * tapeVelocity * tapeThickness / Math.PI
+                + Math.Pow(spoolMinRadiusReal, 2));
 
             spoolRightRadiusReal = (float)Math.Sqrt(
-                tapePercent * Math.Pow(spoolMaxRadiusReal, 2)
-                + (1 - tapePercent) * Math.Pow(spoolMinRadiusReal, 2));
+                seconds * tapeVelocity * tapeThickness / Math.PI
+                + Math.Pow(spoolMinRadiusReal, 2));
 
             spoolLeftRadius = spoolLeftRadiusReal * pixelsPerCm * scale;
             spoolRightRadius = spoolRightRadiusReal * pixelsPerCm * scale;
@@ -184,8 +182,8 @@ namespace cassettePlayerSimulator
 
         private float SpoolAngle(float spoolRadiusReal)
         {
-            var angle = 2 * tapeVelocity * tapeDuration * (spoolRadiusReal - spoolMinRadiusReal)
-                / (float)(Math.Pow(spoolMaxRadiusReal, 2) - Math.Pow(spoolMinRadiusReal, 2));
+            var angle = 2 * (float)Math.PI * (spoolRadiusReal - spoolMinRadiusReal) / tapeThickness;
+
             return angle;
         }
 

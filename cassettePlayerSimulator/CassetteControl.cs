@@ -67,6 +67,7 @@ namespace cassettePlayerSimulator
                 cassetteInserted = value;
                 spoolControlLeft.CassetteInserted = value;
                 spoolControlRight.CassetteInserted = value;
+                Invalidate();
             }
         }
 

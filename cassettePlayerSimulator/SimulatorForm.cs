@@ -26,7 +26,7 @@ namespace cassettePlayerSimulator
             OPEN, STOPPED, PLAYING, RECORDING, FF, REWIND
         }
 
-        private PlayerState State = PlayerState.STOPPED;
+        private PlayerState State = PlayerState.OPEN;
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -185,13 +185,19 @@ namespace cassettePlayerSimulator
         private void buttonLoadTape_Click(object sender, EventArgs e)
         {
             LoadTape();
+
+            State = PlayerState.STOPPED;
+            cassetteControl1.CassetteInserted = true;
+            cassetteButtons.Enabled = true;
+
+            cassetteClose.UpdatePlayback(true);
         }
 
         public SimulatorForm()
         {
             InitializeComponent();
 
-            cassetteControl1.CassetteInserted = true;
+            cassetteButtons.Enabled = false;
 
 #if DEBUG
             timer1.Enabled = true;
@@ -267,14 +273,7 @@ namespace cassettePlayerSimulator
             mixer.AddSample(cassetteClose);
             mixer.AddSample(cassetteInsert);
 
-            Shown += SimulatorForm_Shown;
-
             mixer.Start();
-        }
-
-        private void SimulatorForm_Shown(object sender, EventArgs e)
-        {
-            LoadTape();
         }
 
         private void DisengageButtons()
@@ -423,17 +422,32 @@ namespace cassettePlayerSimulator
 
         private void StopEjectButton_MouseDown(CancelEventArgs e)
         {
-            DisengageButtons();
-
-            if (State != PlayerState.OPEN)
+            if (State != PlayerState.STOPPED && State != PlayerState.OPEN)
             {
+                DisengageButtons();
+
                 State = PlayerState.STOPPED;
+            }
+            else if (State == PlayerState.STOPPED)
+            {
+                State = PlayerState.OPEN;
+                cassetteControl1.CassetteInserted = false;
+
+                ejectDown.UpdatePlayback(true);
             }
         }
 
         private void StopEjectButton_MouseUp()
         {
-            stopUp.UpdatePlayback(true);
+            if (State == PlayerState.OPEN)
+            {
+                ejectUp.UpdatePlayback(true);
+                cassetteButtons.Enabled = false;
+            }
+            else
+            {
+                stopUp.UpdatePlayback(true);
+            }
         }
 
         private void PauseButton_MouseDown(CancelEventArgs e)

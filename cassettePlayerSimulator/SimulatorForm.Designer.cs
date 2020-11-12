@@ -95,9 +95,10 @@
             // 
             // cassetteControl1
             // 
+            this.cassetteControl1.CassetteInserted = false;
             this.cassetteControl1.Location = new System.Drawing.Point(39, 12);
             this.cassetteControl1.Name = "cassetteControl1";
-            this.cassetteControl1.Size = new System.Drawing.Size(422, 267);
+            this.cassetteControl1.Size = new System.Drawing.Size(422, 299);
             this.cassetteControl1.TabIndex = 5;
             // 
             // SimulatorForm

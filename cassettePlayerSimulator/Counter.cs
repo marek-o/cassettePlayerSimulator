@@ -9,9 +9,9 @@ namespace cassettePlayerSimulator
         private Font font;
         private Bitmap wheelBitmap;
 
-        public float Position = 0.0f;
+        private float Position = 0.0f;
 
-        public float ZeroPosition = 0.0f;
+        private float ZeroPosition = 0.0f;
 
         private int digitWidth;
         private int digitHeight;
@@ -30,6 +30,26 @@ namespace cassettePlayerSimulator
         private Brush buttonFaceBrush = new SolidBrush(Color.FromArgb(169, 169, 169));
         private Brush buttonTopBrush = new SolidBrush(Color.FromArgb(211, 211, 211));
         private Brush buttonLeftBrush = new SolidBrush(Color.FromArgb(128, 128, 128));
+
+        private bool ignoreNextSetPosition = false;
+
+        public void SetPosition(float newPos)
+        {
+            if (ignoreNextSetPosition)
+            {
+                var posAfterReset = Position - ZeroPosition;
+                ZeroPosition = newPos - posAfterReset;
+                ignoreNextSetPosition = false;
+            }
+
+            Position = newPos;
+            Invalidate();
+        }
+
+        public void IgnoreNextSetPosition()
+        {
+            ignoreNextSetPosition = true;
+        }
 
         public Counter()
         {

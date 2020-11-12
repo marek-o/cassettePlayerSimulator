@@ -56,8 +56,7 @@ namespace cassettePlayerSimulator
 
             cassetteControl1.AnimateSpools(music.GetCurrentPositionSeconds());
 
-            counter1.Position = -cassetteControl1.GetSpoolAngle(false, music.GetCurrentPositionSeconds()) / 360 / 2;
-            counter1.Invalidate();
+            counter1.SetPosition(-cassetteControl1.GetSpoolAngle(false, music.GetCurrentPositionSeconds()) / 360 / 2);
 
             if ((State == PlayerState.FF
                 || State == PlayerState.REWIND
@@ -190,6 +189,8 @@ namespace cassettePlayerSimulator
             cassetteControl1.CassetteInserted = true;
             cassetteControl1.SetTapeDuration(music.GetLengthSeconds());
             cassetteButtons.Enabled = true;
+
+            counter1.IgnoreNextSetPosition();
 
             cassetteClose.UpdatePlayback(true);
         }

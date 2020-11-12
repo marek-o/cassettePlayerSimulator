@@ -209,5 +209,10 @@ namespace cassettePlayerSimulator
 
             animationFrame++;
         }
+
+        public void SetTapeDuration(float seconds)
+        {
+            tapeDuration = seconds;
+        }
     }
 }

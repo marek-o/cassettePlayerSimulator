@@ -68,6 +68,11 @@ namespace cassettePlayerSimulator
                 }
             }
 
+            public float GetLengthSeconds()
+            {
+                return (float)wavFile.data.Length / wavFile.sampleRate / wavFile.channels;
+            }
+
             public void UpdatePlayback(bool isPlaying, bool isLooped, bool autoRewind, float volume, float speed)
             {
                 lock (locker)

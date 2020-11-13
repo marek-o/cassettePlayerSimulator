@@ -102,7 +102,7 @@ namespace cassettePlayerSimulator
                 scale = Height / baseSize.Height;
             }
 
-            cassetteOffset = new PointF(img.Width * 0.05f * scale, img.Height * 0.05f * scale);
+            cassetteOffset = new PointF((int)(img.Width * 0.05f * scale), (int)(img.Height * 0.05f * scale));
 
             var spoolSize = new Size((int)(160 * scale), (int)(160 * scale));
             

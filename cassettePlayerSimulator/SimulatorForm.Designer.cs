@@ -80,7 +80,7 @@
             // 
             // counter1
             // 
-            this.counter1.Location = new System.Drawing.Point(17, 313);
+            this.counter1.Location = new System.Drawing.Point(17, 299);
             this.counter1.Name = "counter1";
             this.counter1.Size = new System.Drawing.Size(139, 51);
             this.counter1.TabIndex = 8;
@@ -88,7 +88,7 @@
             // 
             // cassetteButtons
             // 
-            this.cassetteButtons.Location = new System.Drawing.Point(17, 370);
+            this.cassetteButtons.Location = new System.Drawing.Point(17, 346);
             this.cassetteButtons.Name = "cassetteButtons";
             this.cassetteButtons.Size = new System.Drawing.Size(422, 123);
             this.cassetteButtons.TabIndex = 6;
@@ -99,7 +99,7 @@
             this.cassetteControl1.CassetteInserted = false;
             this.cassetteControl1.Location = new System.Drawing.Point(17, 18);
             this.cassetteControl1.Name = "cassetteControl1";
-            this.cassetteControl1.Size = new System.Drawing.Size(422, 289);
+            this.cassetteControl1.Size = new System.Drawing.Size(422, 275);
             this.cassetteControl1.TabIndex = 5;
             // 
             // SimulatorForm

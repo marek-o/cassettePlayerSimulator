@@ -22,7 +22,7 @@ namespace cassettePlayerSimulator
             Controls.Add(spoolControlRight);
 
             img = Properties.Resources.cassette;
-            baseSize = new SizeF(img.Width, img.Height * 1.05f);
+            baseSize = new SizeF(img.Width * 1.1f, img.Height * 1.1f);
         }
 
         private Brush tapeBrush = new SolidBrush(Color.FromArgb(128, 64, 0));
@@ -41,12 +41,14 @@ namespace cassettePlayerSimulator
         private float spoolLeftRadiusReal;
         private float spoolRightRadiusReal;
 
-        internal PointF centerLeft => new PointF(371 * scale, 377 * scale);
-        internal PointF centerRight => new PointF(899 * scale, 377 * scale);
+        internal PointF cassetteOffset;
 
-        internal PointF capstan => new PointF(942 * scale, 774 * scale);
-        internal PointF roller => new PointF(942 * scale, (headEngaged ? 833 : 863) * scale);
-        internal PointF head => new PointF(632 * scale, (headEngaged ? 788 : 843) * scale);
+        internal PointF centerLeft => new PointF(cassetteOffset.X + 371 * scale, cassetteOffset.Y + 377 * scale);
+        internal PointF centerRight => new PointF(cassetteOffset.X + 899 * scale, cassetteOffset.Y + 377 * scale);
+
+        internal PointF capstan => new PointF(cassetteOffset.X + 942 * scale, cassetteOffset.Y + 774 * scale);
+        internal PointF roller => new PointF(cassetteOffset.X + 942 * scale, cassetteOffset.Y + (headEngaged ? 833 : 863) * scale);
+        internal PointF head => new PointF(cassetteOffset.X + 632 * scale, cassetteOffset.Y + (headEngaged ? 788 : 843) * scale);
 
         internal float capstanRadius => 10 * scale;
         internal float rollerRadius => 50 * scale;
@@ -99,6 +101,8 @@ namespace cassettePlayerSimulator
             {
                 scale = Height / baseSize.Height;
             }
+
+            cassetteOffset = new PointF(img.Width * 0.05f * scale, img.Height * 0.05f * scale);
 
             var spoolSize = new Size((int)(160 * scale), (int)(160 * scale));
             
@@ -158,12 +162,10 @@ namespace cassettePlayerSimulator
 
             if (CassetteInserted)
             {
-                e.Graphics.DrawImage(imgScaled, Point.Empty);
+                e.Graphics.DrawImage(imgScaled, cassetteOffset);
             }
 
-#if DEBUG
-            e.Graphics.DrawRectangle(Pens.Green, new Rectangle(0, 0, (int)(baseSize.Width * scale) - 1, (int)(baseSize.Height * scale) - 1));
-#endif
+            e.Graphics.DrawRectangle(Pens.Black, 0, 0, Width - 1, Height - 1);
         }
 
         private void DrawTapeSpoolOuter(Graphics g, PointF center, float outerRadius)

@@ -19,7 +19,7 @@ namespace cassettePlayerSimulator
 
         private Brush spoolBrush = new SolidBrush(Color.FromArgb(240, 240, 240));
 
-        private Brush backgroundBrush = new SolidBrush(Color.FromArgb(169, 169, 169));
+        private SolidBrush backgroundBrush = new SolidBrush(Color.FromArgb(169, 169, 169));
 
         private Brush cassetteBrush = new SolidBrush(Color.FromArgb(0, 0, 0));
         
@@ -40,6 +40,8 @@ namespace cassettePlayerSimulator
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
+
+            backgroundBrush.Color = BackColor;
 
             if (CassetteInserted)
             {

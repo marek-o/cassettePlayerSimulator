@@ -22,7 +22,7 @@ namespace cassettePlayerSimulator
             Controls.Add(spoolControlRight);
 
             img = Properties.Resources.cassette;
-            baseSize = new SizeF(img.Width, img.Height * 1.1f);
+            baseSize = new SizeF(img.Width, img.Height * 1.05f);
         }
 
         private Brush tapeBrush = new SolidBrush(Color.FromArgb(128, 64, 0));

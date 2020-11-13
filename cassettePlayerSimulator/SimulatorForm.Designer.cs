@@ -41,7 +41,7 @@
             // 
             // buttonImport
             // 
-            this.buttonImport.Location = new System.Drawing.Point(504, 148);
+            this.buttonImport.Location = new System.Drawing.Point(495, 166);
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(75, 23);
             this.buttonImport.TabIndex = 1;
@@ -51,7 +51,7 @@
             // 
             // buttonLoadTape
             // 
-            this.buttonLoadTape.Location = new System.Drawing.Point(504, 177);
+            this.buttonLoadTape.Location = new System.Drawing.Point(495, 195);
             this.buttonLoadTape.Name = "buttonLoadTape";
             this.buttonLoadTape.Size = new System.Drawing.Size(75, 23);
             this.buttonLoadTape.TabIndex = 2;
@@ -62,7 +62,7 @@
             // labelDebug
             // 
             this.labelDebug.AutoSize = true;
-            this.labelDebug.Location = new System.Drawing.Point(501, 22);
+            this.labelDebug.Location = new System.Drawing.Point(492, 40);
             this.labelDebug.Name = "labelDebug";
             this.labelDebug.Size = new System.Drawing.Size(57, 13);
             this.labelDebug.TabIndex = 7;
@@ -80,25 +80,26 @@
             // 
             // counter1
             // 
-            this.counter1.Location = new System.Drawing.Point(504, 249);
+            this.counter1.Location = new System.Drawing.Point(17, 313);
             this.counter1.Name = "counter1";
-            this.counter1.Size = new System.Drawing.Size(147, 62);
+            this.counter1.Size = new System.Drawing.Size(139, 51);
             this.counter1.TabIndex = 8;
             this.counter1.Text = "counter1";
             // 
             // cassetteButtons
             // 
-            this.cassetteButtons.Location = new System.Drawing.Point(39, 311);
+            this.cassetteButtons.Location = new System.Drawing.Point(17, 370);
             this.cassetteButtons.Name = "cassetteButtons";
             this.cassetteButtons.Size = new System.Drawing.Size(422, 123);
             this.cassetteButtons.TabIndex = 6;
             // 
             // cassetteControl1
             // 
+            this.cassetteControl1.BackColor = System.Drawing.Color.Gray;
             this.cassetteControl1.CassetteInserted = false;
-            this.cassetteControl1.Location = new System.Drawing.Point(39, 12);
+            this.cassetteControl1.Location = new System.Drawing.Point(17, 18);
             this.cassetteControl1.Name = "cassetteControl1";
-            this.cassetteControl1.Size = new System.Drawing.Size(422, 299);
+            this.cassetteControl1.Size = new System.Drawing.Size(422, 289);
             this.cassetteControl1.TabIndex = 5;
             // 
             // SimulatorForm
@@ -107,7 +108,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.DarkGray;
-            this.ClientSize = new System.Drawing.Size(762, 507);
+            this.ClientSize = new System.Drawing.Size(762, 481);
             this.Controls.Add(this.counter1);
             this.Controls.Add(this.labelDebug);
             this.Controls.Add(this.cassetteButtons);

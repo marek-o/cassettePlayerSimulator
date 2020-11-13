@@ -45,8 +45,8 @@ namespace cassettePlayerSimulator
         internal PointF centerRight => new PointF(899 * scale, 377 * scale);
 
         internal PointF capstan => new PointF(942 * scale, 774 * scale);
-        internal PointF roller => new PointF(942 * scale, 833 * scale);
-        internal PointF head => new PointF(632 * scale, 833 * scale);
+        internal PointF roller => new PointF(942 * scale, (headEngaged ? 833 : 863) * scale);
+        internal PointF head => new PointF(632 * scale, (headEngaged ? 788 : 843) * scale);
 
         internal float capstanRadius => 10 * scale;
         internal float rollerRadius => 50 * scale;
@@ -72,6 +72,20 @@ namespace cassettePlayerSimulator
                 spoolControlLeft.CassetteInserted = value;
                 spoolControlRight.CassetteInserted = value;
                 Invalidate();
+            }
+        }
+
+        private bool headEngaged = false;
+
+        public bool HeadEngaged
+        {
+            set
+            {
+                if (headEngaged != value)
+                {
+                    headEngaged = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -118,16 +132,18 @@ namespace cassettePlayerSimulator
                 capstanRadius * 2, capstanRadius * 2);
             e.Graphics.FillEllipse(blackWheelBrush, roller.X - rollerRadius, roller.Y - rollerRadius,
                 rollerRadius * 2, rollerRadius * 2);
+            e.Graphics.FillEllipse(axisBrush, roller.X - capstanRadius, roller.Y - capstanRadius,
+                capstanRadius * 2, capstanRadius * 2);
 
             float headWidth = 120 * scale;
             float headRoundHeight = 25 * scale;
-            float headHeight = 50 * scale;
+            float headHeight = 70 * scale;
             e.Graphics.FillPie(axisBrush, head.X - headWidth / 2, head.Y,
                 headWidth, headRoundHeight * 2, 180, 180);
             e.Graphics.FillRectangle(axisBrush, head.X - headWidth / 2, head.Y + headRoundHeight - 1,
                 headWidth, headHeight);
-            e.Graphics.FillRectangle(axisBrush, head.X + headWidth / 2, head.Y - headRoundHeight / 2,
-                5 * scale, headRoundHeight * 3 / 2 + headHeight);
+            e.Graphics.FillRectangle(axisBrush, head.X + headWidth / 2, head.Y - headRoundHeight / 4,
+                5 * scale, headRoundHeight / 4 + headRoundHeight + headHeight);
 
             if (imgScaled == null || imgScaled.Width != (int)destRect.Width || imgScaled.Height != (int)destRect.Height)
             {

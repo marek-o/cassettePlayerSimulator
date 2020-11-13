@@ -54,6 +54,7 @@ namespace cassettePlayerSimulator
                 music.SetCurrentPositionSeconds(pos + timeOffset);
             }
 
+            cassetteControl1.HeadEngaged = State == PlayerState.PLAYING || State == PlayerState.RECORDING;
             cassetteControl1.AnimateSpools(music.GetCurrentPositionSeconds());
 
             counter1.SetPosition(-cassetteControl1.GetSpoolAngle(false, music.GetCurrentPositionSeconds()) / 360 / 2);

@@ -81,6 +81,7 @@
     <Compile Include="SpoolControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Tape.cs" />
     <EmbeddedResource Include="ProgressForm.resx">
       <DependentUpon>ProgressForm.cs</DependentUpon>
     </EmbeddedResource>

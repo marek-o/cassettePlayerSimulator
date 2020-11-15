@@ -16,6 +16,8 @@ namespace cassettePlayerSimulator
 {
     public partial class SimulatorForm : Form
     {
+        private List<Tape> tapes = new List<Tape>();
+
         SoundMixer mixer;
         SoundMixer.Sample stopDown, stopUp, playDown, playUp, rewDown, rewNoise, rewUp, ffDown, ffNoise, ffUp, recordDown, recordUp,
             pauseDown, pauseUp, unpauseDown, unpauseUp, ejectDown, ejectUp, cassetteClose, cassetteInsert;
@@ -162,14 +164,14 @@ namespace cassettePlayerSimulator
             }
         }
 
-        private void LoadTape()
+        private void LoadTape(string path)
         {
             WAVFile wav = null;
             ProgressForm progressForm = new ProgressForm("Loading tape...");
 
             var thread = new Thread(() =>
             {
-                wav = WAVFile.Load(TapeFile, progressForm);
+                wav = WAVFile.Load(path, progressForm);
                 progressForm.Finish();
             });
 
@@ -180,11 +182,6 @@ namespace cassettePlayerSimulator
             music = new SoundMixer.Sample(wav, false, false, false, 0.2f, 1.0f);
             mixer.AddSample(music);
             mixer.SetRecordingSample(music);
-        }
-
-        private void buttonLoadTape_Click(object sender, EventArgs e)
-        {
-            LoadTape();
 
             State = PlayerState.STOPPED;
             cassetteControl1.CassetteInserted = true;
@@ -194,6 +191,11 @@ namespace cassettePlayerSimulator
             counter1.IgnoreNextSetPosition();
 
             cassetteClose.UpdatePlayback(true);
+        }
+
+        private void buttonLoadTape_Click(object sender, EventArgs e)
+        {
+            LoadTape(TapeFile);
         }
 
         public SimulatorForm()
@@ -277,6 +279,15 @@ namespace cassettePlayerSimulator
             mixer.AddSample(cassetteInsert);
 
             mixer.Start();
+
+            //for now
+            foreach (var file in Directory.EnumerateFiles(TapesDirectory, "*.wav"))
+            {
+                Tape t = new Tape(file, "");
+                tapes.Add(t);
+            }
+
+            listBox.Items.AddRange(tapes.ToArray());
         }
 
         private void DisengageButtons()
@@ -494,6 +505,24 @@ namespace cassettePlayerSimulator
                 {
                     SetRecording(true);
                 }
+            }
+        }
+
+        private void listBox_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            var t = tapes[e.Index];
+            e.Graphics.FillRectangle(Brushes.Yellow, e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 1, e.Bounds.Height - 1);
+            TextRenderer.DrawText(e.Graphics, t.SideA.Label, Font, e.Bounds.Location, Color.Black);
+            e.Graphics.DrawRectangle(Pens.Black, e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 1, e.Bounds.Height - 1);
+        }
+
+        private void listBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var i = listBox.IndexFromPoint(e.Location);
+
+            if (i >= 0 && i < tapes.Count)
+            {
+                LoadTape(tapes[i].SideA.FilePath);
             }
         }
     }

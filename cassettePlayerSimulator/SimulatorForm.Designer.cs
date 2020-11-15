@@ -37,6 +37,7 @@
             this.counter1 = new cassettePlayerSimulator.Counter();
             this.cassetteButtons = new cassettePlayerSimulator.CassetteButtons();
             this.cassetteControl1 = new cassettePlayerSimulator.CassetteControl();
+            this.listBox = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // buttonImport
@@ -102,13 +103,26 @@
             this.cassetteControl1.Size = new System.Drawing.Size(422, 275);
             this.cassetteControl1.TabIndex = 5;
             // 
+            // listBox
+            // 
+            this.listBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.listBox.FormattingEnabled = true;
+            this.listBox.ItemHeight = 50;
+            this.listBox.Location = new System.Drawing.Point(593, 89);
+            this.listBox.Name = "listBox";
+            this.listBox.Size = new System.Drawing.Size(294, 204);
+            this.listBox.TabIndex = 10;
+            this.listBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox_DrawItem);
+            this.listBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDoubleClick);
+            // 
             // SimulatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.DarkGray;
-            this.ClientSize = new System.Drawing.Size(762, 481);
+            this.ClientSize = new System.Drawing.Size(899, 481);
+            this.Controls.Add(this.listBox);
             this.Controls.Add(this.counter1);
             this.Controls.Add(this.labelDebug);
             this.Controls.Add(this.cassetteButtons);
@@ -134,6 +148,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Timer timerAnimation;
         private Counter counter1;
+        private System.Windows.Forms.ListBox listBox;
     }
 }
 

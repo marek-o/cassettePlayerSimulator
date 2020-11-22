@@ -528,7 +528,7 @@ namespace cassettePlayerSimulator
 
         private void RenderListItemSide(TapeSide side, Graphics g, Rectangle bounds, string prefix)
         {
-            TextRenderer.DrawText(g, string.Format("{3}: {0} ({1}) ({2})", side.Label, Path.GetFileName(side.FilePath), side.Length, prefix), Font,
+            TextRenderer.DrawText(g, string.Format("{3}: {0} ({1}) ({2})", side.Label, side.FilePath, side.Length, prefix), Font,
                 bounds, Color.Black, TextFormatFlags.Left);
         }
 
@@ -538,7 +538,7 @@ namespace cassettePlayerSimulator
 
             if (i >= 0 && i < listOfTapes.Tapes.Count)
             {
-                LoadTape(listOfTapes.Tapes[i].SideA.FilePath);
+                LoadTape(Path.Combine(TapesDirectory, listOfTapes.Tapes[i].SideA.FilePath));
             }
         }
     }

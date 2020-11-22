@@ -510,10 +510,23 @@ namespace cassettePlayerSimulator
 
         private void listBox_DrawItem(object sender, DrawItemEventArgs e)
         {
-            var t = tapes[e.Index];
-            e.Graphics.FillRectangle(Brushes.Yellow, e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 1, e.Bounds.Height - 1);
-            TextRenderer.DrawText(e.Graphics, t.SideA.Label, Font, e.Bounds.Location, Color.Black);
-            e.Graphics.DrawRectangle(Pens.Black, e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 1, e.Bounds.Height - 1);
+            var tape = tapes[e.Index];
+            int rowHeight = Font.Height;
+
+            var backBrush = ((e.State & DrawItemState.Selected) != 0) ? SystemBrushes.Highlight : SystemBrushes.Window;
+
+            e.Graphics.FillRectangle(backBrush, new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 1, e.Bounds.Height - 1));
+
+            RenderListItemSide(tape.SideA, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, rowHeight), "Side A");
+            RenderListItemSide(tape.SideB, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y + rowHeight, e.Bounds.Width, rowHeight), "Side B");
+
+            e.Graphics.DrawRectangle(Pens.Black, e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 2, e.Bounds.Height - 2);
+        }
+
+        private void RenderListItemSide(TapeSide side, Graphics g, Rectangle bounds, string prefix)
+        {
+            TextRenderer.DrawText(g, string.Format("{3}: {0} ({1}) ({2})", side.Label, Path.GetFileName(side.FilePath), side.Length, prefix), Font,
+                bounds, Color.Black, TextFormatFlags.Left);
         }
 
         private void listBox_MouseDoubleClick(object sender, MouseEventArgs e)

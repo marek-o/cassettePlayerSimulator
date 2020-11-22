@@ -10,13 +10,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using Utils;
 
 namespace cassettePlayerSimulator
 {
     public partial class SimulatorForm : Form
     {
-        private List<Tape> tapes = new List<Tape>();
+        private TapeList listOfTapes = new TapeList();
 
         SoundMixer mixer;
         SoundMixer.Sample stopDown, stopUp, playDown, playUp, rewDown, rewNoise, rewUp, ffDown, ffNoise, ffUp, recordDown, recordUp,
@@ -95,6 +96,8 @@ namespace cassettePlayerSimulator
                 "Cassette Player Simulator");
 
         private string TapeFile => Path.Combine(TapesDirectory, "tape.wav");
+
+        private string TapeListFile => Path.Combine(TapesDirectory, "tapes.xml");
 
         private void buttonImport_Click(object sender, EventArgs e)
         {
@@ -280,14 +283,14 @@ namespace cassettePlayerSimulator
 
             mixer.Start();
 
-            //for now
-            foreach (var file in Directory.EnumerateFiles(TapesDirectory, "*.wav"))
-            {
-                Tape t = new Tape(file, "");
-                tapes.Add(t);
-            }
+            listOfTapes = TapeList.Load(TapeListFile);
 
-            listBox.Items.AddRange(tapes.ToArray());
+            listBox.Items.AddRange(listOfTapes.Tapes.ToArray());
+        }
+
+        private void buttonSaveList_Click(object sender, EventArgs e)
+        {
+            listOfTapes.Save(TapeListFile);
         }
 
         private void DisengageButtons()
@@ -510,7 +513,7 @@ namespace cassettePlayerSimulator
 
         private void listBox_DrawItem(object sender, DrawItemEventArgs e)
         {
-            var tape = tapes[e.Index];
+            var tape = listOfTapes.Tapes[e.Index];
             int rowHeight = Font.Height;
 
             var backBrush = ((e.State & DrawItemState.Selected) != 0) ? SystemBrushes.Highlight : SystemBrushes.Window;
@@ -533,9 +536,9 @@ namespace cassettePlayerSimulator
         {
             var i = listBox.IndexFromPoint(e.Location);
 
-            if (i >= 0 && i < tapes.Count)
+            if (i >= 0 && i < listOfTapes.Tapes.Count)
             {
-                LoadTape(tapes[i].SideA.FilePath);
+                LoadTape(listOfTapes.Tapes[i].SideA.FilePath);
             }
         }
     }

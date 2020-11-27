@@ -294,6 +294,14 @@ namespace cassettePlayerSimulator
             listBox.Items.AddRange(listOfTapes.Tapes.ToArray());
         }
 
+        private void buttonCreateTape_Click(object sender, EventArgs e)
+        {
+            using (CreateTapeForm form = new CreateTapeForm())
+            {
+                form.ShowDialog();
+            }
+        }
+
         private void buttonSaveList_Click(object sender, EventArgs e)
         {
             if (music != null && loadedTape != null)

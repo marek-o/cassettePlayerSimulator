@@ -18,6 +18,7 @@ namespace cassettePlayerSimulator
     public partial class SimulatorForm : Form
     {
         private TapeList listOfTapes = new TapeList();
+        private TapeSide loadedTape = null;
 
         SoundMixer mixer;
         SoundMixer.Sample stopDown, stopUp, playDown, playUp, rewDown, rewNoise, rewUp, ffDown, ffNoise, ffUp, recordDown, recordUp,
@@ -167,8 +168,10 @@ namespace cassettePlayerSimulator
             }
         }
 
-        private void LoadTape(string path)
+        private void LoadTape(TapeSide tapeSide)
         {
+            string path = Path.Combine(TapesDirectory, tapeSide.FilePath);
+
             WAVFile wav = null;
             ProgressForm progressForm = new ProgressForm("Loading tape...");
 
@@ -181,10 +184,18 @@ namespace cassettePlayerSimulator
             thread.Start();
             progressForm.ShowDialog();
 
+            if (music != null && loadedTape != null)
+            {
+                loadedTape.Position = music.GetCurrentPositionSeconds();
+            }
+
             mixer.RemoveSample(music);
             music = new SoundMixer.Sample(wav, false, false, false, 0.2f, 1.0f);
             mixer.AddSample(music);
             mixer.SetRecordingSample(music);
+
+            loadedTape = tapeSide;
+            music.SetCurrentPositionSeconds(tapeSide.Position);
 
             State = PlayerState.STOPPED;
             cassetteControl1.CassetteInserted = true;
@@ -194,11 +205,6 @@ namespace cassettePlayerSimulator
             counter1.IgnoreNextSetPosition();
 
             cassetteClose.UpdatePlayback(true);
-        }
-
-        private void buttonLoadTape_Click(object sender, EventArgs e)
-        {
-            LoadTape(TapeFile);
         }
 
         public SimulatorForm()
@@ -290,6 +296,13 @@ namespace cassettePlayerSimulator
 
         private void buttonSaveList_Click(object sender, EventArgs e)
         {
+            if (music != null && loadedTape != null)
+            {
+                var pos = music.GetCurrentPositionSeconds();
+
+                loadedTape.Position = pos;
+            }
+
             listOfTapes.Save(TapeListFile);
         }
 
@@ -449,6 +462,9 @@ namespace cassettePlayerSimulator
             {
                 State = PlayerState.OPEN;
                 cassetteControl1.CassetteInserted = false;
+                loadedTape.Position = music.GetCurrentPositionSeconds();
+                loadedTape = null;
+                listBox.Invalidate();
 
                 ejectDown.UpdatePlayback(true);
             }
@@ -516,7 +532,9 @@ namespace cassettePlayerSimulator
             var tape = listOfTapes.Tapes[e.Index];
             int rowHeight = Font.Height;
 
-            var backBrush = ((e.State & DrawItemState.Selected) != 0) ? SystemBrushes.Highlight : SystemBrushes.Window;
+            bool isLoaded = (tape.SideA == loadedTape || tape.SideB == loadedTape);
+            var backBrush = isLoaded ? Brushes.LimeGreen :
+                ((e.State & DrawItemState.Selected) != 0) ? SystemBrushes.Highlight : SystemBrushes.Window;
 
             e.Graphics.FillRectangle(backBrush, new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 1, e.Bounds.Height - 1));
 
@@ -538,7 +556,7 @@ namespace cassettePlayerSimulator
 
             if (i >= 0 && i < listOfTapes.Tapes.Count)
             {
-                LoadTape(Path.Combine(TapesDirectory, listOfTapes.Tapes[i].SideA.FilePath));
+                LoadTape(listOfTapes.Tapes[i].SideA);
             }
         }
     }

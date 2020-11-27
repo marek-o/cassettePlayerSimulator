@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.buttonImport = new System.Windows.Forms.Button();
-            this.buttonLoadTape = new System.Windows.Forms.Button();
             this.labelDebug = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timerAnimation = new System.Windows.Forms.Timer(this.components);
@@ -50,16 +49,6 @@
             this.buttonImport.Text = "Import";
             this.buttonImport.UseVisualStyleBackColor = true;
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
-            // 
-            // buttonLoadTape
-            // 
-            this.buttonLoadTape.Location = new System.Drawing.Point(495, 195);
-            this.buttonLoadTape.Name = "buttonLoadTape";
-            this.buttonLoadTape.Size = new System.Drawing.Size(75, 23);
-            this.buttonLoadTape.TabIndex = 2;
-            this.buttonLoadTape.Text = "Load tape";
-            this.buttonLoadTape.UseVisualStyleBackColor = true;
-            this.buttonLoadTape.Click += new System.EventHandler(this.buttonLoadTape_Click);
             // 
             // labelDebug
             // 
@@ -139,7 +128,6 @@
             this.Controls.Add(this.labelDebug);
             this.Controls.Add(this.cassetteButtons);
             this.Controls.Add(this.cassetteControl1);
-            this.Controls.Add(this.buttonLoadTape);
             this.Controls.Add(this.buttonImport);
             this.MaximizeBox = false;
             this.Name = "SimulatorForm";
@@ -153,7 +141,6 @@
 
         #endregion
         private System.Windows.Forms.Button buttonImport;
-        private System.Windows.Forms.Button buttonLoadTape;
         private CassetteControl cassetteControl1;
         private CassetteButtons cassetteButtons;
         private System.Windows.Forms.Label labelDebug;

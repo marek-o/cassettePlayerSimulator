@@ -62,7 +62,8 @@ namespace cassettePlayerSimulator
 
         public Tape()
         {
-
+            SideA = new TapeSide();
+            SideB = new TapeSide();
         }
 
         public Tape(float sideLengthSeconds)

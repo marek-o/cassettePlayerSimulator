@@ -302,10 +302,45 @@ namespace cassettePlayerSimulator
 
                 if (result == DialogResult.OK)
                 {
-                    MessageBox.Show(string.Format("{0} {1} {2} {3}",
-                        form.LabelSideA, form.LabelSideB, form.SideLengthSeconds, form.Color));
+                    CreateTape(form.SideLengthSeconds, form.LabelSideA, form.LabelSideB, form.Color);
                 }
             }
+        }
+
+        private void CreateTape(float sideLengthSeconds, string labelSideA, string labelSideB, Color color)
+        {
+            string filename;
+
+            do
+            {
+                filename = Guid.NewGuid().ToString().Substring(24, 12) + ".wav";
+            }
+            while (File.Exists(filename));
+
+            var path = Path.Combine(TapesDirectory, filename);
+
+            float[] buffer = new float[44100 * 2];
+            int seconds = (int)sideLengthSeconds;
+
+            using (var writer = new NAudio.Wave.WaveFileWriter(path, new NAudio.Wave.WaveFormat(44100, 16, 2)))
+            {
+                for (int i = 0; i < seconds; ++i)
+                {
+                    writer.WriteSamples(buffer, 0, buffer.Length);
+                }
+            }
+
+            Tape tape = new Tape();
+
+            tape.SideA.Label = labelSideA;
+            tape.SideA.Length = sideLengthSeconds;
+            tape.SideA.FilePath = filename;
+
+            tape.SideB.Label = labelSideB;
+            tape.SideB.Length = sideLengthSeconds;
+
+            listOfTapes.Tapes.Add(tape);
+            listBox.Items.Add(tape);
         }
 
         private void buttonSaveList_Click(object sender, EventArgs e)

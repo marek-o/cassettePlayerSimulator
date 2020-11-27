@@ -298,7 +298,13 @@ namespace cassettePlayerSimulator
         {
             using (CreateTapeForm form = new CreateTapeForm())
             {
-                form.ShowDialog();
+                var result = form.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    MessageBox.Show(string.Format("{0} {1} {2} {3}",
+                        form.LabelSideA, form.LabelSideB, form.SideLengthSeconds, form.Color));
+                }
             }
         }
 

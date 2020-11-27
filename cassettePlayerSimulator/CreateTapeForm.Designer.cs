@@ -40,6 +40,7 @@
             this.buttonColor = new System.Windows.Forms.Button();
             this.buttonCreate = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.panelColor = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -122,15 +123,17 @@
             // 
             // buttonColor
             // 
-            this.buttonColor.Location = new System.Drawing.Point(15, 185);
+            this.buttonColor.Location = new System.Drawing.Point(11, 178);
             this.buttonColor.Name = "buttonColor";
             this.buttonColor.Size = new System.Drawing.Size(75, 23);
             this.buttonColor.TabIndex = 8;
             this.buttonColor.Text = "Select color";
             this.buttonColor.UseVisualStyleBackColor = true;
+            this.buttonColor.Click += new System.EventHandler(this.buttonColor_Click);
             // 
             // buttonCreate
             // 
+            this.buttonCreate.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonCreate.Location = new System.Drawing.Point(172, 249);
             this.buttonCreate.Name = "buttonCreate";
             this.buttonCreate.Size = new System.Drawing.Size(75, 23);
@@ -140,6 +143,7 @@
             // 
             // buttonCancel
             // 
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new System.Drawing.Point(253, 249);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
@@ -147,12 +151,21 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
+            // panelColor
+            // 
+            this.panelColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelColor.Location = new System.Drawing.Point(92, 178);
+            this.panelColor.Name = "panelColor";
+            this.panelColor.Size = new System.Drawing.Size(102, 23);
+            this.panelColor.TabIndex = 11;
+            // 
             // CreateTapeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(339, 285);
+            this.Controls.Add(this.panelColor);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonCreate);
             this.Controls.Add(this.buttonColor);
@@ -165,6 +178,7 @@
             this.MinimizeBox = false;
             this.Name = "CreateTapeForm";
             this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Creating empty tape";
             this.groupBox1.ResumeLayout(false);
@@ -188,5 +202,6 @@
         private System.Windows.Forms.Button buttonColor;
         private System.Windows.Forms.Button buttonCreate;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.Panel panelColor;
     }
 }

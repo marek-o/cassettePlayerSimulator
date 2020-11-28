@@ -332,18 +332,19 @@ namespace cassettePlayerSimulator
 
             var path = Path.Combine(TapesDirectory, filename);
 
-            float[] buffer = new float[44100 * 2];
             int seconds = (int)sideLengthSeconds;
+
+            byte[] buffer = new byte[44100 * 2 * 2 * (seconds / 100)];
 
             using (var writer = new NAudio.Wave.WaveFileWriter(path, new NAudio.Wave.WaveFormat(44100, 16, 2)))
             {
-                for (int i = 0; i < seconds; ++i)
+                for (int i = 0; i < 100; ++i)
                 {
-                    writer.WriteSamples(buffer, 0, buffer.Length);
+                    writer.Write(buffer, 0, buffer.Length);
 
                     if (progress != null)
                     {
-                        progress.Report((float)i / seconds);
+                        progress.Report((float)i / 100);
                     }
                 }
             }

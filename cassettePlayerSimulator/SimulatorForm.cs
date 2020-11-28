@@ -603,22 +603,23 @@ namespace cassettePlayerSimulator
         private void listBox_DrawItem(object sender, DrawItemEventArgs e)
         {
             var tape = listOfTapes.Tapes[e.Index];
-            int rowHeight = Font.Height;
 
-            bool isLoaded = (tape.SideA == loadedTape || tape.SideB == loadedTape);
-            var backBrush = isLoaded ? Brushes.LimeGreen :
-                ((e.State & DrawItemState.Selected) != 0) ? SystemBrushes.Highlight : SystemBrushes.Window;
+            bool isSelected = (e.State & DrawItemState.Selected) != 0;
 
-            e.Graphics.FillRectangle(backBrush, new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 1, e.Bounds.Height - 1));
-
-            RenderListItemSide(tape.SideA, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, rowHeight), "Side A");
-            RenderListItemSide(tape.SideB, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y + rowHeight, e.Bounds.Width, rowHeight), "Side B");
+            RenderListItemSide(tape.SideA, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height / 2), "Side A", isSelected);
+            RenderListItemSide(tape.SideB, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y + e.Bounds.Height / 2, e.Bounds.Width, e.Bounds.Height / 2), "Side B", isSelected);
 
             e.Graphics.DrawRectangle(Pens.Black, e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 2, e.Bounds.Height - 2);
         }
 
-        private void RenderListItemSide(TapeSide side, Graphics g, Rectangle bounds, string prefix)
+        private void RenderListItemSide(TapeSide side, Graphics g, Rectangle bounds, string prefix, bool isSelected)
         {
+            bool isLoaded = side == loadedTape;
+
+            var backBrush = isLoaded ? Brushes.LimeGreen :
+                isSelected ? SystemBrushes.Highlight : SystemBrushes.Window;
+            g.FillRectangle(backBrush, new Rectangle(bounds.X, bounds.Y, bounds.Width - 1, bounds.Height - 1));
+
             TextRenderer.DrawText(g, string.Format("{3}: {0} ({1}) ({2})", side.Label, side.FilePath, side.Length, prefix), Font,
                 bounds, Color.Black, TextFormatFlags.Left);
         }
@@ -626,10 +627,13 @@ namespace cassettePlayerSimulator
         private void listBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             var i = listBox.IndexFromPoint(e.Location);
+            var rect = listBox.GetItemRectangle(i);
+            bool upperHalf = e.Location.Y < (rect.Top + rect.Height / 2);
 
             if (i >= 0 && i < listOfTapes.Tapes.Count)
             {
-                LoadTape(listOfTapes.Tapes[i].SideA);
+                var t = listOfTapes.Tapes[i];
+                LoadTape(upperHalf ? t.SideA : t.SideB);
             }
         }
     }

@@ -322,25 +322,30 @@ namespace cassettePlayerSimulator
 
         private Tape CreateTape(float sideLengthSeconds, string labelSideA, string labelSideB, Color color, IProgress<float> progress = null)
         {
-            string filename;
+            string filenameA, filenameB;
 
             do
             {
-                filename = Guid.NewGuid().ToString().Substring(24, 12) + ".wav";
+                var guid = Guid.NewGuid().ToString().Substring(24, 12);
+                filenameA = guid + "_A.wav";
+                filenameB = guid + "_B.wav";
             }
-            while (File.Exists(filename));
+            while (File.Exists(filenameA) || File.Exists(filenameB));
 
-            var path = Path.Combine(TapesDirectory, filename);
+            var pathA = Path.Combine(TapesDirectory, filenameA);
+            var pathB = Path.Combine(TapesDirectory, filenameB);
 
             int seconds = (int)sideLengthSeconds;
 
             byte[] buffer = new byte[44100 * 2 * 2 * (seconds / 100)];
 
-            using (var writer = new NAudio.Wave.WaveFileWriter(path, new NAudio.Wave.WaveFormat(44100, 16, 2)))
+            using (var writerA = new NAudio.Wave.WaveFileWriter(pathA, new NAudio.Wave.WaveFormat(44100, 16, 2)))
+            using (var writerB = new NAudio.Wave.WaveFileWriter(pathB, new NAudio.Wave.WaveFormat(44100, 16, 2)))
             {
                 for (int i = 0; i < 100; ++i)
                 {
-                    writer.Write(buffer, 0, buffer.Length);
+                    writerA.Write(buffer, 0, buffer.Length);
+                    writerB.Write(buffer, 0, buffer.Length);
 
                     if (progress != null)
                     {
@@ -353,10 +358,11 @@ namespace cassettePlayerSimulator
 
             tape.SideA.Label = labelSideA;
             tape.SideA.Length = sideLengthSeconds;
-            tape.SideA.FilePath = filename;
+            tape.SideA.FilePath = filenameA;
 
             tape.SideB.Label = labelSideB;
             tape.SideB.Length = sideLengthSeconds;
+            tape.SideB.FilePath = filenameB;
 
             return tape;
         }

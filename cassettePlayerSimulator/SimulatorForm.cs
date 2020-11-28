@@ -302,12 +302,25 @@ namespace cassettePlayerSimulator
 
                 if (result == DialogResult.OK)
                 {
-                    CreateTape(form.SideLengthSeconds, form.LabelSideA, form.LabelSideB, form.Color);
+                    Tape tape = null;
+
+                    ProgressForm progressForm = new ProgressForm(string.Format("Creating tape..."));
+                    var thread = new Thread(() =>
+                    {
+                        tape = CreateTape(form.SideLengthSeconds, form.LabelSideA, form.LabelSideB, form.Color, progressForm);
+                        progressForm.Finish();
+                    });
+
+                    thread.Start();
+                    progressForm.ShowDialog();
+
+                    listOfTapes.Tapes.Add(tape);
+                    listBox.Items.Add(tape);
                 }
             }
         }
 
-        private void CreateTape(float sideLengthSeconds, string labelSideA, string labelSideB, Color color)
+        private Tape CreateTape(float sideLengthSeconds, string labelSideA, string labelSideB, Color color, IProgress<float> progress = null)
         {
             string filename;
 
@@ -327,6 +340,11 @@ namespace cassettePlayerSimulator
                 for (int i = 0; i < seconds; ++i)
                 {
                     writer.WriteSamples(buffer, 0, buffer.Length);
+
+                    if (progress != null)
+                    {
+                        progress.Report((float)i / seconds);
+                    }
                 }
             }
 
@@ -339,8 +357,7 @@ namespace cassettePlayerSimulator
             tape.SideB.Label = labelSideB;
             tape.SideB.Length = sideLengthSeconds;
 
-            listOfTapes.Tapes.Add(tape);
-            listBox.Items.Add(tape);
+            return tape;
         }
 
         private void buttonSaveList_Click(object sender, EventArgs e)

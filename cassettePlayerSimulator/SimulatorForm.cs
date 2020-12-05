@@ -626,6 +626,29 @@ namespace cassettePlayerSimulator
 
         private void listBox_MouseDown(object sender, MouseEventArgs e)
         {
+            TapeSide side = GetClickedItem(e);
+
+            if (side != null && e.Button == MouseButtons.Right)
+            {
+                rightClickedTape = side;
+                contextMenuStrip1.Show(listBox.PointToScreen(e.Location));
+            }
+        }
+
+        TapeSide rightClickedTape = null;
+
+        private void listBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            TapeSide side = GetClickedItem(e);
+
+            if (side != null)
+            {
+                LoadTape(side);
+            }
+        }
+
+        private TapeSide GetClickedItem(MouseEventArgs e)
+        {
             var i = listBox.IndexFromPoint(e.Location);
             var rect = listBox.GetItemRectangle(i);
             bool upperHalf = e.Location.Y < (rect.Top + rect.Height / 2);
@@ -635,27 +658,10 @@ namespace cassettePlayerSimulator
                 var t = listOfTapes.Tapes[i];
                 var side = upperHalf ? t.SideA : t.SideB;
 
-                if (e.Button == MouseButtons.Right)
-                {
-                    rightClickedTape = side;
-                    contextMenuStrip1.Show(listBox.PointToScreen(e.Location));
-                }
+                return side;
             }
-        }
 
-        TapeSide rightClickedTape = null;
-
-        private void listBox_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            var i = listBox.IndexFromPoint(e.Location);
-            var rect = listBox.GetItemRectangle(i);
-            bool upperHalf = e.Location.Y < (rect.Top + rect.Height / 2);
-
-            if (i >= 0 && i < listOfTapes.Tapes.Count)
-            {
-                var t = listOfTapes.Tapes[i];
-                LoadTape(upperHalf ? t.SideA : t.SideB);
-            }
+            return null;
         }
 
         private void toolStripMenuItemChangeLabel_Click(object sender, EventArgs e)

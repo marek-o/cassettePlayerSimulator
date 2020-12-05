@@ -12,9 +12,16 @@ namespace cassettePlayerSimulator
 {
     public partial class CreateTapeForm : Form
     {
-        public CreateTapeForm()
+        public CreateTapeForm(bool editMode)
         {
             InitializeComponent();
+
+            if (editMode)
+            {
+                Text = "Editing tape";
+                buttonCreate.Text = "Save";
+                groupBox1.Enabled = false;
+            }
 
             colorDialog1.Color = panelColor.BackColor = Color.Red;
         }
@@ -25,8 +32,29 @@ namespace cassettePlayerSimulator
             panelColor.BackColor = colorDialog1.Color;
         }
 
-        public string LabelSideA => textBoxLabelA.Text;
-        public string LabelSideB => textBoxLabelB.Text;
+        public string LabelSideA
+        {
+            get
+            {
+                return textBoxLabelA.Text;
+            }
+            set
+            {
+                textBoxLabelA.Text = value;
+            }
+        }
+
+        public string LabelSideB
+        {
+            get
+            {
+                return textBoxLabelB.Text;
+            }
+            set
+            {
+                textBoxLabelB.Text = value;
+            }
+        }
 
         public Color Color => colorDialog1.Color;
 

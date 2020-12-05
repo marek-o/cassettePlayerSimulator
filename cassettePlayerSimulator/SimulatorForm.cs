@@ -296,7 +296,7 @@ namespace cassettePlayerSimulator
 
         private void buttonCreateTape_Click(object sender, EventArgs e)
         {
-            using (CreateTapeForm form = new CreateTapeForm())
+            using (CreateTapeForm form = new CreateTapeForm(false))
             {
                 var result = form.ShowDialog();
 
@@ -669,6 +669,24 @@ namespace cassettePlayerSimulator
             if (rightClickedTape != null)
             {
                 MessageBox.Show(string.Format("changing label of {0} {1}", rightClickedTape.FilePath, rightClickedTape.Length));
+
+                using (var form = new CreateTapeForm(true))
+                {
+                    //FIXME
+                    var tape = listOfTapes.Tapes.First(t => t.SideA == rightClickedTape || t.SideB == rightClickedTape);
+
+                    form.LabelSideA = tape.SideA.Label;
+                    form.LabelSideB = tape.SideB.Label;
+
+                    var result = form.ShowDialog();
+
+                    if (result == DialogResult.OK)
+                    {
+                        tape.SideA.Label = form.LabelSideA;
+                        tape.SideB.Label = form.LabelSideB;
+                    }
+                }
+                
             }
         }
     }

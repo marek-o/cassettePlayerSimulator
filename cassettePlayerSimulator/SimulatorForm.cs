@@ -624,6 +624,27 @@ namespace cassettePlayerSimulator
                 bounds, Color.Black, TextFormatFlags.Left);
         }
 
+        private void listBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            var i = listBox.IndexFromPoint(e.Location);
+            var rect = listBox.GetItemRectangle(i);
+            bool upperHalf = e.Location.Y < (rect.Top + rect.Height / 2);
+
+            if (i >= 0 && i < listOfTapes.Tapes.Count)
+            {
+                var t = listOfTapes.Tapes[i];
+                var side = upperHalf ? t.SideA : t.SideB;
+
+                if (e.Button == MouseButtons.Right)
+                {
+                    rightClickedTape = side;
+                    contextMenuStrip1.Show(listBox.PointToScreen(e.Location));
+                }
+            }
+        }
+
+        TapeSide rightClickedTape = null;
+
         private void listBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             var i = listBox.IndexFromPoint(e.Location);
@@ -634,6 +655,14 @@ namespace cassettePlayerSimulator
             {
                 var t = listOfTapes.Tapes[i];
                 LoadTape(upperHalf ? t.SideA : t.SideB);
+            }
+        }
+
+        private void toolStripMenuItemChangeLabel_Click(object sender, EventArgs e)
+        {
+            if (rightClickedTape != null)
+            {
+                MessageBox.Show(string.Format("changing label of {0} {1}", rightClickedTape.FilePath, rightClickedTape.Length));
             }
         }
     }

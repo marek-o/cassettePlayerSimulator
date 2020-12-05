@@ -37,8 +37,13 @@
             this.cassetteButtons = new cassettePlayerSimulator.CassetteButtons();
             this.cassetteControl1 = new cassettePlayerSimulator.CassetteControl();
             this.listBox = new System.Windows.Forms.ListBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemChangeLabel = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemChangeColor = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonSaveList = new System.Windows.Forms.Button();
             this.buttonCreateTape = new System.Windows.Forms.Button();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonImport
@@ -105,6 +110,35 @@
             this.listBox.TabIndex = 10;
             this.listBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox_DrawItem);
             this.listBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDoubleClick);
+            this.listBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDown);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemChangeLabel,
+            this.toolStripMenuItemChangeColor,
+            this.toolStripMenuItemDelete});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 92);
+            // 
+            // toolStripMenuItemChangeLabel
+            // 
+            this.toolStripMenuItemChangeLabel.Name = "toolStripMenuItemChangeLabel";
+            this.toolStripMenuItemChangeLabel.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemChangeLabel.Text = "Change label";
+            this.toolStripMenuItemChangeLabel.Click += new System.EventHandler(this.toolStripMenuItemChangeLabel_Click);
+            // 
+            // toolStripMenuItemChangeColor
+            // 
+            this.toolStripMenuItemChangeColor.Name = "toolStripMenuItemChangeColor";
+            this.toolStripMenuItemChangeColor.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemChangeColor.Text = "Change color";
+            // 
+            // toolStripMenuItemDelete
+            // 
+            this.toolStripMenuItemDelete.Name = "toolStripMenuItemDelete";
+            this.toolStripMenuItemDelete.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemDelete.Text = "Delete";
             // 
             // buttonSaveList
             // 
@@ -146,6 +180,7 @@
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Cassette Player Simulator";
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -162,6 +197,10 @@
         private System.Windows.Forms.ListBox listBox;
         private System.Windows.Forms.Button buttonSaveList;
         private System.Windows.Forms.Button buttonCreateTape;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemChangeLabel;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemChangeColor;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDelete;
     }
 }
 

@@ -19,6 +19,7 @@ namespace cassettePlayerSimulator
     {
         private TapeList listOfTapes = new TapeList();
         private TapeSide loadedTape = null;
+        private TapeManager tapeManager;
 
         SoundMixer mixer;
         SoundMixer.Sample stopDown, stopUp, playDown, playUp, rewDown, rewNoise, rewUp, ffDown, ffNoise, ffUp, recordDown, recordUp,
@@ -290,6 +291,7 @@ namespace cassettePlayerSimulator
             mixer.Start();
 
             listOfTapes = TapeList.Load(TapeListFile);
+            tapeManager = new TapeManager(listBox);
 
             listBox.Items.AddRange(listOfTapes.Tapes.ToArray());
         }

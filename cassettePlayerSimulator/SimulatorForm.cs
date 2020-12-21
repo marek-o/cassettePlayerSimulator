@@ -93,15 +93,22 @@ namespace cassettePlayerSimulator
 
         private bool isPaused = false; //is pause button engaged, this is different from playback pause
 
-        private string TapesDirectory =>
+        //to be extracted
+        public string TapesDirectory_tapeManager =>
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "Cassette Player Simulator");
 
-        private string TapeFile => Path.Combine(TapesDirectory, "tape.wav");
+        private string TapeFile => Path.Combine(TapesDirectory_tapeManager, "tape.wav");
 
-        private string TapeListFile => Path.Combine(TapesDirectory, "tapes.xml");
+        private string TapeListFile => Path.Combine(TapesDirectory_tapeManager, "tapes.xml");
 
         private void buttonImport_Click(object sender, EventArgs e)
+        {
+            PerformImport_tapeManager();
+        }
+        
+        //to be extracted
+        public void PerformImport_tapeManager()
         {
             string inputFileFullPath;
 
@@ -117,7 +124,7 @@ namespace cassettePlayerSimulator
                 inputFileFullPath = dialog.FileName;
             }
 
-            Directory.CreateDirectory(TapesDirectory);
+            Directory.CreateDirectory(TapesDirectory_tapeManager);
 
             if (File.Exists(TapeFile))
             {
@@ -169,9 +176,32 @@ namespace cassettePlayerSimulator
             }
         }
 
+        //to be extracted
+        public event Action LoadedTapeChanged_tapeManager = () => {};
+
+        //to be extracted
+        private TapeSide loadedTape_tapeManager;
+
+        //to be extracted
+        public TapeSide LoadedTape_tapeManager
+        {
+            get
+            {
+                return loadedTape_tapeManager;
+            }
+            set
+            {
+                if (loadedTape_tapeManager != value)
+                {
+                    loadedTape_tapeManager = value;
+                    LoadedTapeChanged_tapeManager();
+                }
+            }
+        }
+
         private void LoadTape(TapeSide tapeSide)
         {
-            string path = Path.Combine(TapesDirectory, tapeSide.FilePath);
+            string path = Path.Combine(TapesDirectory_tapeManager, tapeSide.FilePath);
 
             WAVFile wav = null;
             ProgressForm progressForm = new ProgressForm("Loading tape...");
@@ -290,13 +320,37 @@ namespace cassettePlayerSimulator
 
             mixer.Start();
 
-            listOfTapes = TapeList.Load(TapeListFile);
             tapeManager = new TapeManager(listBox);
+            TapeManager_constructor(listBox);
 
+            LoadedTapeChanged_tapeManager += TapeManager_LoadedTapeChanged;
+        }
+
+        private void TapeManager_LoadedTapeChanged()
+        {
+            if (LoadedTape_tapeManager != loadedTape)
+            {
+                if (LoadedTape_tapeManager != null)
+                {
+                    LoadTape(LoadedTape_tapeManager);
+                }
+            }
+        }
+
+        //to be extracted
+        public void TapeManager_constructor(ListBox listBox)
+        {
+            listOfTapes = TapeList.Load(TapeListFile);
             listBox.Items.AddRange(listOfTapes.Tapes.ToArray());
         }
 
         private void buttonCreateTape_Click(object sender, EventArgs e)
+        {
+            CreateTape_tapeManager();
+        }
+
+        //to be extracted
+        public void CreateTape_tapeManager()
         {
             using (CreateTapeForm form = new CreateTapeForm(false))
             {
@@ -334,8 +388,8 @@ namespace cassettePlayerSimulator
             }
             while (File.Exists(filenameA) || File.Exists(filenameB));
 
-            var pathA = Path.Combine(TapesDirectory, filenameA);
-            var pathB = Path.Combine(TapesDirectory, filenameB);
+            var pathA = Path.Combine(TapesDirectory_tapeManager, filenameA);
+            var pathB = Path.Combine(TapesDirectory_tapeManager, filenameB);
 
             int seconds = (int)sideLengthSeconds;
 
@@ -378,6 +432,12 @@ namespace cassettePlayerSimulator
                 loadedTape.Position = pos;
             }
 
+            SaveList_tapeManager();
+        }
+
+        //to be extracted
+        public void SaveList_tapeManager()
+        {
             listOfTapes.Save(TapeListFile);
         }
 
@@ -539,10 +599,18 @@ namespace cassettePlayerSimulator
                 cassetteControl1.CassetteInserted = false;
                 loadedTape.Position = music.GetCurrentPositionSeconds();
                 loadedTape = null;
-                listBox.Invalidate();
+
+                EjectTape_tapeManager();
 
                 ejectDown.UpdatePlayback(true);
             }
+        }
+
+        public void EjectTape_tapeManager()
+        {
+            LoadedTape_tapeManager = null;
+
+            listBox.Invalidate();
         }
 
         private void StopEjectButton_MouseUp()

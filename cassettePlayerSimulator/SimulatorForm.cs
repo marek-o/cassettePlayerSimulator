@@ -98,8 +98,10 @@ namespace cassettePlayerSimulator
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "Cassette Player Simulator");
 
+        //to be extracted
         private string TapeFile => Path.Combine(TapesDirectory_tapeManager, "tape.wav");
 
+        //to be extracted
         private string TapeListFile => Path.Combine(TapesDirectory_tapeManager, "tapes.xml");
 
         private void buttonImport_Click(object sender, EventArgs e)
@@ -146,6 +148,7 @@ namespace cassettePlayerSimulator
             progressForm.ShowDialog();
         }
 
+        //to be extracted
         private void Import(string inputFilePath, IProgress<float> progress = null)
         {
             float[] buffer = new float[1024 * 128];
@@ -427,6 +430,7 @@ namespace cassettePlayerSimulator
             }
         }
 
+        //to be extracted
         private Tape CreateTape(float sideLengthSeconds, string labelSideA, string labelSideB, Color color, IProgress<float> progress = null)
         {
             string filenameA, filenameB;
@@ -657,6 +661,7 @@ namespace cassettePlayerSimulator
             }
         }
 
+        //to be extracted
         public void EjectTape_tapeManager()
         {
             LoadedTape_tapeManager = null;
@@ -721,6 +726,7 @@ namespace cassettePlayerSimulator
             }
         }
 
+        //to be extracted
         private void listBox_DrawItem(object sender, DrawItemEventArgs e)
         {
             var tape = listOfTapes.Tapes[e.Index];
@@ -733,9 +739,10 @@ namespace cassettePlayerSimulator
             e.Graphics.DrawRectangle(Pens.Black, e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 2, e.Bounds.Height - 2);
         }
 
+        //to be extracted
         private void RenderListItemSide(TapeSide side, Graphics g, Rectangle bounds, string prefix, bool isSelected)
         {
-            bool isLoaded = side == loadedTape;
+            bool isLoaded = side == loadedTape_tapeManager;
 
             var backBrush = isLoaded ? Brushes.LimeGreen :
                 isSelected ? SystemBrushes.Highlight : SystemBrushes.Window;
@@ -745,6 +752,7 @@ namespace cassettePlayerSimulator
                 bounds, Color.Black, TextFormatFlags.Left);
         }
 
+        //to be extracted
         private void listBox_MouseDown(object sender, MouseEventArgs e)
         {
             TapeSide side = GetClickedItem(e);
@@ -756,18 +764,18 @@ namespace cassettePlayerSimulator
             }
         }
 
+        //to be extracted
         TapeSide rightClickedTape = null;
 
+        //to be extracted
         private void listBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             TapeSide side = GetClickedItem(e);
 
-            if (side != null)
-            {
-                LoadTape(side);
-            }
+            LoadedTape_tapeManager = side;
         }
 
+        //to be extracted
         private TapeSide GetClickedItem(MouseEventArgs e)
         {
             var i = listBox.IndexFromPoint(e.Location);
@@ -785,6 +793,7 @@ namespace cassettePlayerSimulator
             return null;
         }
 
+        //to be extracted
         private void toolStripMenuItemChangeLabel_Click(object sender, EventArgs e)
         {
             if (rightClickedTape != null)

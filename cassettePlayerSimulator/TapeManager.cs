@@ -114,42 +114,6 @@ namespace cassettePlayerSimulator
 
         private ListBox listBox;
 
-        public void TapeManager_constructor(ListBox listBox)
-        {
-            this.listBox = listBox;
-
-            this.contextMenuStrip1 = new ContextMenuStrip();
-            this.toolStripMenuItemChangeLabel = new ToolStripMenuItem();
-            this.toolStripMenuItemChangeColor = new ToolStripMenuItem();
-            this.toolStripMenuItemDelete = new ToolStripMenuItem();
-
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemChangeLabel,
-            this.toolStripMenuItemChangeColor,
-            this.toolStripMenuItemDelete});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 92);
-            this.toolStripMenuItemChangeLabel.Name = "toolStripMenuItemChangeLabel";
-            this.toolStripMenuItemChangeLabel.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItemChangeLabel.Text = "Change label";
-            this.toolStripMenuItemChangeLabel.Click += new System.EventHandler(this.toolStripMenuItemChangeLabel_Click);
-            this.toolStripMenuItemChangeColor.Name = "toolStripMenuItemChangeColor";
-            this.toolStripMenuItemChangeColor.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItemChangeColor.Text = "Change color";
-            this.toolStripMenuItemDelete.Name = "toolStripMenuItemDelete";
-            this.toolStripMenuItemDelete.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItemDelete.Text = "Delete";
-
-            this.listBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.listBox.ItemHeight = 50;
-            this.listBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox_DrawItem);
-            this.listBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDoubleClick);
-            this.listBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDown);
-
-            listOfTapes = TapeList.Load(TapeListFile);
-            this.listBox.Items.AddRange(listOfTapes.Tapes.ToArray());
-        }
-
         public void CreateTape()
         {
             using (CreateTapeForm form = new CreateTapeForm(false))
@@ -324,7 +288,38 @@ namespace cassettePlayerSimulator
 
         public TapeManager(ListBox listBox)
         {
-            TapeManager_constructor(listBox);
+            this.listBox = listBox;
+
+            this.contextMenuStrip1 = new ContextMenuStrip();
+            this.toolStripMenuItemChangeLabel = new ToolStripMenuItem();
+            this.toolStripMenuItemChangeColor = new ToolStripMenuItem();
+            this.toolStripMenuItemDelete = new ToolStripMenuItem();
+
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemChangeLabel,
+            this.toolStripMenuItemChangeColor,
+            this.toolStripMenuItemDelete});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 92);
+            this.toolStripMenuItemChangeLabel.Name = "toolStripMenuItemChangeLabel";
+            this.toolStripMenuItemChangeLabel.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemChangeLabel.Text = "Change label";
+            this.toolStripMenuItemChangeLabel.Click += new System.EventHandler(this.toolStripMenuItemChangeLabel_Click);
+            this.toolStripMenuItemChangeColor.Name = "toolStripMenuItemChangeColor";
+            this.toolStripMenuItemChangeColor.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemChangeColor.Text = "Change color";
+            this.toolStripMenuItemDelete.Name = "toolStripMenuItemDelete";
+            this.toolStripMenuItemDelete.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemDelete.Text = "Delete";
+
+            this.listBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.listBox.ItemHeight = 50;
+            this.listBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox_DrawItem);
+            this.listBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDoubleClick);
+            this.listBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDown);
+
+            listOfTapes = TapeList.Load(TapeListFile);
+            this.listBox.Items.AddRange(listOfTapes.Tapes.ToArray());
         }
     }
 }

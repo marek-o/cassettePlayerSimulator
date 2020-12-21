@@ -338,10 +338,61 @@ namespace cassettePlayerSimulator
         }
 
         //to be extracted
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemChangeLabel;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemChangeColor;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDelete;
+
+        //to be extracted
+        private ListBox listBox_tapeManager;
+
+        //to be extracted
         public void TapeManager_constructor(ListBox listBox)
         {
+            listBox_tapeManager = listBox;
+
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip();
+            this.toolStripMenuItemChangeLabel = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemChangeColor = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
+
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemChangeLabel,
+            this.toolStripMenuItemChangeColor,
+            this.toolStripMenuItemDelete});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 92);
+            // 
+            // toolStripMenuItemChangeLabel
+            // 
+            this.toolStripMenuItemChangeLabel.Name = "toolStripMenuItemChangeLabel";
+            this.toolStripMenuItemChangeLabel.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemChangeLabel.Text = "Change label";
+            this.toolStripMenuItemChangeLabel.Click += new System.EventHandler(this.toolStripMenuItemChangeLabel_Click);
+            // 
+            // toolStripMenuItemChangeColor
+            // 
+            this.toolStripMenuItemChangeColor.Name = "toolStripMenuItemChangeColor";
+            this.toolStripMenuItemChangeColor.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemChangeColor.Text = "Change color";
+            // 
+            // toolStripMenuItemDelete
+            // 
+            this.toolStripMenuItemDelete.Name = "toolStripMenuItemDelete";
+            this.toolStripMenuItemDelete.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemDelete.Text = "Delete";
+
+            this.listBox_tapeManager.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.listBox_tapeManager.ItemHeight = 50;
+            this.listBox_tapeManager.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox_DrawItem);
+            this.listBox_tapeManager.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDoubleClick);
+            this.listBox_tapeManager.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDown);
+
             listOfTapes = TapeList.Load(TapeListFile);
-            listBox.Items.AddRange(listOfTapes.Tapes.ToArray());
+            listBox_tapeManager.Items.AddRange(listOfTapes.Tapes.ToArray());
         }
 
         private void buttonCreateTape_Click(object sender, EventArgs e)

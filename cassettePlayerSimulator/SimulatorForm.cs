@@ -94,12 +94,12 @@ namespace cassettePlayerSimulator
 
         private void buttonImport_Click(object sender, EventArgs e)
         {
-            tapeManager.PerformImport_tapeManager();
+            tapeManager.PerformImport();
         }
 
         private void LoadTape(TapeSide tapeSide)
         {
-            string path = Path.Combine(tapeManager.TapesDirectory_tapeManager, tapeSide.FilePath);
+            string path = Path.Combine(tapeManager.TapesDirectory, tapeSide.FilePath);
 
             WAVFile wav = null;
             ProgressForm progressForm = new ProgressForm("Loading tape...");
@@ -220,23 +220,23 @@ namespace cassettePlayerSimulator
 
             tapeManager = new TapeManager(listBox);
 
-            tapeManager.LoadedTapeChanged_tapeManager += TapeManager_LoadedTapeChanged;
+            tapeManager.LoadedTapeChanged += TapeManager_LoadedTapeChanged;
         }
 
         private void TapeManager_LoadedTapeChanged()
         {
-            if (tapeManager.LoadedTape_tapeManager != loadedTape)
+            if (tapeManager.LoadedTape != loadedTape)
             {
-                if (tapeManager.LoadedTape_tapeManager != null)
+                if (tapeManager.LoadedTape != null)
                 {
-                    LoadTape(tapeManager.LoadedTape_tapeManager);
+                    LoadTape(tapeManager.LoadedTape);
                 }
             }
         }
 
         private void buttonCreateTape_Click(object sender, EventArgs e)
         {
-            tapeManager.CreateTape_tapeManager();
+            tapeManager.CreateTape();
         }
 
         private void buttonSaveList_Click(object sender, EventArgs e)
@@ -248,7 +248,7 @@ namespace cassettePlayerSimulator
                 loadedTape.Position = pos;
             }
 
-            tapeManager.SaveList_tapeManager();
+            tapeManager.SaveList();
         }
 
         private void DisengageButtons()
@@ -410,7 +410,7 @@ namespace cassettePlayerSimulator
                 loadedTape.Position = music.GetCurrentPositionSeconds();
                 loadedTape = null;
 
-                tapeManager.EjectTape_tapeManager();
+                tapeManager.EjectTape();
 
                 ejectDown.UpdatePlayback(true);
             }

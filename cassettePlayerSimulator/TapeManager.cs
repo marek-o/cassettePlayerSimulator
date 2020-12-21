@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Serialization;
-using Utils;
 
 namespace cassettePlayerSimulator
 {
@@ -19,19 +11,15 @@ namespace cassettePlayerSimulator
     {
         private TapeList listOfTapes = new TapeList();
 
-        //to be extracted
-        public string TapesDirectory_tapeManager =>
+        public string TapesDirectory =>
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "Cassette Player Simulator");
 
-        //to be extracted
-        private string TapeFile => Path.Combine(TapesDirectory_tapeManager, "tape.wav");
+        private string TapeFile => Path.Combine(TapesDirectory, "tape.wav");
 
-        //to be extracted
-        private string TapeListFile => Path.Combine(TapesDirectory_tapeManager, "tapes.xml");
+        private string TapeListFile => Path.Combine(TapesDirectory, "tapes.xml");
 
-        //to be extracted
-        public void PerformImport_tapeManager()
+        public void PerformImport()
         {
             string inputFileFullPath;
 
@@ -47,7 +35,7 @@ namespace cassettePlayerSimulator
                 inputFileFullPath = dialog.FileName;
             }
 
-            Directory.CreateDirectory(TapesDirectory_tapeManager);
+            Directory.CreateDirectory(TapesDirectory);
 
             if (File.Exists(TapeFile))
             {
@@ -69,7 +57,6 @@ namespace cassettePlayerSimulator
             progressForm.ShowDialog();
         }
 
-        //to be extracted
         private void Import(string inputFilePath, IProgress<float> progress = null)
         {
             float[] buffer = new float[1024 * 128];
@@ -100,89 +87,70 @@ namespace cassettePlayerSimulator
             }
         }
 
-        //to be extracted
-        public event Action LoadedTapeChanged_tapeManager = () => { };
+        public event Action LoadedTapeChanged = () => { };
 
-        //to be extracted
-        private TapeSide loadedTape_tapeManager;
+        private TapeSide loadedTape;
 
-        //to be extracted
-        public TapeSide LoadedTape_tapeManager
+        public TapeSide LoadedTape
         {
             get
             {
-                return loadedTape_tapeManager;
+                return loadedTape;
             }
             set
             {
-                if (loadedTape_tapeManager != value)
+                if (loadedTape != value)
                 {
-                    loadedTape_tapeManager = value;
-                    LoadedTapeChanged_tapeManager();
+                    loadedTape = value;
+                    LoadedTapeChanged();
                 }
             }
         }
 
-        //to be extracted
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemChangeLabel;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemChangeColor;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDelete;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem toolStripMenuItemChangeLabel;
+        private ToolStripMenuItem toolStripMenuItemChangeColor;
+        private ToolStripMenuItem toolStripMenuItemDelete;
 
-        //to be extracted
-        private ListBox listBox_tapeManager;
+        private ListBox listBox;
 
-        //to be extracted
         public void TapeManager_constructor(ListBox listBox)
         {
-            listBox_tapeManager = listBox;
+            this.listBox = listBox;
 
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip();
-            this.toolStripMenuItemChangeLabel = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemChangeColor = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip1 = new ContextMenuStrip();
+            this.toolStripMenuItemChangeLabel = new ToolStripMenuItem();
+            this.toolStripMenuItemChangeColor = new ToolStripMenuItem();
+            this.toolStripMenuItemDelete = new ToolStripMenuItem();
 
-            // 
-            // contextMenuStrip1
-            // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemChangeLabel,
             this.toolStripMenuItemChangeColor,
             this.toolStripMenuItemDelete});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(181, 92);
-            // 
-            // toolStripMenuItemChangeLabel
-            // 
             this.toolStripMenuItemChangeLabel.Name = "toolStripMenuItemChangeLabel";
             this.toolStripMenuItemChangeLabel.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemChangeLabel.Text = "Change label";
             this.toolStripMenuItemChangeLabel.Click += new System.EventHandler(this.toolStripMenuItemChangeLabel_Click);
-            // 
-            // toolStripMenuItemChangeColor
-            // 
             this.toolStripMenuItemChangeColor.Name = "toolStripMenuItemChangeColor";
             this.toolStripMenuItemChangeColor.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemChangeColor.Text = "Change color";
-            // 
-            // toolStripMenuItemDelete
-            // 
             this.toolStripMenuItemDelete.Name = "toolStripMenuItemDelete";
             this.toolStripMenuItemDelete.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemDelete.Text = "Delete";
 
-            this.listBox_tapeManager.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.listBox_tapeManager.ItemHeight = 50;
-            this.listBox_tapeManager.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox_DrawItem);
-            this.listBox_tapeManager.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDoubleClick);
-            this.listBox_tapeManager.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDown);
+            this.listBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.listBox.ItemHeight = 50;
+            this.listBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox_DrawItem);
+            this.listBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDoubleClick);
+            this.listBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDown);
 
             listOfTapes = TapeList.Load(TapeListFile);
-            listBox_tapeManager.Items.AddRange(listOfTapes.Tapes.ToArray());
+            this.listBox.Items.AddRange(listOfTapes.Tapes.ToArray());
         }
 
-        //to be extracted
-        public void CreateTape_tapeManager()
+        public void CreateTape()
         {
             using (CreateTapeForm form = new CreateTapeForm(false))
             {
@@ -203,12 +171,11 @@ namespace cassettePlayerSimulator
                     progressForm.ShowDialog();
 
                     listOfTapes.Tapes.Add(tape);
-                    listBox_tapeManager.Items.Add(tape);
+                    listBox.Items.Add(tape);
                 }
             }
         }
 
-        //to be extracted
         private Tape CreateTape(float sideLengthSeconds, string labelSideA, string labelSideB, Color color, IProgress<float> progress = null)
         {
             string filenameA, filenameB;
@@ -221,8 +188,8 @@ namespace cassettePlayerSimulator
             }
             while (File.Exists(filenameA) || File.Exists(filenameB));
 
-            var pathA = Path.Combine(TapesDirectory_tapeManager, filenameA);
-            var pathB = Path.Combine(TapesDirectory_tapeManager, filenameB);
+            var pathA = Path.Combine(TapesDirectory, filenameA);
+            var pathB = Path.Combine(TapesDirectory, filenameB);
 
             int seconds = (int)sideLengthSeconds;
 
@@ -256,21 +223,18 @@ namespace cassettePlayerSimulator
             return tape;
         }
 
-        //to be extracted
-        public void SaveList_tapeManager()
+        public void SaveList()
         {
             listOfTapes.Save(TapeListFile);
         }
 
-        //to be extracted
-        public void EjectTape_tapeManager()
+        public void EjectTape()
         {
-            LoadedTape_tapeManager = null;
+            LoadedTape = null;
 
-            listBox_tapeManager.Invalidate();
+            listBox.Invalidate();
         }
 
-        //to be extracted
         private void listBox_DrawItem(object sender, DrawItemEventArgs e)
         {
             var tape = listOfTapes.Tapes[e.Index];
@@ -283,10 +247,9 @@ namespace cassettePlayerSimulator
             e.Graphics.DrawRectangle(Pens.Black, e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 2, e.Bounds.Height - 2);
         }
 
-        //to be extracted
         private void RenderListItemSide(TapeSide side, Graphics g, Rectangle bounds, string prefix, bool isSelected)
         {
-            bool isLoaded = side == loadedTape_tapeManager;
+            bool isLoaded = side == loadedTape;
 
             var backBrush = isLoaded ? Brushes.LimeGreen :
                 isSelected ? SystemBrushes.Highlight : SystemBrushes.Window;
@@ -296,7 +259,6 @@ namespace cassettePlayerSimulator
                 bounds, Color.Black, TextFormatFlags.Left);
         }
 
-        //to be extracted
         private void listBox_MouseDown(object sender, MouseEventArgs e)
         {
             TapeSide side = GetClickedItem(e);
@@ -304,26 +266,23 @@ namespace cassettePlayerSimulator
             if (side != null && e.Button == MouseButtons.Right)
             {
                 rightClickedTape = side;
-                contextMenuStrip1.Show(listBox_tapeManager.PointToScreen(e.Location));
+                contextMenuStrip1.Show(listBox.PointToScreen(e.Location));
             }
         }
 
-        //to be extracted
-        TapeSide rightClickedTape = null;
+        private TapeSide rightClickedTape = null;
 
-        //to be extracted
         private void listBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             TapeSide side = GetClickedItem(e);
 
-            LoadedTape_tapeManager = side;
+            LoadedTape = side;
         }
 
-        //to be extracted
         private TapeSide GetClickedItem(MouseEventArgs e)
         {
-            var i = listBox_tapeManager.IndexFromPoint(e.Location);
-            var rect = listBox_tapeManager.GetItemRectangle(i);
+            var i = listBox.IndexFromPoint(e.Location);
+            var rect = listBox.GetItemRectangle(i);
             bool upperHalf = e.Location.Y < (rect.Top + rect.Height / 2);
 
             if (i >= 0 && i < listOfTapes.Tapes.Count)
@@ -337,7 +296,6 @@ namespace cassettePlayerSimulator
             return null;
         }
 
-        //to be extracted
         private void toolStripMenuItemChangeLabel_Click(object sender, EventArgs e)
         {
             if (rightClickedTape != null)

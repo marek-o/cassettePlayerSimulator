@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
 
 namespace cassettePlayerSimulator
 {
@@ -60,6 +61,20 @@ namespace cassettePlayerSimulator
         private Bitmap imgScaled;
 
         private SizeF baseSize;
+
+        private Color cassetteColor = Color.Red;
+        public Color CassetteColor
+        {
+            get
+            {
+                return cassetteColor;
+            }
+            set
+            {
+                cassetteColor = value;
+                Invalidate();
+            }
+        }
 
         private bool cassetteInserted = false;
         public bool CassetteInserted
@@ -155,7 +170,12 @@ namespace cassettePlayerSimulator
                 imgScaled = new Bitmap((int)destRect.Width, (int)destRect.Height);
 
                 using (Graphics g = Graphics.FromImage(imgScaled))
+                using (var b = new SolidBrush(CassetteColor))
                 {
+                    g.FillRectangle(b, 50 * scale, 200 * scale, 230 * scale, 400 * scale);
+                    g.FillRectangle(b, 980 * scale, 200 * scale, 230 * scale, 400 * scale);
+                    g.FillRectangle(b, 50 * scale, 200 * scale, 1200 * scale, 70 * scale);
+                    g.FillRectangle(b, 50 * scale, 480 * scale, 1200 * scale, 130 * scale);
                     g.DrawImage(img, destRect, new RectangleF(0, 0, img.Width, img.Height), GraphicsUnit.Pixel);
                 }
             }

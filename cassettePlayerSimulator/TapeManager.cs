@@ -262,6 +262,7 @@ namespace cassettePlayerSimulator
 
         private void ToolStripMenuItemLoad_Click(object sender, EventArgs e)
         {
+            LoadedTape = rightClickedTape;
         }
 
         private void ToolStripMenuItemEdit_Click(object sender, EventArgs e)

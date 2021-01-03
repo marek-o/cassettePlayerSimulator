@@ -268,8 +268,6 @@ namespace cassettePlayerSimulator
         {
             if (rightClickedTape != null)
             {
-                MessageBox.Show(string.Format("changing label of {0} {1}", rightClickedTape.FilePath, rightClickedTape.Length));
-
                 using (var form = new EditTapeForm(true))
                 {
                     //FIXME
@@ -277,6 +275,7 @@ namespace cassettePlayerSimulator
 
                     form.LabelSideA = tape.SideA.Label;
                     form.LabelSideB = tape.SideB.Label;
+                    form.Color = tape.Color;
 
                     var result = form.ShowDialog();
 
@@ -284,6 +283,7 @@ namespace cassettePlayerSimulator
                     {
                         tape.SideA.Label = form.LabelSideA;
                         tape.SideB.Label = form.LabelSideB;
+                        tape.Color = form.Color;
                     }
                 }
 

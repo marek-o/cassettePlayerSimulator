@@ -56,7 +56,18 @@ namespace cassettePlayerSimulator
             }
         }
 
-        public Color Color => colorDialog1.Color;
+        public Color Color
+        {
+            get
+            {
+                return colorDialog1.Color;
+            }
+            set
+            {
+                colorDialog1.Color = value;
+                panelColor.BackColor = value;
+            }
+        }
 
         public float SideLengthSeconds
         {

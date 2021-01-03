@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using System.Drawing;
 
 namespace cassettePlayerSimulator
 {
@@ -59,6 +60,24 @@ namespace cassettePlayerSimulator
     {
         public TapeSide SideA;
         public TapeSide SideB;
+
+        [XmlIgnore]
+        public Color Color = Color.Red;
+
+        [XmlElement("Color")]
+        public string ColorString
+        {
+            get
+            {
+                var i = Color.ToArgb();
+                return Convert.ToString(i, 16);
+            }
+            set
+            {
+                var i = Convert.ToInt32(value, 16);
+                Color = Color.FromArgb(i);
+            }
+        }
 
         public Tape()
         {

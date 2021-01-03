@@ -58,11 +58,11 @@
     <Compile Include="Counter.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CreateTapeForm.cs">
+    <Compile Include="EditTapeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateTapeForm.Designer.cs">
-      <DependentUpon>CreateTapeForm.cs</DependentUpon>
+    <Compile Include="EditTapeForm.Designer.cs">
+      <DependentUpon>EditTapeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ProgressForm.cs">
       <SubType>Form</SubType>
@@ -89,8 +89,8 @@
     </Compile>
     <Compile Include="Tape.cs" />
     <Compile Include="TapeManager.cs" />
-    <EmbeddedResource Include="CreateTapeForm.resx">
-      <DependentUpon>CreateTapeForm.cs</DependentUpon>
+    <EmbeddedResource Include="EditTapeForm.resx">
+      <DependentUpon>EditTapeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProgressForm.resx">
       <DependentUpon>ProgressForm.cs</DependentUpon>

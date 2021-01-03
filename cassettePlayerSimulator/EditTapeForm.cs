@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace cassettePlayerSimulator
 {
-    public partial class CreateTapeForm : Form
+    public partial class EditTapeForm : Form
     {
-        public CreateTapeForm(bool editMode)
+        public EditTapeForm(bool editMode)
         {
             InitializeComponent();
 

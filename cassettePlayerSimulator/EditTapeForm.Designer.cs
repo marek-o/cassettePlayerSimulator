@@ -1,6 +1,6 @@
 ﻿namespace cassettePlayerSimulator
 {
-    partial class CreateTapeForm
+    partial class EditTapeForm
     {
         /// <summary>
         /// Required designer variable.

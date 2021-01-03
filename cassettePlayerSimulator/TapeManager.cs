@@ -108,8 +108,8 @@ namespace cassettePlayerSimulator
         }
 
         private ContextMenuStrip contextMenuStrip1;
-        private ToolStripMenuItem toolStripMenuItemChangeLabel;
-        private ToolStripMenuItem toolStripMenuItemChangeColor;
+        private ToolStripMenuItem toolStripMenuItemLoad;
+        private ToolStripMenuItem toolStripMenuItemEdit;
         private ToolStripMenuItem toolStripMenuItemDelete;
 
         private ListBox listBox;
@@ -260,7 +260,11 @@ namespace cassettePlayerSimulator
             return null;
         }
 
-        private void toolStripMenuItemChangeLabel_Click(object sender, EventArgs e)
+        private void ToolStripMenuItemLoad_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void ToolStripMenuItemEdit_Click(object sender, EventArgs e)
         {
             if (rightClickedTape != null)
             {
@@ -286,37 +290,36 @@ namespace cassettePlayerSimulator
             }
         }
 
+        private void ToolStripMenuItemDelete_Click(object sender, EventArgs e)
+        {
+        }
+
         public TapeManager(ListBox listBox)
         {
             this.listBox = listBox;
 
             this.contextMenuStrip1 = new ContextMenuStrip();
-            this.toolStripMenuItemChangeLabel = new ToolStripMenuItem();
-            this.toolStripMenuItemChangeColor = new ToolStripMenuItem();
+            this.toolStripMenuItemLoad = new ToolStripMenuItem();
+            this.toolStripMenuItemEdit = new ToolStripMenuItem();
             this.toolStripMenuItemDelete = new ToolStripMenuItem();
 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemChangeLabel,
-            this.toolStripMenuItemChangeColor,
+            this.contextMenuStrip1.Items.AddRange(new ToolStripItem[] {
+            this.toolStripMenuItemLoad,
+            this.toolStripMenuItemEdit,
             this.toolStripMenuItemDelete});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 92);
-            this.toolStripMenuItemChangeLabel.Name = "toolStripMenuItemChangeLabel";
-            this.toolStripMenuItemChangeLabel.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItemChangeLabel.Text = "Change label";
-            this.toolStripMenuItemChangeLabel.Click += new System.EventHandler(this.toolStripMenuItemChangeLabel_Click);
-            this.toolStripMenuItemChangeColor.Name = "toolStripMenuItemChangeColor";
-            this.toolStripMenuItemChangeColor.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItemChangeColor.Text = "Change color";
-            this.toolStripMenuItemDelete.Name = "toolStripMenuItemDelete";
-            this.toolStripMenuItemDelete.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemLoad.Text = "Load";
+            this.toolStripMenuItemLoad.Font = new Font(contextMenuStrip1.Font, FontStyle.Bold);
+            this.toolStripMenuItemLoad.Click += ToolStripMenuItemLoad_Click;
+            this.toolStripMenuItemEdit.Text = "Edit";
+            this.toolStripMenuItemEdit.Click += ToolStripMenuItemEdit_Click;
             this.toolStripMenuItemDelete.Text = "Delete";
+            this.toolStripMenuItemDelete.Click += ToolStripMenuItemDelete_Click;
 
-            this.listBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.listBox.DrawMode = DrawMode.OwnerDrawFixed;
             this.listBox.ItemHeight = 50;
-            this.listBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox_DrawItem);
-            this.listBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDoubleClick);
-            this.listBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDown);
+            this.listBox.DrawItem += listBox_DrawItem;
+            this.listBox.MouseDoubleClick += listBox_MouseDoubleClick;
+            this.listBox.MouseDown += listBox_MouseDown;
 
             listOfTapes = TapeList.Load(TapeListFile);
             this.listBox.Items.AddRange(listOfTapes.Tapes.ToArray());

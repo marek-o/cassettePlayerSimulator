@@ -93,6 +93,20 @@ namespace cassettePlayerSimulator
             }
         }
 
+        private string cassetteLabel = "";
+        public string CassetteLabel
+        {
+            get
+            {
+                return cassetteLabel;
+            }
+            set
+            {
+                cassetteLabel = value;
+                Invalidate();
+            }
+        }
+
         private bool headEngaged = false;
 
         public bool HeadEngaged
@@ -202,6 +216,10 @@ namespace cassettePlayerSimulator
             if (CassetteInserted)
             {
                 e.Graphics.DrawImage(imgScaled, cassetteOffset);
+
+                TextRenderer.DrawText(e.Graphics, cassetteLabel, Font,
+                    new Rectangle((int)(266 * scale), (int)(153 * scale), (int)(813 * scale), (int)(70 * scale)),
+                    Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
             }
 
             e.Graphics.DrawRectangle(Pens.Black, 0, 0, Width - 1, Height - 1);

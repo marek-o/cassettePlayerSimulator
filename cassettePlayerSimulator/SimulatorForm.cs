@@ -34,7 +34,11 @@ namespace cassettePlayerSimulator
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            labelDebug.Text = string.Format("{0}\r\npaused:{1}\r\n{2:F2}", State.ToString(), isPauseFullyPressed.ToString(), music != null ? music.GetCurrentPositionSeconds() : 0.0f);
+            labelDebug.Text = string.Format("{0}\r\npaused:{1}\r\n{2:F2}\r\nscale {3:F3}",
+                State.ToString(),
+                isPauseFullyPressed.ToString(),
+                music != null ? music.GetCurrentPositionSeconds() : 0.0f,
+                cassetteControl1.scale);
         }
 
         private Stopwatch rewindStopwatch = new Stopwatch();
@@ -131,6 +135,7 @@ namespace cassettePlayerSimulator
             State = PlayerState.STOPPED;
             cassetteControl1.CassetteInserted = true;
             cassetteControl1.CassetteColor = loadedTape.Parent.Color;
+            cassetteControl1.CassetteLabel = loadedTape.Label;
             cassetteControl1.SetTapeDuration(music.GetLengthSeconds());
             cassetteButtons.Enabled = true;
 

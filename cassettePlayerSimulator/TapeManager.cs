@@ -271,8 +271,7 @@ namespace cassettePlayerSimulator
             {
                 using (var form = new EditTapeForm(true))
                 {
-                    //FIXME
-                    var tape = listOfTapes.Tapes.First(t => t.SideA == rightClickedTape || t.SideB == rightClickedTape);
+                    var tape = rightClickedTape.Parent;
 
                     form.LabelSideA = tape.SideA.Label;
                     form.LabelSideB = tape.SideB.Label;

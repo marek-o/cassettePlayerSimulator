@@ -34,7 +34,7 @@ namespace cassettePlayerSimulator
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            labelDebug.Text = string.Format("{0}\r\npaused:{1}\r\n{2:F2}", State.ToString(), isPaused.ToString(), music != null ? music.GetCurrentPositionSeconds() : 0.0f);
+            labelDebug.Text = string.Format("{0}\r\npaused:{1}\r\n{2:F2}", State.ToString(), isPauseFullyPressed.ToString(), music != null ? music.GetCurrentPositionSeconds() : 0.0f);
         }
 
         private Stopwatch rewindStopwatch = new Stopwatch();
@@ -59,14 +59,15 @@ namespace cassettePlayerSimulator
             }
 
             cassetteControl1.HeadEngaged = State == PlayerState.PLAYING || State == PlayerState.RECORDING;
+            cassetteControl1.RollerEngaged = (State == PlayerState.PLAYING || State == PlayerState.RECORDING) && !isTapePaused;
             cassetteControl1.AnimateSpools(music.GetCurrentPositionSeconds());
 
             counter1.SetPosition(-cassetteControl1.GetSpoolAngle(false, music.GetCurrentPositionSeconds()) / 360 / 2);
 
             if ((State == PlayerState.FF
                 || State == PlayerState.REWIND
-                || (State == PlayerState.RECORDING && !isPaused)
-                || (State == PlayerState.PLAYING && !isPaused))
+                || (State == PlayerState.RECORDING && !isPauseFullyPressed)
+                || (State == PlayerState.PLAYING && !isPauseFullyPressed))
                 &&
                 (music.position == 0.0
                 || music.position == music.LastSafePosition()))
@@ -90,7 +91,8 @@ namespace cassettePlayerSimulator
             }
         }
 
-        private bool isPaused = false; //is pause button engaged, this is different from playback pause
+        private bool isPauseFullyPressed = false; //is pause button engaged, this is different from playback pause
+        private bool isTapePaused = false;
 
         private void buttonImport_Click(object sender, EventArgs e)
         {
@@ -292,25 +294,28 @@ namespace cassettePlayerSimulator
         {
             int sampleCount = slowChange ? 44100 * 2 / 5 : 44100 * 2 / 20;
 
-            if (!isPaused)
+            if (!isPauseFullyPressed)
             {
                 if (setPlaying)
                 {
                     music.RampSpeed(0.0f, 1.0f, sampleCount);
                     music.UpdatePlayback(true);
+                    isTapePaused = false;
                 }
                 else
                 {
                     music.RampSpeed(1.0f, 0.0f, sampleCount);
+                    isTapePaused = true;
                 }
             }
         }
 
         private void SetRecording(bool isRecording)
         {
-            if (!isPaused)
+            if (!isPauseFullyPressed)
             {
                 music.UpdateRecording(isRecording);
+                isTapePaused = !isRecording;
             }
         }
 
@@ -432,7 +437,7 @@ namespace cassettePlayerSimulator
 
         private void PauseButton_MouseDown(CancelEventArgs e)
         {
-            if (!isPaused)
+            if (!isPauseFullyPressed)
             {
                 pauseDown.UpdatePlayback(true);
 
@@ -453,15 +458,15 @@ namespace cassettePlayerSimulator
 
         private void PauseButton_MouseUp()
         {
-            if (!isPaused)
+            if (!isPauseFullyPressed)
             {
                 pauseUp.UpdatePlayback(true);
-                isPaused = true;
+                isPauseFullyPressed = true;
             }
             else
             {
                 unpauseUp.UpdatePlayback(true);
-                isPaused = false;
+                isPauseFullyPressed = false;
 
                 if (State == PlayerState.PLAYING)
                 {

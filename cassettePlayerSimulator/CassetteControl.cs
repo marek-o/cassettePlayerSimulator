@@ -48,7 +48,7 @@ namespace cassettePlayerSimulator
         internal PointF centerRight => new PointF(cassetteOffset.X + 899 * scale, cassetteOffset.Y + 377 * scale);
 
         internal PointF capstan => new PointF(cassetteOffset.X + 942 * scale, cassetteOffset.Y + 774 * scale);
-        internal PointF roller => new PointF(cassetteOffset.X + 942 * scale, cassetteOffset.Y + (headEngaged ? 833 : 863) * scale);
+        internal PointF roller => new PointF(cassetteOffset.X + 942 * scale, cassetteOffset.Y + (rollerEngaged ? 833 : 863) * scale);
         internal PointF head => new PointF(cassetteOffset.X + 632 * scale, cassetteOffset.Y + (headEngaged ? 788 : 843) * scale);
 
         internal float capstanRadius => 10 * scale;
@@ -102,6 +102,19 @@ namespace cassettePlayerSimulator
                 if (headEngaged != value)
                 {
                     headEngaged = value;
+                    Invalidate();
+                }
+            }
+        }
+
+        private bool rollerEngaged = false;
+        public bool RollerEngaged
+        {
+            set
+            {
+                if (rollerEngaged != value)
+                {
+                    rollerEngaged = value;
                     Invalidate();
                 }
             }

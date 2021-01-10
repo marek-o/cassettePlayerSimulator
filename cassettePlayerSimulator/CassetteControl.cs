@@ -32,6 +32,8 @@ namespace cassettePlayerSimulator
         private Brush axisBrush = new SolidBrush(Color.FromArgb(192, 192, 192));
         private Pen tapePen = new Pen(Color.FromArgb(128, 64, 0));
 
+        private Font tapeSideFont = new Font(FontFamily.GenericSansSerif, 15.0f, FontStyle.Bold);
+
         public float scale;
 
         internal float spoolMinRadius => 144 * scale;
@@ -103,6 +105,16 @@ namespace cassettePlayerSimulator
             set
             {
                 cassetteLabel = value;
+                Invalidate();
+            }
+        }
+
+        private bool isSideA = true;
+        public bool IsSideA
+        {
+            set
+            {
+                isSideA = value;
                 Invalidate();
             }
         }
@@ -220,6 +232,11 @@ namespace cassettePlayerSimulator
                 TextRenderer.DrawText(e.Graphics, cassetteLabel, Font,
                     new Rectangle((int)(266 * scale), (int)(153 * scale), (int)(813 * scale), (int)(70 * scale)),
                     Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
+
+                TextRenderer.DrawText(e.Graphics, isSideA ? "A" : "B", tapeSideFont,
+                    new Rectangle((int)(180 * scale), (int)(142 * scale), (int)(90 * scale), (int)(90 * scale)),
+                    Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPadding);
+
             }
 
             e.Graphics.DrawRectangle(Pens.Black, 0, 0, Width - 1, Height - 1);

@@ -136,6 +136,7 @@ namespace cassettePlayerSimulator
             cassetteControl1.CassetteInserted = true;
             cassetteControl1.CassetteColor = loadedTape.Parent.Color;
             cassetteControl1.CassetteLabel = loadedTape.Label;
+            cassetteControl1.IsSideA = loadedTape.Parent.SideA == loadedTape;
             cassetteControl1.SetTapeDuration(music.GetLengthSeconds());
             cassetteButtons.Enabled = true;
 

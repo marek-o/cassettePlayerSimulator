@@ -35,6 +35,12 @@ namespace cassettePlayerSimulator
                 }
             }
 
+            foreach (Tape t in listOfTapes.Tapes)
+            {
+                t.SideA.Parent = t;
+                t.SideB.Parent = t;
+            }
+
             return listOfTapes;
         }
 
@@ -81,8 +87,8 @@ namespace cassettePlayerSimulator
 
         public Tape()
         {
-            SideA = new TapeSide();
-            SideB = new TapeSide();
+            SideA = new TapeSide() { Parent = this };
+            SideB = new TapeSide() { Parent = this };
         }
 
         public Tape(float sideLengthSeconds)
@@ -105,6 +111,9 @@ namespace cassettePlayerSimulator
         public string FilePath;
         public float Position;
         public float Length;
+
+        [XmlIgnore]
+        public Tape Parent;
 
         public TapeSide()
         {

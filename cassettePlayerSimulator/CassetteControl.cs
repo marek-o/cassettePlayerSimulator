@@ -62,6 +62,7 @@ namespace cassettePlayerSimulator
 
         private SizeF baseSize;
 
+        private Color prevCassetteColor = Color.Transparent;
         private Color cassetteColor = Color.Red;
         public Color CassetteColor
         {
@@ -164,13 +165,18 @@ namespace cassettePlayerSimulator
             e.Graphics.FillRectangle(axisBrush, head.X + headWidth / 2, head.Y - headRoundHeight / 4,
                 5 * scale, headRoundHeight / 4 + headRoundHeight + headHeight);
 
-            if (imgScaled == null || imgScaled.Width != (int)destRect.Width || imgScaled.Height != (int)destRect.Height)
+            if (imgScaled == null
+                || imgScaled.Width != (int)destRect.Width
+                || imgScaled.Height != (int)destRect.Height
+                || prevCassetteColor != cassetteColor)
             {
                 imgScaled?.Dispose();
                 imgScaled = new Bitmap((int)destRect.Width, (int)destRect.Height);
 
+                prevCassetteColor = cassetteColor;
+
                 using (Graphics g = Graphics.FromImage(imgScaled))
-                using (var b = new SolidBrush(CassetteColor))
+                using (var b = new SolidBrush(cassetteColor))
                 {
                     g.FillRectangle(b, 50 * scale, 200 * scale, 230 * scale, 400 * scale);
                     g.FillRectangle(b, 980 * scale, 200 * scale, 230 * scale, 400 * scale);

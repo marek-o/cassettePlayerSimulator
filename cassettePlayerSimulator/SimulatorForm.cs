@@ -128,6 +128,7 @@ namespace cassettePlayerSimulator
 
             State = PlayerState.STOPPED;
             cassetteControl1.CassetteInserted = true;
+            cassetteControl1.CassetteColor = loadedTape.Parent.Color;
             cassetteControl1.SetTapeDuration(music.GetLengthSeconds());
             cassetteButtons.Enabled = true;
 

@@ -71,26 +71,16 @@ namespace cassettePlayerSimulator
             {
                 loadedTape = value;
 
-                spoolControlLeft.CassetteInserted = cassetteInserted;
-                spoolControlRight.CassetteInserted = cassetteInserted;
+                spoolControlLeft.CassetteInserted = value != null;
+                spoolControlRight.CassetteInserted = value != null;
 
                 Invalidate();
             }
         }
 
         private Color prevCassetteColor = Color.Transparent;
-        private Color cassetteColor => loadedTape?.Parent.Color ?? Color.Transparent;
-
-        private bool cassetteInserted => loadedTape != null;
-
-        private string cassetteLabel => loadedTape?.Label ?? "";
-
-        private bool isSideA => loadedTape?.Parent.SideA == loadedTape;
-
-        private string cassetteLengthString => ((int)Math.Round((loadedTape?.Length ?? 0) / 900.0f) * 30).ToString();
 
         private bool headEngaged = false;
-
         public bool HeadEngaged
         {
             set
@@ -148,7 +138,7 @@ namespace cassettePlayerSimulator
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
-            if (cassetteInserted)
+            if (loadedTape != null)
             {
                 DrawTapeSpoolOuter(e.Graphics, centerLeft, spoolLeftRadius);
                 DrawTapeSpoolOuter(e.Graphics, centerRight, spoolRightRadius);
@@ -174,6 +164,8 @@ namespace cassettePlayerSimulator
             e.Graphics.FillRectangle(axisBrush, head.X + headWidth / 2, head.Y - headRoundHeight / 4,
                 5 * scale, headRoundHeight / 4 + headRoundHeight + headHeight);
 
+            Color cassetteColor = loadedTape?.Parent.Color ?? Color.Transparent;
+
             if (imgScaled == null
                 || imgScaled.Width != (int)destRect.Width
                 || imgScaled.Height != (int)destRect.Height
@@ -195,19 +187,19 @@ namespace cassettePlayerSimulator
                 }
             }
 
-            if (cassetteInserted)
+            if (loadedTape != null)
             {
                 e.Graphics.DrawImage(imgScaled, cassetteOffset);
 
-                TextRenderer.DrawText(e.Graphics, cassetteLabel, Font,
+                TextRenderer.DrawText(e.Graphics, loadedTape.Label, Font,
                     new Rectangle((int)(266 * scale), (int)(153 * scale), (int)(813 * scale), (int)(70 * scale)),
                     Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
 
-                TextRenderer.DrawText(e.Graphics, isSideA ? "A" : "B", tapeSideFont,
+                TextRenderer.DrawText(e.Graphics, (loadedTape.Parent.SideA == loadedTape) ? "A" : "B", tapeSideFont,
                     new Rectangle((int)(180 * scale), (int)(142 * scale), (int)(90 * scale), (int)(90 * scale)),
                     Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPadding);
 
-                TextRenderer.DrawText(e.Graphics, cassetteLengthString, tapeSideFont,
+                TextRenderer.DrawText(e.Graphics, ((int)Math.Round(loadedTape.Length / 900.0f) * 30).ToString(), tapeSideFont,
                     new Rectangle((int)(1112 * scale), (int)(410 * scale), (int)(90 * scale), (int)(90 * scale)),
                     Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPadding);
             }

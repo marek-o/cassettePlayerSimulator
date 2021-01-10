@@ -206,7 +206,7 @@ namespace cassettePlayerSimulator
             bool isSelected = (e.State & DrawItemState.Selected) != 0;
 
             RenderListItemSide(tape.SideA, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height / 2), "Side A", isSelected);
-            RenderListItemSide(tape.SideB, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y + e.Bounds.Height / 2, e.Bounds.Width, e.Bounds.Height / 2), "Side B", isSelected);
+            RenderListItemSide(tape.SideB, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y + e.Bounds.Height / 2 - 1, e.Bounds.Width, e.Bounds.Height / 2), "Side B", isSelected);
 
             e.Graphics.DrawRectangle(Pens.Black, e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 2, e.Bounds.Height - 2);
         }
@@ -215,12 +215,31 @@ namespace cassettePlayerSimulator
         {
             bool isLoaded = side == loadedTape;
 
-            var backBrush = isLoaded ? Brushes.LimeGreen :
-                isSelected ? SystemBrushes.Highlight : SystemBrushes.Window;
+            var backBrush = isSelected ? SystemBrushes.Highlight : SystemBrushes.Window;
             g.FillRectangle(backBrush, new Rectangle(bounds.X, bounds.Y, bounds.Width - 1, bounds.Height - 1));
 
-            TextRenderer.DrawText(g, string.Format("{3}: {0} ({1}) ({2})", side.Label, side.FilePath, side.Length, prefix), SystemFonts.DefaultFont,
-                bounds, Color.Black, TextFormatFlags.Left);
+            int rectSize = bounds.Height - 1;
+
+            var textColor = isSelected ? SystemColors.HighlightText : SystemColors.ControlText;
+
+            using (SolidBrush b = new SolidBrush(side.Parent.Color))
+            {
+                var rect = new Rectangle(bounds.X, bounds.Y, rectSize, rectSize);
+                g.FillRectangle(b, rect);
+
+                if (isLoaded)
+                {
+                    rect.Inflate(-rectSize / 4, -rectSize / 4);
+                    g.FillEllipse(Brushes.Black, rect);
+                }
+            }
+
+            var timeSpan = new TimeSpan(0, 0, (int)side.Length);
+
+            TextRenderer.DrawText(g, string.Format("{0}: {1} ({2})", prefix, side.Label, timeSpan.ToString("mm\\:ss")),
+                SystemFonts.DefaultFont,
+                new Rectangle(bounds.X + rectSize, bounds.Y, bounds.Width - rectSize, bounds.Height),
+                textColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
         }
 
         private void listBox_MouseDown(object sender, MouseEventArgs e)

@@ -119,6 +119,16 @@ namespace cassettePlayerSimulator
             }
         }
 
+        private string cassetteLengthString = "90";
+        public string CassetteLengthString
+        {
+            set
+            {
+                cassetteLengthString = value;
+                Invalidate();
+            }
+        }
+
         private bool headEngaged = false;
 
         public bool HeadEngaged
@@ -237,6 +247,9 @@ namespace cassettePlayerSimulator
                     new Rectangle((int)(180 * scale), (int)(142 * scale), (int)(90 * scale), (int)(90 * scale)),
                     Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPadding);
 
+                TextRenderer.DrawText(e.Graphics, cassetteLengthString, tapeSideFont,
+                    new Rectangle((int)(1112 * scale), (int)(410 * scale), (int)(90 * scale), (int)(90 * scale)),
+                    Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPadding);
             }
 
             e.Graphics.DrawRectangle(Pens.Black, 0, 0, Width - 1, Height - 1);

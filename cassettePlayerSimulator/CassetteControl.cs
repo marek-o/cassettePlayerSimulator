@@ -64,70 +64,30 @@ namespace cassettePlayerSimulator
 
         private SizeF baseSize;
 
+        private TapeSide loadedTape;
+        public TapeSide LoadedTape
+        {
+            set
+            {
+                loadedTape = value;
+
+                spoolControlLeft.CassetteInserted = cassetteInserted;
+                spoolControlRight.CassetteInserted = cassetteInserted;
+
+                Invalidate();
+            }
+        }
+
         private Color prevCassetteColor = Color.Transparent;
-        private Color cassetteColor = Color.Red;
-        public Color CassetteColor
-        {
-            get
-            {
-                return cassetteColor;
-            }
-            set
-            {
-                cassetteColor = value;
-                Invalidate();
-            }
-        }
+        private Color cassetteColor => loadedTape?.Parent.Color ?? Color.Transparent;
 
-        private bool cassetteInserted = false;
-        public bool CassetteInserted
-        {
-            get
-            {
-                return cassetteInserted;
-            }
-            set
-            {
-                cassetteInserted = value;
-                spoolControlLeft.CassetteInserted = value;
-                spoolControlRight.CassetteInserted = value;
-                Invalidate();
-            }
-        }
+        private bool cassetteInserted => loadedTape != null;
 
-        private string cassetteLabel = "";
-        public string CassetteLabel
-        {
-            get
-            {
-                return cassetteLabel;
-            }
-            set
-            {
-                cassetteLabel = value;
-                Invalidate();
-            }
-        }
+        private string cassetteLabel => loadedTape?.Label ?? "";
 
-        private bool isSideA = true;
-        public bool IsSideA
-        {
-            set
-            {
-                isSideA = value;
-                Invalidate();
-            }
-        }
+        private bool isSideA => loadedTape?.Parent.SideA == loadedTape;
 
-        private string cassetteLengthString = "90";
-        public string CassetteLengthString
-        {
-            set
-            {
-                cassetteLengthString = value;
-                Invalidate();
-            }
-        }
+        private string cassetteLengthString => ((int)Math.Round((loadedTape?.Length ?? 0) / 900.0f) * 30).ToString();
 
         private bool headEngaged = false;
 
@@ -188,7 +148,7 @@ namespace cassettePlayerSimulator
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
-            if (CassetteInserted)
+            if (cassetteInserted)
             {
                 DrawTapeSpoolOuter(e.Graphics, centerLeft, spoolLeftRadius);
                 DrawTapeSpoolOuter(e.Graphics, centerRight, spoolRightRadius);
@@ -235,7 +195,7 @@ namespace cassettePlayerSimulator
                 }
             }
 
-            if (CassetteInserted)
+            if (cassetteInserted)
             {
                 e.Graphics.DrawImage(imgScaled, cassetteOffset);
 

@@ -133,11 +133,7 @@ namespace cassettePlayerSimulator
             music.SetCurrentPositionSeconds(tapeSide.Position);
 
             State = PlayerState.STOPPED;
-            cassetteControl1.CassetteInserted = true;
-            cassetteControl1.CassetteColor = loadedTape.Parent.Color;
-            cassetteControl1.CassetteLabel = loadedTape.Label;
-            cassetteControl1.IsSideA = loadedTape.Parent.SideA == loadedTape;
-            cassetteControl1.CassetteLengthString = ((int)Math.Round(loadedTape.Length / 900.0f) * 30).ToString();
+            cassetteControl1.LoadedTape = tapeSide;
             cassetteControl1.SetTapeDuration(music.GetLengthSeconds());
             cassetteButtons.Enabled = true;
 
@@ -419,7 +415,7 @@ namespace cassettePlayerSimulator
             else if (State == PlayerState.STOPPED)
             {
                 State = PlayerState.OPEN;
-                cassetteControl1.CassetteInserted = false;
+                cassetteControl1.LoadedTape = null;
                 loadedTape.Position = music.GetCurrentPositionSeconds();
                 loadedTape = null;
 

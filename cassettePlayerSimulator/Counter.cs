@@ -245,6 +245,7 @@ namespace cassettePlayerSimulator
         {
             base.OnMouseUp(e);
             mouseIsDown = false;
+            Invalidate();
         }
     }
 }

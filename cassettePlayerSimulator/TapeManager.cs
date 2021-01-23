@@ -99,6 +99,17 @@ namespace cassettePlayerSimulator
             }
             set
             {
+                if (value != null)
+                {
+                    var path = Path.Combine(TapesDirectory, value.FilePath);
+
+                    if (!File.Exists(path))
+                    {
+                        MessageBox.Show("File not found: " + path, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
                 if (loadedTape != value)
                 {
                     loadedTape = value;
@@ -265,11 +276,12 @@ namespace cassettePlayerSimulator
         private TapeSide GetClickedItem(MouseEventArgs e)
         {
             var i = listBox.IndexFromPoint(e.Location);
-            var rect = listBox.GetItemRectangle(i);
-            bool upperHalf = e.Location.Y < (rect.Top + rect.Height / 2);
 
             if (i >= 0 && i < listOfTapes.Tapes.Count)
             {
+                var rect = listBox.GetItemRectangle(i);
+                bool upperHalf = e.Location.Y < (rect.Top + rect.Height / 2);
+
                 var t = listOfTapes.Tapes[i];
                 var side = upperHalf ? t.SideA : t.SideB;
 
@@ -311,6 +323,34 @@ namespace cassettePlayerSimulator
 
         private void ToolStripMenuItemDelete_Click(object sender, EventArgs e)
         {
+            if (rightClickedTape != null)
+            {
+                var tape = rightClickedTape.Parent;
+
+                var result = MessageBox.Show(
+                    string.Format("This will remove both tape sides: \"{0}\" and \"{1}\". Are you sure?",
+                    tape.SideA.Label, tape.SideB.Label),
+                    "Deleting tape", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.OK)
+                {
+                    var file1 = Path.Combine(TapesDirectory, tape.SideA.FilePath);
+                    var file2 = Path.Combine(TapesDirectory, tape.SideB.FilePath);
+
+                    if (File.Exists(file1))
+                    {
+                        File.Delete(file1);
+                    }
+
+                    if (File.Exists(file2))
+                    {
+                        File.Delete(file2);
+                    }
+
+                    listOfTapes.Tapes.Remove(tape);
+                    listBox.Items.Remove(tape);
+                }
+            }
         }
 
         public TapeManager(ListBox listBox)

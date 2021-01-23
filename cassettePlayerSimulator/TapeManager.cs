@@ -99,19 +99,19 @@ namespace cassettePlayerSimulator
             }
             set
             {
-                if (value != null)
+                if (loadedTape != value && (loadedTape == null || value == null))
                 {
-                    var path = Path.Combine(TapesDirectory, value.FilePath);
-
-                    if (!File.Exists(path))
+                    if (value != null)
                     {
-                        MessageBox.Show("File not found: " + path, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                }
+                        var path = Path.Combine(TapesDirectory, value.FilePath);
 
-                if (loadedTape != value)
-                {
+                        if (!File.Exists(path))
+                        {
+                            MessageBox.Show("File not found: " + path, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+
                     loadedTape = value;
                     LoadedTapeChanged();
                 }
@@ -212,14 +212,17 @@ namespace cassettePlayerSimulator
 
         private void listBox_DrawItem(object sender, DrawItemEventArgs e)
         {
-            var tape = listOfTapes.Tapes[e.Index];
+            if (e.Index >= 0 && e.Index < listOfTapes.Tapes.Count)
+            {
+                var tape = listOfTapes.Tapes[e.Index];
 
-            bool isSelected = (e.State & DrawItemState.Selected) != 0;
+                bool isSelected = (e.State & DrawItemState.Selected) != 0;
 
-            RenderListItemSide(tape.SideA, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height / 2), "Side A", isSelected);
-            RenderListItemSide(tape.SideB, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y + e.Bounds.Height / 2 - 1, e.Bounds.Width, e.Bounds.Height / 2), "Side B", isSelected);
+                RenderListItemSide(tape.SideA, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height / 2), "Side A", isSelected);
+                RenderListItemSide(tape.SideB, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y + e.Bounds.Height / 2 - 1, e.Bounds.Width, e.Bounds.Height / 2), "Side B", isSelected);
 
-            e.Graphics.DrawRectangle(Pens.Black, e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 2, e.Bounds.Height - 2);
+                e.Graphics.DrawRectangle(Pens.Black, e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 2, e.Bounds.Height - 2);
+            }
         }
 
         private void RenderListItemSide(TapeSide side, Graphics g, Rectangle bounds, string prefix, bool isSelected)
@@ -260,6 +263,10 @@ namespace cassettePlayerSimulator
             if (side != null && e.Button == MouseButtons.Right)
             {
                 rightClickedTape = side;
+
+                toolStripMenuItemLoad.Enabled = (LoadedTape == null);
+                toolStripMenuItemDelete.Enabled = (LoadedTape == null);
+
                 contextMenuStrip1.Show(listBox.PointToScreen(e.Location));
             }
         }

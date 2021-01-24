@@ -72,6 +72,7 @@ namespace cassettePlayerSimulator
                     tapeDuration = value.Parent.Length;
                 }
 
+                animationFrame = animationSuspendedFrameCount; //force full repaint
                 Invalidate();
             }
         }
@@ -265,11 +266,13 @@ namespace cassettePlayerSimulator
             return (float)Math.IEEERemainder(angle, 2 * Math.PI);
         }
 
+        private int animationSuspendedFrameCount = 20;
+
         public void AnimateSpools(float seconds)
         {
             UpdateRadiusesOfSpools(seconds);
 
-            if (animationFrame >= 20)
+            if (animationFrame >= animationSuspendedFrameCount)
             {
                 animationFrame = 0;
                 Invalidate();

@@ -119,7 +119,8 @@ namespace cassettePlayerSimulator
         }
 
         private ContextMenuStrip contextMenuStrip1;
-        private ToolStripMenuItem toolStripMenuItemLoad;
+        private ToolStripMenuItem toolStripMenuItemLoadA;
+        private ToolStripMenuItem toolStripMenuItemLoadB;
         private ToolStripMenuItem toolStripMenuItemEdit;
         private ToolStripMenuItem toolStripMenuItemDelete;
 
@@ -264,7 +265,13 @@ namespace cassettePlayerSimulator
             {
                 rightClickedTape = side;
 
-                toolStripMenuItemLoad.Enabled = (LoadedTape == null);
+                bool isSideA = (side == side.Parent.SideA);
+
+                toolStripMenuItemLoadA.Font = isSideA ? boldFont : normalFont;
+                toolStripMenuItemLoadB.Font = !isSideA ? boldFont : normalFont;
+
+                toolStripMenuItemLoadA.Enabled = (LoadedTape == null);
+                toolStripMenuItemLoadB.Enabled = (LoadedTape == null);
                 toolStripMenuItemDelete.Enabled = (LoadedTape == null);
 
                 contextMenuStrip1.Show(listBox.PointToScreen(e.Location));
@@ -298,9 +305,14 @@ namespace cassettePlayerSimulator
             return null;
         }
 
-        private void ToolStripMenuItemLoad_Click(object sender, EventArgs e)
+        private void ToolStripMenuItemLoadA_Click(object sender, EventArgs e)
         {
-            LoadedTape = rightClickedTape;
+            LoadedTape = rightClickedTape.Parent.SideA;
+        }
+
+        private void ToolStripMenuItemLoadB_Click(object sender, EventArgs e)
+        {
+            LoadedTape = rightClickedTape.Parent.SideB;
         }
 
         private void ToolStripMenuItemEdit_Click(object sender, EventArgs e)
@@ -360,22 +372,31 @@ namespace cassettePlayerSimulator
             }
         }
 
+        private Font normalFont;
+        private Font boldFont;
+
         public TapeManager(ListBox listBox)
         {
             this.listBox = listBox;
 
             this.contextMenuStrip1 = new ContextMenuStrip();
-            this.toolStripMenuItemLoad = new ToolStripMenuItem();
+            this.toolStripMenuItemLoadA = new ToolStripMenuItem();
+            this.toolStripMenuItemLoadB = new ToolStripMenuItem();
             this.toolStripMenuItemEdit = new ToolStripMenuItem();
             this.toolStripMenuItemDelete = new ToolStripMenuItem();
 
+            normalFont = new Font(contextMenuStrip1.Font, FontStyle.Regular);
+            boldFont = new Font(contextMenuStrip1.Font, FontStyle.Bold);
+
             this.contextMenuStrip1.Items.AddRange(new ToolStripItem[] {
-            this.toolStripMenuItemLoad,
+            this.toolStripMenuItemLoadA,
+            this.toolStripMenuItemLoadB,
             this.toolStripMenuItemEdit,
             this.toolStripMenuItemDelete});
-            this.toolStripMenuItemLoad.Text = "Load";
-            this.toolStripMenuItemLoad.Font = new Font(contextMenuStrip1.Font, FontStyle.Bold);
-            this.toolStripMenuItemLoad.Click += ToolStripMenuItemLoad_Click;
+            this.toolStripMenuItemLoadA.Text = "Load Side A";
+            this.toolStripMenuItemLoadA.Click += ToolStripMenuItemLoadA_Click;
+            this.toolStripMenuItemLoadB.Text = "Load Side B";
+            this.toolStripMenuItemLoadB.Click += ToolStripMenuItemLoadB_Click;
             this.toolStripMenuItemEdit.Text = "Edit";
             this.toolStripMenuItemEdit.Click += ToolStripMenuItemEdit_Click;
             this.toolStripMenuItemDelete.Text = "Delete";

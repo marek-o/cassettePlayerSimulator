@@ -23,11 +23,11 @@ namespace cassettePlayerSimulator
 
         public float scale;
 
-        public float angle = 0;
+        public float angleDegrees = 0;
 
-        internal float spoolInnerRadius => 68 * scale;
-        internal float blackWheelRadius => 50 * scale;
-        internal float axisRadius => 10 * scale;
+        private float spoolInnerRadius => 68 * scale;
+        private float blackWheelRadius => 50 * scale;
+        private float axisRadius => 10 * scale;
 
         public bool CassetteInserted { get; set; }
 
@@ -42,7 +42,7 @@ namespace cassettePlayerSimulator
                 e.Graphics.FillRectangle(cassetteBrush, new RectangleF(0, 0, Width, Height));
             }
 
-            DrawTapeSpool(e.Graphics, new PointF(Width / 2, Height / 2), angle);
+            DrawTapeSpool(e.Graphics, new PointF(Width / 2, Height / 2), angleDegrees);
         }
 
         private PointF PolarToCartesian(PointF center, float r, float angleDegrees)

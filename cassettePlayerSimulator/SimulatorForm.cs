@@ -13,12 +13,12 @@ namespace cassettePlayerSimulator
         private TapeSide loadedTapeSide = null;
         private TapeManager tapeManager;
 
-        SoundMixer mixer;
-        SoundMixer.Sample stopDown, stopUp, playDown, playUp, rewDown, rewNoise, rewUp, ffDown, ffNoise, ffUp, recordDown, recordUp,
+        private SoundMixer mixer;
+        private SoundMixer.Sample stopDown, stopUp, playDown, playUp, rewDown, rewNoise, rewUp, ffDown, ffNoise, ffUp, recordDown, recordUp,
             pauseDown, pauseUp, unpauseDown, unpauseUp, ejectDown, ejectUp, cassetteClose, cassetteInsert;
-        SoundMixer.Sample music;
+        private SoundMixer.Sample music;
 
-        public enum PlayerState
+        private enum PlayerState
         {
             OPEN, STOPPED, PLAYING, RECORDING, FF, REWIND
         }
@@ -66,8 +66,7 @@ namespace cassettePlayerSimulator
                 || (State == PlayerState.RECORDING && !isPauseFullyPressed)
                 || (State == PlayerState.PLAYING && !isPauseFullyPressed))
                 &&
-                (music.position == 0.0
-                || music.position == music.LastSafePosition()))
+                music.IsAtBeginningOrEnd())
             {
                 if (!autoStopStopwatch.IsRunning)
                 {

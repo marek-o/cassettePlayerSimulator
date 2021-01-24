@@ -270,9 +270,9 @@ namespace cassettePlayerSimulator
                 Invalidate();
             }
 
-            spoolControlLeft.angle = AngleRemainder(SpoolAngle(spoolLeftRadiusReal)) * 180 / (float)Math.PI;
+            spoolControlLeft.angleDegrees = AngleRemainder(SpoolAngle(spoolLeftRadiusReal)) * 180 / (float)Math.PI;
             spoolControlLeft.Invalidate();
-            spoolControlRight.angle = -AngleRemainder(SpoolAngle(spoolRightRadiusReal)) * 180 / (float)Math.PI;
+            spoolControlRight.angleDegrees = -AngleRemainder(SpoolAngle(spoolRightRadiusReal)) * 180 / (float)Math.PI;
             spoolControlRight.Invalidate();
 
             animationFrame++;

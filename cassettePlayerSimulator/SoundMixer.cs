@@ -9,7 +9,7 @@ namespace cassettePlayerSimulator
         public class Sample
         {
             public WAVFile wavFile;
-            public double position;
+            private double position;
             private bool isPlaying;
             private bool isRecording;
             private bool isLooped;
@@ -28,26 +28,35 @@ namespace cassettePlayerSimulator
                 this.wavFile = wavFile;
                 position = 0;
 
-                UpdatePlayback(isPlaying, isLooped, autoRewind, volume, speed);
+                this.isPlaying = isPlaying;
+                this.isLooped = isLooped;
+                this.autoRewind = autoRewind;
+                this.volume = volume;
+                this.speed = speed;
             }
 
             private short Clamp(double sample)
             {
-                if (sample > 32767.0)
+                if (sample > short.MaxValue)
                 {
-                    sample = 32767.0;
+                    sample = short.MaxValue;
                 }
-                else if (sample < -32768.0)
+                else if (sample < short.MinValue)
                 {
-                    sample = -32768.0;
+                    sample = short.MinValue;
                 }
 
                 return (short)sample;
             }
 
-            public int LastSafePosition()
+            private int LastSafePosition()
             {
                 return wavFile.data.Length - 3;
+            }
+
+            public bool IsAtBeginningOrEnd()
+            {
+                return position == 0 || position == LastSafePosition();
             }
 
             public float GetCurrentPositionSeconds()
@@ -68,18 +77,6 @@ namespace cassettePlayerSimulator
             public float GetLengthSeconds()
             {
                 return (float)wavFile.data.Length / wavFile.sampleRate / wavFile.channels;
-            }
-
-            public void UpdatePlayback(bool isPlaying, bool isLooped, bool autoRewind, float volume, float speed)
-            {
-                lock (locker)
-                {
-                    this.isPlaying = isPlaying;
-                    this.isLooped = isLooped;
-                    this.autoRewind = autoRewind;
-                    this.volume = volume;
-                    this.speed = speed;
-                }
             }
 
             public void UpdatePlayback(bool isPlaying)
@@ -109,7 +106,7 @@ namespace cassettePlayerSimulator
                 }
             }
 
-            public void PlayIntoBuffer(short[] buffer)
+            internal void PlayIntoBuffer(short[] buffer)
             {
                 lock (locker)
                 {
@@ -150,13 +147,12 @@ namespace cassettePlayerSimulator
                                     isPlaying = false;
                                 }
                             }
-
                         }
                     }
                 }
             }
 
-            public void RecordFromBuffer(short[] buffer)
+            internal void RecordFromBuffer(short[] buffer)
             {
                 lock (locker)
                 {
@@ -177,10 +173,10 @@ namespace cassettePlayerSimulator
             }
         }
 
-        SoundWrapper player;
-        SoundWrapper recorder;
-        List<Sample> samples = new List<Sample>();
-        Sample recordingSample;
+        private SoundWrapper player;
+        private SoundWrapper recorder;
+        private List<Sample> samples = new List<Sample>();
+        private Sample recordingSample;
 
         private object playingLocker = new object();
 
@@ -250,5 +246,4 @@ namespace cassettePlayerSimulator
             }
         }
     }
-
 }

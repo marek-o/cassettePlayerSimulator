@@ -159,11 +159,13 @@
             this.panelColor.Size = new System.Drawing.Size(102, 23);
             this.panelColor.TabIndex = 11;
             // 
-            // CreateTapeForm
+            // EditTapeForm
             // 
+            this.AcceptButton = this.buttonCreate;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(339, 285);
             this.Controls.Add(this.panelColor);
             this.Controls.Add(this.buttonCancel);
@@ -176,7 +178,7 @@
             this.Controls.Add(this.groupBox1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "CreateTapeForm";
+            this.Name = "EditTapeForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;

@@ -43,6 +43,12 @@ namespace cassettePlayerSimulator
             }
 
             Position = newPos;
+
+            if (isResetPressed)
+            {
+                ZeroPosition = Position;
+            }
+
             Invalidate();
         }
 
@@ -107,11 +113,6 @@ namespace cassettePlayerSimulator
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-
-            if (isResetPressed)
-            {
-                ZeroPosition = Position;
-            }
 
             var posAfterReset = Position - ZeroPosition;
 

@@ -67,6 +67,11 @@ namespace cassettePlayerSimulator
                 spoolControlLeft.CassetteInserted = value != null;
                 spoolControlRight.CassetteInserted = value != null;
 
+                if (value != null)
+                {
+                    tapeDuration = value.Parent.Length;
+                }
+
                 Invalidate();
             }
         }
@@ -276,11 +281,6 @@ namespace cassettePlayerSimulator
             spoolControlRight.Invalidate();
 
             animationFrame++;
-        }
-
-        public void SetTapeDuration(float seconds)
-        {
-            tapeDuration = seconds;
         }
     }
 }

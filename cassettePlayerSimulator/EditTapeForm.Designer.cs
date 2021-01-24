@@ -31,17 +31,17 @@
             this.radioButtonC30 = new System.Windows.Forms.RadioButton();
             this.radioButtonC60 = new System.Windows.Forms.RadioButton();
             this.radioButtonC90 = new System.Windows.Forms.RadioButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxLabelA = new System.Windows.Forms.TextBox();
             this.textBoxLabelB = new System.Windows.Forms.TextBox();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.buttonColor = new System.Windows.Forms.Button();
             this.buttonCreate = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.panelColor = new System.Windows.Forms.Panel();
-            this.groupBox1.SuspendLayout();
+            this.groupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // radioButtonC30
@@ -79,15 +79,15 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.radioButtonC90);
-            this.groupBox1.Controls.Add(this.radioButtonC30);
-            this.groupBox1.Controls.Add(this.radioButtonC60);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(316, 99);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Length";
+            this.groupBox.Controls.Add(this.radioButtonC90);
+            this.groupBox.Controls.Add(this.radioButtonC30);
+            this.groupBox.Controls.Add(this.radioButtonC60);
+            this.groupBox.Location = new System.Drawing.Point(12, 12);
+            this.groupBox.Name = "groupBox1";
+            this.groupBox.Size = new System.Drawing.Size(316, 99);
+            this.groupBox.TabIndex = 3;
+            this.groupBox.TabStop = false;
+            this.groupBox.Text = "Length";
             // 
             // label1
             // 
@@ -175,7 +175,7 @@
             this.Controls.Add(this.textBoxLabelA);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EditTapeForm";
@@ -183,8 +183,8 @@
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Creating empty tape";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBox.ResumeLayout(false);
+            this.groupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,12 +195,12 @@
         private System.Windows.Forms.RadioButton radioButtonC30;
         private System.Windows.Forms.RadioButton radioButtonC60;
         private System.Windows.Forms.RadioButton radioButtonC90;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxLabelA;
         private System.Windows.Forms.TextBox textBoxLabelB;
-        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.ColorDialog colorDialog;
         private System.Windows.Forms.Button buttonColor;
         private System.Windows.Forms.Button buttonCreate;
         private System.Windows.Forms.Button buttonCancel;

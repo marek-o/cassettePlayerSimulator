@@ -108,7 +108,7 @@ namespace cassettePlayerSimulator
         {
             base.OnPaint(e);
 
-            if (mouseIsDown)
+            if (isResetPressed)
             {
                 ZeroPosition = Position;
             }
@@ -189,7 +189,7 @@ namespace cassettePlayerSimulator
 
             //drawing button
             int depth = buttonDepthUp;
-            if (mouseIsDown)
+            if (isResetPressed)
             {
                 depth = buttonDepthDown;
             }
@@ -225,7 +225,7 @@ namespace cassettePlayerSimulator
             e.Graphics.DrawPolygon(borderPen, leftPolygon);
         }
 
-        private bool mouseIsDown = false;
+        private bool isResetPressed = false;
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
@@ -236,7 +236,7 @@ namespace cassettePlayerSimulator
 
             if (buttonRect.Contains(e.Location))
             {
-                mouseIsDown = true;
+                isResetPressed = true;
                 Invalidate();
             }
         }
@@ -244,7 +244,7 @@ namespace cassettePlayerSimulator
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
-            mouseIsDown = false;
+            isResetPressed = false;
             Invalidate();
         }
     }

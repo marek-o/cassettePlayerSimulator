@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -87,19 +86,19 @@ namespace cassettePlayerSimulator
             }
         }
 
-        public event Action LoadedTapeChanged = () => { };
+        public event Action LoadedTapeSideChanged = () => { };
 
-        private TapeSide loadedTape;
+        private TapeSide loadedTapeSide;
 
-        public TapeSide LoadedTape
+        public TapeSide LoadedTapeSide
         {
             get
             {
-                return loadedTape;
+                return loadedTapeSide;
             }
             set
             {
-                if (loadedTape != value && (loadedTape == null || value == null))
+                if (loadedTapeSide != value && (loadedTapeSide == null || value == null))
                 {
                     if (value != null)
                     {
@@ -112,13 +111,13 @@ namespace cassettePlayerSimulator
                         }
                     }
 
-                    loadedTape = value;
-                    LoadedTapeChanged();
+                    loadedTapeSide = value;
+                    LoadedTapeSideChanged();
                 }
             }
         }
 
-        private ContextMenuStrip contextMenuStrip1;
+        private ContextMenuStrip contextMenuStrip;
         private ToolStripMenuItem toolStripMenuItemLoadA;
         private ToolStripMenuItem toolStripMenuItemLoadB;
         private ToolStripMenuItem toolStripMenuItemEdit;
@@ -206,7 +205,7 @@ namespace cassettePlayerSimulator
 
         public void EjectTape()
         {
-            LoadedTape = null;
+            LoadedTapeSide = null;
 
             listBox.Invalidate();
         }
@@ -228,7 +227,7 @@ namespace cassettePlayerSimulator
 
         private void RenderListItemSide(TapeSide side, Graphics g, Rectangle bounds, string prefix, bool isSelected)
         {
-            bool isLoaded = side == loadedTape;
+            bool isLoaded = side == loadedTapeSide;
 
             var backBrush = isSelected ? SystemBrushes.Highlight : SystemBrushes.Window;
             g.FillRectangle(backBrush, new Rectangle(bounds.X, bounds.Y, bounds.Width - 1, bounds.Height - 1));
@@ -263,28 +262,28 @@ namespace cassettePlayerSimulator
 
             if (side != null && e.Button == MouseButtons.Right)
             {
-                rightClickedTape = side;
+                rightClickedTapeSide = side;
 
                 bool isSideA = (side == side.Parent.SideA);
 
                 toolStripMenuItemLoadA.Font = isSideA ? boldFont : normalFont;
                 toolStripMenuItemLoadB.Font = !isSideA ? boldFont : normalFont;
 
-                toolStripMenuItemLoadA.Enabled = (LoadedTape == null);
-                toolStripMenuItemLoadB.Enabled = (LoadedTape == null);
-                toolStripMenuItemDelete.Enabled = (LoadedTape == null);
+                toolStripMenuItemLoadA.Enabled = (LoadedTapeSide == null);
+                toolStripMenuItemLoadB.Enabled = (LoadedTapeSide == null);
+                toolStripMenuItemDelete.Enabled = (LoadedTapeSide == null);
 
-                contextMenuStrip1.Show(listBox.PointToScreen(e.Location));
+                contextMenuStrip.Show(listBox.PointToScreen(e.Location));
             }
         }
 
-        private TapeSide rightClickedTape = null;
+        private TapeSide rightClickedTapeSide = null;
 
         private void listBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             TapeSide side = GetClickedItem(e);
 
-            LoadedTape = side;
+            LoadedTapeSide = side;
         }
 
         private TapeSide GetClickedItem(MouseEventArgs e)
@@ -307,21 +306,21 @@ namespace cassettePlayerSimulator
 
         private void ToolStripMenuItemLoadA_Click(object sender, EventArgs e)
         {
-            LoadedTape = rightClickedTape.Parent.SideA;
+            LoadedTapeSide = rightClickedTapeSide.Parent.SideA;
         }
 
         private void ToolStripMenuItemLoadB_Click(object sender, EventArgs e)
         {
-            LoadedTape = rightClickedTape.Parent.SideB;
+            LoadedTapeSide = rightClickedTapeSide.Parent.SideB;
         }
 
         private void ToolStripMenuItemEdit_Click(object sender, EventArgs e)
         {
-            if (rightClickedTape != null)
+            if (rightClickedTapeSide != null)
             {
                 using (var form = new EditTapeForm(true))
                 {
-                    var tape = rightClickedTape.Parent;
+                    var tape = rightClickedTapeSide.Parent;
 
                     form.LabelSideA = tape.SideA.Label;
                     form.LabelSideB = tape.SideB.Label;
@@ -342,9 +341,9 @@ namespace cassettePlayerSimulator
 
         private void ToolStripMenuItemDelete_Click(object sender, EventArgs e)
         {
-            if (rightClickedTape != null)
+            if (rightClickedTapeSide != null)
             {
-                var tape = rightClickedTape.Parent;
+                var tape = rightClickedTapeSide.Parent;
 
                 var result = MessageBox.Show(
                     string.Format("This will remove both tape sides: \"{0}\" and \"{1}\". Are you sure?",
@@ -379,16 +378,16 @@ namespace cassettePlayerSimulator
         {
             this.listBox = listBox;
 
-            this.contextMenuStrip1 = new ContextMenuStrip();
+            this.contextMenuStrip = new ContextMenuStrip();
             this.toolStripMenuItemLoadA = new ToolStripMenuItem();
             this.toolStripMenuItemLoadB = new ToolStripMenuItem();
             this.toolStripMenuItemEdit = new ToolStripMenuItem();
             this.toolStripMenuItemDelete = new ToolStripMenuItem();
 
-            normalFont = new Font(contextMenuStrip1.Font, FontStyle.Regular);
-            boldFont = new Font(contextMenuStrip1.Font, FontStyle.Bold);
+            normalFont = new Font(contextMenuStrip.Font, FontStyle.Regular);
+            boldFont = new Font(contextMenuStrip.Font, FontStyle.Bold);
 
-            this.contextMenuStrip1.Items.AddRange(new ToolStripItem[] {
+            this.contextMenuStrip.Items.AddRange(new ToolStripItem[] {
             this.toolStripMenuItemLoadA,
             this.toolStripMenuItemLoadB,
             this.toolStripMenuItemEdit,

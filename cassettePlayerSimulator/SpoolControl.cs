@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace cassettePlayerSimulator
@@ -51,16 +45,16 @@ namespace cassettePlayerSimulator
             DrawTapeSpool(e.Graphics, new PointF(Width / 2, Height / 2), angle);
         }
 
-        private PointF PolarToCartesian(PointF center, float r, float a)
+        private PointF PolarToCartesian(PointF center, float r, float angleDegrees)
         {
             return new PointF
             (
-                center.X + r * (float)Math.Cos(a * Math.PI / 180),
-                center.Y + r * (float)Math.Sin(a * Math.PI / 180)
+                center.X + r * (float)Math.Cos(angleDegrees * Math.PI / 180),
+                center.Y + r * (float)Math.Sin(angleDegrees * Math.PI / 180)
             );
         }
 
-        private void DrawTapeSpool(Graphics g, PointF center, float angle)
+        private void DrawTapeSpool(Graphics g, PointF center, float angleDegrees)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
@@ -75,7 +69,7 @@ namespace cassettePlayerSimulator
 
             for (int i = 0; i < 6; ++i)
             {
-                float a = 60 * i + angle;
+                float a = 60 * i + angleDegrees;
                 if (CassetteInserted)
                 {
                     g.FillPolygon(spoolBrush, new PointF[]

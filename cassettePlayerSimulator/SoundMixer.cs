@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Utils;
 
 namespace cassettePlayerSimulator
@@ -24,7 +21,7 @@ namespace cassettePlayerSimulator
             private int rampSampleCounter;
             private float rampSlope;
 
-            public object locker = new object();
+            private object locker = new object();
 
             public Sample(WAVFile wavFile, bool isPlaying, bool isLooped, bool autoRewind, float volume, float speed)
             {

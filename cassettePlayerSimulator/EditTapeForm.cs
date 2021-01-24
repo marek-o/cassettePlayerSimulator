@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace cassettePlayerSimulator
@@ -20,16 +14,16 @@ namespace cassettePlayerSimulator
             {
                 Text = "Editing tape";
                 buttonCreate.Text = "Save";
-                groupBox1.Enabled = false;
+                groupBox.Enabled = false;
             }
 
-            colorDialog1.Color = panelColor.BackColor = Color.Red;
+            colorDialog.Color = panelColor.BackColor = Color.Red;
         }
 
         private void buttonColor_Click(object sender, EventArgs e)
         {
-            colorDialog1.ShowDialog();
-            panelColor.BackColor = colorDialog1.Color;
+            colorDialog.ShowDialog();
+            panelColor.BackColor = colorDialog.Color;
         }
 
         public string LabelSideA
@@ -60,11 +54,11 @@ namespace cassettePlayerSimulator
         {
             get
             {
-                return colorDialog1.Color;
+                return colorDialog.Color;
             }
             set
             {
-                colorDialog1.Color = value;
+                colorDialog.Color = value;
                 panelColor.BackColor = value;
             }
         }

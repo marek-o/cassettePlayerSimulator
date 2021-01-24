@@ -31,11 +31,11 @@
             this.components = new System.ComponentModel.Container();
             this.buttonImport = new System.Windows.Forms.Button();
             this.labelDebug = new System.Windows.Forms.Label();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timerDebug = new System.Windows.Forms.Timer(this.components);
             this.timerAnimation = new System.Windows.Forms.Timer(this.components);
-            this.counter1 = new cassettePlayerSimulator.Counter();
+            this.counter = new cassettePlayerSimulator.Counter();
             this.cassetteButtons = new cassettePlayerSimulator.CassetteButtons();
-            this.cassetteControl1 = new cassettePlayerSimulator.CassetteControl();
+            this.cassetteControl = new cassettePlayerSimulator.CassetteControl();
             this.listBox = new System.Windows.Forms.ListBox();
             this.buttonSaveList = new System.Windows.Forms.Button();
             this.buttonCreateTape = new System.Windows.Forms.Button();
@@ -62,7 +62,7 @@
             // 
             // timer1
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timerDebug.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // timerAnimation
             // 
@@ -72,11 +72,11 @@
             // 
             // counter1
             // 
-            this.counter1.Location = new System.Drawing.Point(17, 299);
-            this.counter1.Name = "counter1";
-            this.counter1.Size = new System.Drawing.Size(139, 51);
-            this.counter1.TabIndex = 8;
-            this.counter1.Text = "counter1";
+            this.counter.Location = new System.Drawing.Point(17, 299);
+            this.counter.Name = "counter1";
+            this.counter.Size = new System.Drawing.Size(139, 51);
+            this.counter.TabIndex = 8;
+            this.counter.Text = "counter1";
             // 
             // cassetteButtons
             // 
@@ -87,11 +87,11 @@
             // 
             // cassetteControl1
             // 
-            this.cassetteControl1.BackColor = System.Drawing.Color.Gray;
-            this.cassetteControl1.Location = new System.Drawing.Point(17, 18);
-            this.cassetteControl1.Name = "cassetteControl1";
-            this.cassetteControl1.Size = new System.Drawing.Size(422, 275);
-            this.cassetteControl1.TabIndex = 5;
+            this.cassetteControl.BackColor = System.Drawing.Color.Gray;
+            this.cassetteControl.Location = new System.Drawing.Point(17, 18);
+            this.cassetteControl.Name = "cassetteControl1";
+            this.cassetteControl.Size = new System.Drawing.Size(422, 275);
+            this.cassetteControl.TabIndex = 5;
             // 
             // listBox
             // 
@@ -131,10 +131,10 @@
             this.Controls.Add(this.buttonCreateTape);
             this.Controls.Add(this.buttonSaveList);
             this.Controls.Add(this.listBox);
-            this.Controls.Add(this.counter1);
+            this.Controls.Add(this.counter);
             this.Controls.Add(this.labelDebug);
             this.Controls.Add(this.cassetteButtons);
-            this.Controls.Add(this.cassetteControl1);
+            this.Controls.Add(this.cassetteControl);
             this.Controls.Add(this.buttonImport);
             this.MaximizeBox = false;
             this.Name = "SimulatorForm";
@@ -148,12 +148,12 @@
 
         #endregion
         private System.Windows.Forms.Button buttonImport;
-        private CassetteControl cassetteControl1;
+        private CassetteControl cassetteControl;
         private CassetteButtons cassetteButtons;
         private System.Windows.Forms.Label labelDebug;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timerDebug;
         private System.Windows.Forms.Timer timerAnimation;
-        private Counter counter1;
+        private Counter counter;
         private System.Windows.Forms.ListBox listBox;
         private System.Windows.Forms.Button buttonSaveList;
         private System.Windows.Forms.Button buttonCreateTape;

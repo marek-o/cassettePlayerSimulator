@@ -1,23 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using Utils;
 
 namespace cassettePlayerSimulator
 {
     public partial class SimulatorForm : Form
     {
-        private TapeSide loadedTape = null;
+        private TapeSide loadedTapeSide = null;
         private TapeManager tapeManager;
 
         SoundMixer mixer;
@@ -38,7 +31,7 @@ namespace cassettePlayerSimulator
                 State.ToString(),
                 isPauseFullyPressed.ToString(),
                 music != null ? music.GetCurrentPositionSeconds() : 0.0f,
-                cassetteControl1.scale);
+                cassetteControl.scale);
         }
 
         private Stopwatch rewindStopwatch = new Stopwatch();
@@ -57,16 +50,16 @@ namespace cassettePlayerSimulator
                 rewindStopwatch.Restart();
 
                 var pos = music.GetCurrentPositionSeconds();
-                var timeOffset = cassetteControl1.AngularToLinear(State == PlayerState.FF, pos, elapsed * 360 * 5);
+                var timeOffset = cassetteControl.AngularToLinear(State == PlayerState.FF, pos, elapsed * 360 * 5);
                 timeOffset *= (State == PlayerState.REWIND) ? -1 : 1;
                 music.SetCurrentPositionSeconds(pos + timeOffset);
             }
 
-            cassetteControl1.HeadEngaged = State == PlayerState.PLAYING || State == PlayerState.RECORDING;
-            cassetteControl1.RollerEngaged = (State == PlayerState.PLAYING || State == PlayerState.RECORDING) && !isTapePaused;
-            cassetteControl1.AnimateSpools(music.GetCurrentPositionSeconds());
+            cassetteControl.HeadEngaged = State == PlayerState.PLAYING || State == PlayerState.RECORDING;
+            cassetteControl.RollerEngaged = (State == PlayerState.PLAYING || State == PlayerState.RECORDING) && !isTapePaused;
+            cassetteControl.AnimateSpools(music.GetCurrentPositionSeconds());
 
-            counter1.SetPosition(-cassetteControl1.GetSpoolAngle(false, music.GetCurrentPositionSeconds()) / 360 / 2);
+            counter.SetPosition(-cassetteControl.GetSpoolAngleDegrees(false, music.GetCurrentPositionSeconds()) / 360 / 2);
 
             if ((State == PlayerState.FF
                 || State == PlayerState.REWIND
@@ -103,7 +96,7 @@ namespace cassettePlayerSimulator
             tapeManager.PerformImport();
         }
 
-        private void LoadTape(TapeSide tapeSide)
+        private void LoadTapeSide(TapeSide tapeSide)
         {
             string path = Path.Combine(tapeManager.TapesDirectory, tapeSide.FilePath);
 
@@ -119,9 +112,9 @@ namespace cassettePlayerSimulator
             thread.Start();
             progressForm.ShowDialog();
 
-            if (music != null && loadedTape != null)
+            if (music != null && loadedTapeSide != null)
             {
-                loadedTape.Position = music.GetCurrentPositionSeconds();
+                loadedTapeSide.Position = music.GetCurrentPositionSeconds();
             }
 
             mixer.RemoveSample(music);
@@ -129,15 +122,15 @@ namespace cassettePlayerSimulator
             mixer.AddSample(music);
             mixer.SetRecordingSample(music);
 
-            loadedTape = tapeSide;
+            loadedTapeSide = tapeSide;
             music.SetCurrentPositionSeconds(tapeSide.Position);
 
             State = PlayerState.STOPPED;
-            cassetteControl1.LoadedTape = tapeSide;
-            cassetteControl1.SetTapeDuration(music.GetLengthSeconds());
+            cassetteControl.LoadedTapeSide = tapeSide;
+            cassetteControl.SetTapeDuration(music.GetLengthSeconds());
             cassetteButtons.Enabled = true;
 
-            counter1.IgnoreNextSetPosition();
+            counter.IgnoreNextSetPosition();
 
             cassetteClose.UpdatePlayback(true);
         }
@@ -149,7 +142,7 @@ namespace cassettePlayerSimulator
             cassetteButtons.Enabled = false;
 
 #if DEBUG
-            timer1.Enabled = true;
+            timerDebug.Enabled = true;
 #else
             labelDebug.Visible = false;
 #endif
@@ -226,16 +219,16 @@ namespace cassettePlayerSimulator
 
             tapeManager = new TapeManager(listBox);
 
-            tapeManager.LoadedTapeChanged += TapeManager_LoadedTapeChanged;
+            tapeManager.LoadedTapeSideChanged += TapeManager_LoadedTapeSideChanged;
         }
 
-        private void TapeManager_LoadedTapeChanged()
+        private void TapeManager_LoadedTapeSideChanged()
         {
-            if (tapeManager.LoadedTape != loadedTape)
+            if (tapeManager.LoadedTapeSide != loadedTapeSide)
             {
-                if (tapeManager.LoadedTape != null)
+                if (tapeManager.LoadedTapeSide != null)
                 {
-                    LoadTape(tapeManager.LoadedTape);
+                    LoadTapeSide(tapeManager.LoadedTapeSide);
                 }
             }
         }
@@ -247,11 +240,11 @@ namespace cassettePlayerSimulator
 
         private void buttonSaveList_Click(object sender, EventArgs e)
         {
-            if (music != null && loadedTape != null)
+            if (music != null && loadedTapeSide != null)
             {
                 var pos = music.GetCurrentPositionSeconds();
 
-                loadedTape.Position = pos;
+                loadedTapeSide.Position = pos;
             }
 
             tapeManager.SaveList();
@@ -262,14 +255,14 @@ namespace cassettePlayerSimulator
             if (State == PlayerState.PLAYING)
             {
                 stopDown.UpdatePlayback(true);
-                SetPlayback(false, false);
+                SetSoundPlayback(false, false);
 
                 cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.UP;
             }
             else if (State == PlayerState.RECORDING)
             {
                 stopDown.UpdatePlayback(true);
-                SetRecording(false);
+                SetSoundRecording(false);
                 mixer.StopRecording();
 
                 cassetteButtons.RecButton.ButtonState = CassetteButtons.Button.State.UP;
@@ -293,7 +286,7 @@ namespace cassettePlayerSimulator
             }
         }
 
-        private void SetPlayback(bool setPlaying, bool slowChange)
+        private void SetSoundPlayback(bool setPlaying, bool slowChange)
         {
             int sampleCount = slowChange ? 44100 * 2 / 5 : 44100 * 2 / 20;
 
@@ -313,7 +306,7 @@ namespace cassettePlayerSimulator
             }
         }
 
-        private void SetRecording(bool isRecording)
+        private void SetSoundRecording(bool isRecording)
         {
             if (!isPauseFullyPressed)
             {
@@ -329,7 +322,7 @@ namespace cassettePlayerSimulator
                 DisengageButtons();
 
                 recordDown.UpdatePlayback(true);
-                SetRecording(true);
+                SetSoundRecording(true);
                 mixer.StartRecording();
 
                 cassetteButtons.PlayButton.ButtonState = CassetteButtons.Button.State.DOWN;
@@ -355,7 +348,7 @@ namespace cassettePlayerSimulator
 
                 playDown.UpdatePlayback(true);
 
-                SetPlayback(true, false);
+                SetSoundPlayback(true, false);
 
                 State = PlayerState.PLAYING;
             }
@@ -415,9 +408,9 @@ namespace cassettePlayerSimulator
             else if (State == PlayerState.STOPPED)
             {
                 State = PlayerState.OPEN;
-                cassetteControl1.LoadedTape = null;
-                loadedTape.Position = music.GetCurrentPositionSeconds();
-                loadedTape = null;
+                cassetteControl.LoadedTapeSide = null;
+                loadedTapeSide.Position = music.GetCurrentPositionSeconds();
+                loadedTapeSide = null;
 
                 tapeManager.EjectTape();
 
@@ -446,11 +439,11 @@ namespace cassettePlayerSimulator
 
                 if (State == PlayerState.PLAYING)
                 {
-                    SetPlayback(false, true);
+                    SetSoundPlayback(false, true);
                 }
                 else if (State == PlayerState.RECORDING)
                 {
-                    SetRecording(false);
+                    SetSoundRecording(false);
                 }
             }
             else
@@ -473,11 +466,11 @@ namespace cassettePlayerSimulator
 
                 if (State == PlayerState.PLAYING)
                 {
-                    SetPlayback(true, true);
+                    SetSoundPlayback(true, true);
                 }
                 else if (State == PlayerState.RECORDING)
                 {
-                    SetRecording(true);
+                    SetSoundRecording(true);
                 }
             }
         }

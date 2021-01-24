@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Drawing.Imaging;
 
 namespace cassettePlayerSimulator
 {
@@ -64,12 +57,12 @@ namespace cassettePlayerSimulator
 
         private SizeF baseSize;
 
-        private TapeSide loadedTape;
-        public TapeSide LoadedTape
+        private TapeSide loadedTapeSide;
+        public TapeSide LoadedTapeSide
         {
             set
             {
-                loadedTape = value;
+                loadedTapeSide = value;
 
                 spoolControlLeft.CassetteInserted = value != null;
                 spoolControlRight.CassetteInserted = value != null;
@@ -138,7 +131,7 @@ namespace cassettePlayerSimulator
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
-            if (loadedTape != null)
+            if (loadedTapeSide != null)
             {
                 DrawTapeSpoolOuter(e.Graphics, centerLeft, spoolLeftRadius);
                 DrawTapeSpoolOuter(e.Graphics, centerRight, spoolRightRadius);
@@ -164,7 +157,7 @@ namespace cassettePlayerSimulator
             e.Graphics.FillRectangle(axisBrush, head.X + headWidth / 2, head.Y - headRoundHeight / 4,
                 5 * scale, headRoundHeight / 4 + headRoundHeight + headHeight);
 
-            Color cassetteColor = loadedTape?.Parent.Color ?? Color.Transparent;
+            Color cassetteColor = loadedTapeSide?.Parent.Color ?? Color.Transparent;
 
             if (imgScaled == null
                 || imgScaled.Width != (int)destRect.Width
@@ -187,19 +180,19 @@ namespace cassettePlayerSimulator
                 }
             }
 
-            if (loadedTape != null)
+            if (loadedTapeSide != null)
             {
                 e.Graphics.DrawImage(imgScaled, cassetteOffset);
 
-                TextRenderer.DrawText(e.Graphics, loadedTape.Label, Font,
+                TextRenderer.DrawText(e.Graphics, loadedTapeSide.Label, Font,
                     new Rectangle((int)(266 * scale), (int)(153 * scale), (int)(813 * scale), (int)(70 * scale)),
                     Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
 
-                TextRenderer.DrawText(e.Graphics, (loadedTape.Parent.SideA == loadedTape) ? "A" : "B", tapeSideFont,
+                TextRenderer.DrawText(e.Graphics, (loadedTapeSide.Parent.SideA == loadedTapeSide) ? "A" : "B", tapeSideFont,
                     new Rectangle((int)(180 * scale), (int)(142 * scale), (int)(90 * scale), (int)(90 * scale)),
                     Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPadding);
 
-                TextRenderer.DrawText(e.Graphics, ((int)Math.Round(loadedTape.Parent.Length / 900.0f) * 30).ToString(), tapeSideFont,
+                TextRenderer.DrawText(e.Graphics, ((int)Math.Round(loadedTapeSide.Parent.Length / 900.0f) * 30).ToString(), tapeSideFont,
                     new Rectangle((int)(1112 * scale), (int)(410 * scale), (int)(90 * scale), (int)(90 * scale)),
                     Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPadding);
             }
@@ -248,7 +241,7 @@ namespace cassettePlayerSimulator
             return linearOffset / tapeVelocity;
         }
 
-        public float GetSpoolAngle(bool rightSpool, float seconds)
+        public float GetSpoolAngleDegrees(bool rightSpool, float seconds)
         {
             UpdateRadiusesOfSpools(seconds);
             var angle = SpoolAngle(rightSpool ? spoolRightRadiusReal : spoolLeftRadiusReal);

@@ -61,7 +61,7 @@ namespace cassettePlayerSimulator
             float[] buffer = new float[1024 * 128];
 
             using (var reader = new NAudio.Wave.AudioFileReader(inputFilePath))
-            using (var writer = new NAudio.Wave.WaveFileWriter(TapeFile, new NAudio.Wave.WaveFormat(44100, 16, 2)))
+            using (var writer = new NAudio.Wave.WaveFileWriter(TapeFile, Common.WaveFormat))
             {
                 int readCount = 0;
 
@@ -167,11 +167,11 @@ namespace cassettePlayerSimulator
             var pathB = Path.Combine(TapesDirectory, filenameB);
 
             int seconds = (int)sideLengthSeconds;
+            
+            byte[] buffer = new byte[Common.WaveFormat.AverageBytesPerSecond * seconds / 100];
 
-            byte[] buffer = new byte[44100 * 2 * 2 * (seconds / 100)];
-
-            using (var writerA = new NAudio.Wave.WaveFileWriter(pathA, new NAudio.Wave.WaveFormat(44100, 16, 2)))
-            using (var writerB = new NAudio.Wave.WaveFileWriter(pathB, new NAudio.Wave.WaveFormat(44100, 16, 2)))
+            using (var writerA = new NAudio.Wave.WaveFileWriter(pathA, Common.WaveFormat))
+            using (var writerB = new NAudio.Wave.WaveFileWriter(pathB, Common.WaveFormat))
             {
                 for (int i = 0; i < 100; ++i)
                 {

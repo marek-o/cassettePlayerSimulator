@@ -160,7 +160,11 @@ namespace cassettePlayerSimulator
             cassetteButtons.PauseButton.MouseDown += PauseButton_MouseDown;
             cassetteButtons.PauseButton.MouseUp += PauseButton_MouseUp;
 
-            mixer = new SoundMixer(16, 2, 44100, 8*1024);
+            mixer = new SoundMixer(
+                (ushort)Common.WaveFormat.BitsPerSample,
+                (ushort)Common.WaveFormat.Channels,
+                (ushort)Common.WaveFormat.SampleRate,
+                8*1024);
 
             float vol = 2.0f;
             float speed = 0.5f;
@@ -288,7 +292,7 @@ namespace cassettePlayerSimulator
 
         private void SetSoundPlayback(bool setPlaying, bool slowChange)
         {
-            int sampleCount = slowChange ? 44100 * 2 / 5 : 44100 * 2 / 20;
+            int sampleCount = slowChange ? music.wavFile.sampleRate * 2 / 5 : music.wavFile.sampleRate * 2 / 20;
 
             if (!isPauseFullyPressed)
             {

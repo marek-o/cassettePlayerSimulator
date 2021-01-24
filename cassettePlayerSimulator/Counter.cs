@@ -25,12 +25,6 @@ namespace cassettePlayerSimulator
         private int buttonDepthUp = 8;
         private int buttonDepthDown = 2;
 
-        private Pen borderPen = new Pen(Color.FromArgb(0, 0, 0));
-        private Brush coverBrush = new SolidBrush(Color.FromArgb(169, 169, 169));
-        private Brush buttonFaceBrush = new SolidBrush(Color.FromArgb(169, 169, 169));
-        private Brush buttonTopBrush = new SolidBrush(Color.FromArgb(211, 211, 211));
-        private Brush buttonLeftBrush = new SolidBrush(Color.FromArgb(128, 128, 128));
-
         private bool ignoreNextSetPosition = false;
 
         public void SetPosition(float newPos)
@@ -68,37 +62,36 @@ namespace cassettePlayerSimulator
 
             wheelBitmap = new Bitmap(digitWidth, digitHeight * 11);
             using (var g = Graphics.FromImage(wheelBitmap))
-            using (var wheelBrush = new SolidBrush(Color.FromArgb(96, 96, 96)))
             {
                 g.FillRectangle(Brushes.Black, new RectangleF(0, 0, wheelBitmap.Width, wheelBitmap.Height));
 
                 for (int i = 0; i <= 10; ++i)
                 {
                     //wheel background
-                    g.FillRectangle(wheelBrush,
+                    g.FillRectangle(Common.CounterWheelBrush,
                         new RectangleF(digitWidth * 0.1f, i * digitHeight,
                         digitWidth * 0.7f, digitHeight));
 
                     //right gears
-                    g.FillRectangle(wheelBrush,
+                    g.FillRectangle(Common.CounterWheelBrush,
                         new RectangleF(digitWidth * 0.8f, i * digitHeight,
                         digitWidth * 0.1f, digitHeight * 0.25f));
-                    g.FillRectangle(wheelBrush,
+                    g.FillRectangle(Common.CounterWheelBrush,
                         new RectangleF(digitWidth * 0.8f, i * digitHeight + digitHeight * 0.5f,
                         digitWidth * 0.1f, digitHeight * 0.25f));
 
                     TextRenderer.DrawText(g, (i % 10).ToString(), font,
                         new Rectangle(0, i * digitHeight - (int)(digitHeight * 0.1f),
                         digitWidth, digitHeight),
-                        Color.White, wheelBrush.Color,
+                        Color.White, Common.CounterWheelColor,
                         TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
                 }
 
                 //left gears (next to "7")
-                g.FillRectangle(wheelBrush,
+                g.FillRectangle(Common.CounterWheelBrush,
                     new RectangleF(digitWidth * 0.0f, 7 * digitHeight,
                     digitWidth * 0.1f, digitHeight * 0.25f));
-                g.FillRectangle(wheelBrush,
+                g.FillRectangle(Common.CounterWheelBrush,
                     new RectangleF(digitWidth * 0.0f, 7 * digitHeight + digitHeight * 0.5f,
                     digitWidth * 0.1f, digitHeight * 0.25f));
             }
@@ -165,8 +158,8 @@ namespace cassettePlayerSimulator
             };
 
             //bottom face
-            e.Graphics.FillPolygon(buttonTopBrush, bottomPolygon);
-            e.Graphics.DrawPolygon(borderPen, bottomPolygon);
+            e.Graphics.FillPolygon(Common.ButtonTopBrush, bottomPolygon);
+            e.Graphics.DrawPolygon(Common.BorderPen, bottomPolygon);
 
             var rightPolygon = new PointF[]
             {
@@ -177,16 +170,16 @@ namespace cassettePlayerSimulator
             };
 
             //right face
-            e.Graphics.FillPolygon(buttonLeftBrush, rightPolygon);
-            e.Graphics.DrawPolygon(borderPen, rightPolygon);
+            e.Graphics.FillPolygon(Common.ButtonLeftBrush, rightPolygon);
+            e.Graphics.DrawPolygon(Common.BorderPen, rightPolygon);
 
             //cover top
-            e.Graphics.FillRectangle(coverBrush, 0, 0, Width, counterDepth);
-            e.Graphics.DrawLine(borderPen, counterDepth, counterDepth, counterRect.Width + counterDepth, counterDepth);
+            e.Graphics.FillRectangle(Common.CoverBrush, 0, 0, Width, counterDepth);
+            e.Graphics.DrawLine(Common.BorderPen, counterDepth, counterDepth, counterRect.Width + counterDepth, counterDepth);
 
             //cover left
-            e.Graphics.FillRectangle(coverBrush, 0, 0, counterDepth, Height);
-            e.Graphics.DrawLine(borderPen, counterDepth, counterDepth, counterDepth, counterRect.Height + counterDepth);
+            e.Graphics.FillRectangle(Common.CoverBrush, 0, 0, counterDepth, Height);
+            e.Graphics.DrawLine(Common.BorderPen, counterDepth, counterDepth, counterDepth, counterRect.Height + counterDepth);
 
             //drawing button
             int depth = buttonDepthUp;
@@ -198,8 +191,8 @@ namespace cassettePlayerSimulator
             var faceRect = new Rectangle(buttonOrigin.X + depth, buttonOrigin.Y + depth, buttonFaceWidth, buttonFaceHeight);
 
             //front face
-            e.Graphics.FillRectangle(buttonFaceBrush, faceRect);
-            e.Graphics.DrawRectangle(borderPen, faceRect);
+            e.Graphics.FillRectangle(Common.ButtonFaceBrush, faceRect);
+            e.Graphics.DrawRectangle(Common.BorderPen, faceRect);
 
             var topPolygon = new PointF[]
             {
@@ -210,8 +203,8 @@ namespace cassettePlayerSimulator
             };
 
             //top face
-            e.Graphics.FillPolygon(buttonTopBrush, topPolygon);
-            e.Graphics.DrawPolygon(borderPen, topPolygon);
+            e.Graphics.FillPolygon(Common.ButtonTopBrush, topPolygon);
+            e.Graphics.DrawPolygon(Common.BorderPen, topPolygon);
 
             var leftPolygon = new PointF[]
             {
@@ -222,8 +215,8 @@ namespace cassettePlayerSimulator
             };
 
             //left face
-            e.Graphics.FillPolygon(buttonLeftBrush, leftPolygon);
-            e.Graphics.DrawPolygon(borderPen, leftPolygon);
+            e.Graphics.FillPolygon(Common.ButtonLeftBrush, leftPolygon);
+            e.Graphics.DrawPolygon(Common.BorderPen, leftPolygon);
         }
 
         private bool isResetPressed = false;

@@ -19,12 +19,6 @@ namespace cassettePlayerSimulator
             baseSize = new SizeF(img.Width * 1.1f, img.Height * 1.1f);
         }
 
-        private Brush tapeBrush = new SolidBrush(Color.FromArgb(128, 64, 0));
-        private Brush spoolBrush = new SolidBrush(Color.FromArgb(240, 240, 240));
-        private Brush blackWheelBrush = new SolidBrush(Color.FromArgb(64, 64, 64));
-        private Brush axisBrush = new SolidBrush(Color.FromArgb(192, 192, 192));
-        private Pen tapePen = new Pen(Color.FromArgb(128, 64, 0));
-
         private Font tapeSideFont = new Font(FontFamily.GenericSansSerif, 15.0f, FontStyle.Bold);
 
         public float scale;
@@ -142,25 +136,25 @@ namespace cassettePlayerSimulator
                 DrawTapeSpoolOuter(e.Graphics, centerLeft, spoolLeftRadius);
                 DrawTapeSpoolOuter(e.Graphics, centerRight, spoolRightRadius);
 
-                e.Graphics.DrawLine(tapePen, 0.1f * Width, (int)(capstan.Y + capstanRadius),
+                e.Graphics.DrawLine(Common.TapePen, 0.1f * Width, (int)(capstan.Y + capstanRadius),
                     0.9f * Width, (int)(capstan.Y + capstanRadius));
             }
 
-            e.Graphics.FillEllipse(axisBrush, capstan.X - capstanRadius, capstan.Y - capstanRadius,
+            e.Graphics.FillEllipse(Common.AxisBrush, capstan.X - capstanRadius, capstan.Y - capstanRadius,
                 capstanRadius * 2, capstanRadius * 2);
-            e.Graphics.FillEllipse(blackWheelBrush, roller.X - rollerRadius, roller.Y - rollerRadius,
+            e.Graphics.FillEllipse(Common.BlackWheelBrush, roller.X - rollerRadius, roller.Y - rollerRadius,
                 rollerRadius * 2, rollerRadius * 2);
-            e.Graphics.FillEllipse(axisBrush, roller.X - capstanRadius, roller.Y - capstanRadius,
+            e.Graphics.FillEllipse(Common.AxisBrush, roller.X - capstanRadius, roller.Y - capstanRadius,
                 capstanRadius * 2, capstanRadius * 2);
 
             float headWidth = 120 * scale;
             float headRoundHeight = 25 * scale;
             float headHeight = 70 * scale;
-            e.Graphics.FillPie(axisBrush, head.X - headWidth / 2, head.Y,
+            e.Graphics.FillPie(Common.AxisBrush, head.X - headWidth / 2, head.Y,
                 headWidth, headRoundHeight * 2, 180, 180);
-            e.Graphics.FillRectangle(axisBrush, head.X - headWidth / 2, head.Y + headRoundHeight - 1,
+            e.Graphics.FillRectangle(Common.AxisBrush, head.X - headWidth / 2, head.Y + headRoundHeight - 1,
                 headWidth, headHeight);
-            e.Graphics.FillRectangle(axisBrush, head.X + headWidth / 2, head.Y - headRoundHeight / 4,
+            e.Graphics.FillRectangle(Common.AxisBrush, head.X + headWidth / 2, head.Y - headRoundHeight / 4,
                 5 * scale, headRoundHeight / 4 + headRoundHeight + headHeight);
 
             Color cassetteColor = loadedTapeSide?.Parent.Color ?? Color.Transparent;
@@ -208,9 +202,9 @@ namespace cassettePlayerSimulator
 
         private void DrawTapeSpoolOuter(Graphics g, PointF center, float outerRadius)
         {
-            g.FillEllipse(tapeBrush, center.X - outerRadius, center.Y - outerRadius,
+            g.FillEllipse(Common.TapeBrush, center.X - outerRadius, center.Y - outerRadius,
                 outerRadius * 2, outerRadius * 2);
-            g.FillEllipse(spoolBrush, center.X - spoolMinRadius, center.Y - spoolMinRadius,
+            g.FillEllipse(Common.SpoolBrush, center.X - spoolMinRadius, center.Y - spoolMinRadius,
                 spoolMinRadius * 2, spoolMinRadius * 2);
         }
 

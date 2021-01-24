@@ -11,15 +11,7 @@ namespace cassettePlayerSimulator
             SetStyle(ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
         }
 
-        private Brush spoolBrush = new SolidBrush(Color.FromArgb(240, 240, 240));
-
-        private SolidBrush backgroundBrush = new SolidBrush(Color.FromArgb(169, 169, 169));
-
-        private Brush cassetteBrush = new SolidBrush(Color.FromArgb(0, 0, 0));
-        
-        private Brush blackWheelBrush = new SolidBrush(Color.FromArgb(64, 64, 64));
-        
-        private Brush axisBrush = new SolidBrush(Color.FromArgb(192, 192, 192));
+        private SolidBrush backgroundBrush = new SolidBrush(DefaultBackColor);
 
         public float scale;
 
@@ -39,7 +31,7 @@ namespace cassettePlayerSimulator
 
             if (CassetteInserted)
             {
-                e.Graphics.FillRectangle(cassetteBrush, new RectangleF(0, 0, Width, Height));
+                e.Graphics.FillRectangle(Common.CassetteBodyBrush, new RectangleF(0, 0, Width, Height));
             }
 
             DrawTapeSpool(e.Graphics, new PointF(Width / 2, Height / 2), angleDegrees);
@@ -61,10 +53,10 @@ namespace cassettePlayerSimulator
             g.FillEllipse(backgroundBrush, center.X - spoolInnerRadius, center.Y - spoolInnerRadius,
                 spoolInnerRadius * 2, spoolInnerRadius * 2);
 
-            g.FillEllipse(blackWheelBrush, center.X - blackWheelRadius, center.Y - blackWheelRadius,
+            g.FillEllipse(Common.BlackWheelBrush, center.X - blackWheelRadius, center.Y - blackWheelRadius,
                 blackWheelRadius * 2, blackWheelRadius * 2);
 
-            g.FillEllipse(axisBrush, center.X - axisRadius, center.Y - axisRadius,
+            g.FillEllipse(Common.AxisBrush, center.X - axisRadius, center.Y - axisRadius,
                 axisRadius * 2, axisRadius * 2);
 
             for (int i = 0; i < 6; ++i)
@@ -72,7 +64,7 @@ namespace cassettePlayerSimulator
                 float a = 60 * i + angleDegrees;
                 if (CassetteInserted)
                 {
-                    g.FillPolygon(spoolBrush, new PointF[]
+                    g.FillPolygon(Common.SpoolBrush, new PointF[]
                     {
                         PolarToCartesian(center, 55 * scale, a - 2),
                         PolarToCartesian(center, 55 * scale, a + 22),
@@ -81,7 +73,7 @@ namespace cassettePlayerSimulator
                     });
                 }
 
-                g.FillPolygon(blackWheelBrush, new PointF[]
+                g.FillPolygon(Common.BlackWheelBrush, new PointF[]
                 {
                     PolarToCartesian(center, 60 * scale, a + 30),
                     PolarToCartesian(center, 60 * scale, a + 50),

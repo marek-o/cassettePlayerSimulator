@@ -188,12 +188,12 @@ namespace cassettePlayerSimulator
             Tape tape = new Tape();
 
             tape.SideA.Label = labelSideA;
-            tape.SideA.Length = sideLengthSeconds;
             tape.SideA.FilePath = filenameA;
 
             tape.SideB.Label = labelSideB;
-            tape.SideB.Length = sideLengthSeconds;
             tape.SideB.FilePath = filenameB;
+
+            tape.Length = sideLengthSeconds;
 
             return tape;
         }
@@ -248,7 +248,7 @@ namespace cassettePlayerSimulator
                 }
             }
 
-            var timeSpan = new TimeSpan(0, 0, (int)side.Length);
+            var timeSpan = new TimeSpan(0, 0, (int)side.Parent.Length);
 
             TextRenderer.DrawText(g, string.Format("{0}: {1} ({2})", prefix, side.Label, timeSpan.ToString("mm\\:ss")),
                 SystemFonts.DefaultFont,

@@ -66,6 +66,8 @@ namespace cassettePlayerSimulator
     {
         public TapeSide SideA;
         public TapeSide SideB;
+        public float Position;
+        public float Length;
 
         [XmlIgnore]
         public Color Color = Color.Red;
@@ -90,18 +92,6 @@ namespace cassettePlayerSimulator
             SideA = new TapeSide() { Parent = this };
             SideB = new TapeSide() { Parent = this };
         }
-
-        public Tape(float sideLengthSeconds)
-        {
-            SideA = new TapeSide() { Length = sideLengthSeconds };
-            SideB = new TapeSide() { Length = sideLengthSeconds };
-        }
-
-        public Tape(string pathA, string pathB)
-        {
-            SideA = new TapeSide(pathA);
-            SideB = new TapeSide(pathB);
-        }
     }
 
     [Serializable]
@@ -109,8 +99,19 @@ namespace cassettePlayerSimulator
     {
         public string Label;
         public string FilePath;
-        public float Position;
-        public float Length;
+
+        [XmlIgnore]
+        public float Position
+        {
+            get
+            {
+                return (this == Parent.SideA) ? Parent.Position : Parent.Length - Parent.Position;
+            }
+            set
+            {
+                Parent.Position = (this == Parent.SideA) ? value : Parent.Length - value;
+            }
+        }
 
         [XmlIgnore]
         public Tape Parent;
@@ -118,14 +119,6 @@ namespace cassettePlayerSimulator
         public TapeSide()
         {
 
-        }
-
-        public TapeSide(string path)
-        {
-            FilePath = path;
-            Label = "no name";
-            Position = 0.0f;
-            Length = 123.0f; //FIXME
         }
     }
 }

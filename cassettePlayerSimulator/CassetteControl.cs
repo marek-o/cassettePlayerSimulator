@@ -199,7 +199,7 @@ namespace cassettePlayerSimulator
                     new Rectangle((int)(180 * scale), (int)(142 * scale), (int)(90 * scale), (int)(90 * scale)),
                     Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPadding);
 
-                TextRenderer.DrawText(e.Graphics, ((int)Math.Round(loadedTape.Length / 900.0f) * 30).ToString(), tapeSideFont,
+                TextRenderer.DrawText(e.Graphics, ((int)Math.Round(loadedTape.Parent.Length / 900.0f) * 30).ToString(), tapeSideFont,
                     new Rectangle((int)(1112 * scale), (int)(410 * scale), (int)(90 * scale), (int)(90 * scale)),
                     Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPadding);
             }

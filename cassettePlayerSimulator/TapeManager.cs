@@ -194,6 +194,7 @@ namespace cassettePlayerSimulator
             tape.SideB.FilePath = filenameB;
 
             tape.Length = sideLengthSeconds;
+            tape.Color = color;
 
             return tape;
         }

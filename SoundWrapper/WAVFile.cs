@@ -16,11 +16,30 @@ namespace Utils
         public int bitsPerSample = 0;
         public int dataLength = 0;
 
+        public int dataOffset = 0;
+
         public short[] data;
 
-        private static WAVFile Load(Stream stream, IProgress<float> progress = null)
+        public string filename;
+
+        public BinaryWriter writer;
+
+        public void OpenForWriting()
+        {
+            var fileStream = File.Open(filename, FileMode.Open, FileAccess.Write);
+            writer = new BinaryWriter(fileStream);
+        }
+
+        public void CloseForWriting()
+        {
+            writer?.Close();
+            writer = null;
+        }
+
+        private static WAVFile Load(string filename, Stream stream, IProgress<float> progress = null)
         {
             var wav = new WAVFile();
+            wav.filename = filename;
 
             using (BinaryReader reader = new BinaryReader(stream))
             {
@@ -44,6 +63,8 @@ namespace Utils
 
                 var magic3 = reader.ReadBytes(4);
                 wav.dataLength = reader.ReadInt32();
+
+                wav.dataOffset = (int)reader.BaseStream.Position;
 
                 if (Encoding.ASCII.GetString(magic1) != "RIFF"
                     || Encoding.ASCII.GetString(magic2) != "WAVEfmt "
@@ -96,14 +117,14 @@ namespace Utils
 
         public static WAVFile Load(System.IO.UnmanagedMemoryStream stream)
         {
-            return Load(stream as Stream);
+            return Load("", stream as Stream);
         }
 
         public static WAVFile Load(string filename, IProgress<float> progress = null)
         {
             using (var file = File.OpenRead(filename))
             {
-                return Load(file, progress);
+                return Load(filename, file, progress);
             }
         }
     }

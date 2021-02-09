@@ -12,6 +12,7 @@ namespace cassettePlayerSimulator
             private double position;
             private bool isPlaying;
             private bool isRecording;
+            private bool recordingToFile = true;
             private bool isLooped;
             private bool autoRewind;
             private float volume;
@@ -91,7 +92,19 @@ namespace cassettePlayerSimulator
             {
                 lock (locker)
                 {
-                    this.isRecording = isRecording;
+                    if (this.isRecording != isRecording)
+                    {
+                        this.isRecording = isRecording;
+
+                        if (isRecording)
+                        {
+                            wavFile.OpenForWriting();
+                        }
+                        else
+                        {
+                            wavFile.CloseForWriting();
+                        }
+                    }
                 }
             }
 
@@ -156,6 +169,15 @@ namespace cassettePlayerSimulator
             {
                 lock (locker)
                 {
+                    if (isRecording && recordingToFile && position + buffer.Length < LastSafePosition())
+                    {
+                        byte[] bytes = new byte[buffer.Length * 2];
+                        Buffer.BlockCopy(buffer, 0, bytes, 0, bytes.Length);
+
+                        wavFile.writer.Seek(wavFile.dataOffset + (int)(position * 2), System.IO.SeekOrigin.Begin);
+                        wavFile.writer.Write(bytes, 0, bytes.Length);
+                    }
+
                     for (int i = 0; i < buffer.Length; ++i)
                     {
                         if (isRecording)

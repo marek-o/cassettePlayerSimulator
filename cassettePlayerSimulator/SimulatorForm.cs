@@ -95,6 +95,12 @@ namespace cassettePlayerSimulator
             tapeManager.PerformImport();
         }
 
+        private void SimulatorForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            StopEjectButton_MouseDown(new CancelEventArgs());
+            StopEjectButton_MouseDown(new CancelEventArgs());
+        }
+
         private void LoadTapeSide(TapeSide tapeSide)
         {
             string path = Path.Combine(tapeManager.TapesDirectory, tapeSide.FilePath);

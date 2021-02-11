@@ -129,6 +129,7 @@
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Cassette Player Simulator";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SimulatorForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

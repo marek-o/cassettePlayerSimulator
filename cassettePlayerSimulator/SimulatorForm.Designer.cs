@@ -37,7 +37,6 @@
             this.cassetteButtons = new cassettePlayerSimulator.CassetteButtons();
             this.cassetteControl = new cassettePlayerSimulator.CassetteControl();
             this.listBox = new System.Windows.Forms.ListBox();
-            this.buttonSaveList = new System.Windows.Forms.Button();
             this.buttonCreateTape = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -60,7 +59,7 @@
             this.labelDebug.TabIndex = 7;
             this.labelDebug.Text = "debug info";
             // 
-            // timer1
+            // timerDebug
             // 
             this.timerDebug.Tick += new System.EventHandler(this.timer1_Tick);
             // 
@@ -70,10 +69,10 @@
             this.timerAnimation.Interval = 10;
             this.timerAnimation.Tick += new System.EventHandler(this.timerAnimation_Tick);
             // 
-            // counter1
+            // counter
             // 
             this.counter.Location = new System.Drawing.Point(17, 299);
-            this.counter.Name = "counter1";
+            this.counter.Name = "counter";
             this.counter.Size = new System.Drawing.Size(139, 51);
             this.counter.TabIndex = 8;
             this.counter.Text = "counter1";
@@ -85,11 +84,11 @@
             this.cassetteButtons.Size = new System.Drawing.Size(422, 123);
             this.cassetteButtons.TabIndex = 6;
             // 
-            // cassetteControl1
+            // cassetteControl
             // 
             this.cassetteControl.BackColor = System.Drawing.Color.Gray;
             this.cassetteControl.Location = new System.Drawing.Point(17, 18);
-            this.cassetteControl.Name = "cassetteControl1";
+            this.cassetteControl.Name = "cassetteControl";
             this.cassetteControl.Size = new System.Drawing.Size(422, 275);
             this.cassetteControl.TabIndex = 5;
             // 
@@ -98,18 +97,8 @@
             this.listBox.FormattingEnabled = true;
             this.listBox.Location = new System.Drawing.Point(593, 89);
             this.listBox.Name = "listBox";
-            this.listBox.Size = new System.Drawing.Size(294, 204);
+            this.listBox.Size = new System.Drawing.Size(294, 199);
             this.listBox.TabIndex = 10;
-            // 
-            // buttonSaveList
-            // 
-            this.buttonSaveList.Location = new System.Drawing.Point(593, 40);
-            this.buttonSaveList.Name = "buttonSaveList";
-            this.buttonSaveList.Size = new System.Drawing.Size(75, 23);
-            this.buttonSaveList.TabIndex = 11;
-            this.buttonSaveList.Text = "Save list";
-            this.buttonSaveList.UseVisualStyleBackColor = true;
-            this.buttonSaveList.Click += new System.EventHandler(this.buttonSaveList_Click);
             // 
             // buttonCreateTape
             // 
@@ -129,7 +118,6 @@
             this.BackColor = System.Drawing.Color.DarkGray;
             this.ClientSize = new System.Drawing.Size(899, 481);
             this.Controls.Add(this.buttonCreateTape);
-            this.Controls.Add(this.buttonSaveList);
             this.Controls.Add(this.listBox);
             this.Controls.Add(this.counter);
             this.Controls.Add(this.labelDebug);
@@ -155,7 +143,6 @@
         private System.Windows.Forms.Timer timerAnimation;
         private Counter counter;
         private System.Windows.Forms.ListBox listBox;
-        private System.Windows.Forms.Button buttonSaveList;
         private System.Windows.Forms.Button buttonCreateTape;
     }
 }

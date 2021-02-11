@@ -240,18 +240,6 @@ namespace cassettePlayerSimulator
             tapeManager.CreateTape();
         }
 
-        private void buttonSaveList_Click(object sender, EventArgs e)
-        {
-            if (music != null && loadedTapeSide != null)
-            {
-                var pos = music.GetCurrentPositionSeconds();
-
-                loadedTapeSide.Position = pos;
-            }
-
-            tapeManager.SaveList();
-        }
-
         private void DisengageButtons()
         {
             if (State == PlayerState.PLAYING)

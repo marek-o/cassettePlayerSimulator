@@ -147,6 +147,8 @@ namespace cassettePlayerSimulator
 
                     listOfTapes.Tapes.Add(tape);
                     listBox.Items.Add(tape);
+
+                    SaveList();
                 }
             }
         }
@@ -209,6 +211,8 @@ namespace cassettePlayerSimulator
             LoadedTapeSide = null;
 
             listBox.Invalidate();
+
+            SaveList();
         }
 
         private void listBox_DrawItem(object sender, DrawItemEventArgs e)
@@ -334,9 +338,10 @@ namespace cassettePlayerSimulator
                         tape.SideA.Label = form.LabelSideA;
                         tape.SideB.Label = form.LabelSideB;
                         tape.Color = form.Color;
+
+                        SaveList();
                     }
                 }
-
             }
         }
 
@@ -368,6 +373,8 @@ namespace cassettePlayerSimulator
 
                     listOfTapes.Tapes.Remove(tape);
                     listBox.Items.Remove(tape);
+
+                    SaveList();
                 }
             }
         }

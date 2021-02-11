@@ -165,6 +165,8 @@ namespace cassettePlayerSimulator
             }
             while (File.Exists(filenameA) || File.Exists(filenameB));
 
+            Directory.CreateDirectory(TapesDirectory);
+
             var pathA = Path.Combine(TapesDirectory, filenameA);
             var pathB = Path.Combine(TapesDirectory, filenameB);
 

@@ -169,26 +169,26 @@ namespace cassettePlayerSimulator
             {
                 lock (locker)
                 {
-                    if (isRecording && recordingToFile && position + buffer.Length < LastSafePosition())
+                    if (isRecording)
                     {
-                        byte[] bytes = new byte[buffer.Length * 2];
-                        Buffer.BlockCopy(buffer, 0, bytes, 0, bytes.Length);
-
-                        wavFile.writer.Seek(wavFile.dataOffset + (int)(position * 2), System.IO.SeekOrigin.Begin);
-                        wavFile.writer.Write(bytes, 0, bytes.Length);
-                    }
-
-                    for (int i = 0; i < buffer.Length; ++i)
-                    {
-                        if (isRecording)
+                        if (position + buffer.Length < LastSafePosition())
                         {
-                            wavFile.data[(int)position] = buffer[i];
-                            position += 1.0;
-
-                            if (position > LastSafePosition())
+                            if (recordingToFile)
                             {
-                                position = LastSafePosition();
+                                byte[] bytes = new byte[buffer.Length * 2];
+                                Buffer.BlockCopy(buffer, 0, bytes, 0, bytes.Length);
+
+                                wavFile.writer.Seek(wavFile.dataOffset + (int)(position * 2), System.IO.SeekOrigin.Begin);
+                                wavFile.writer.Write(bytes, 0, bytes.Length);
                             }
+
+                            Buffer.BlockCopy(buffer, 0, wavFile.data, (int)(position * 2), buffer.Length * 2);
+
+                            position += buffer.Length;
+                        }
+                        else
+                        {
+                            position = LastSafePosition();
                         }
                     }
                 }

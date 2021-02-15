@@ -14,8 +14,6 @@ namespace cassettePlayerSimulator
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "Cassette Player Simulator");
 
-        private string TapeFile => Path.Combine(TapesDirectory, "tape.wav");
-
         private string TapeListFile => Path.Combine(TapesDirectory, "tapes.xml");
 
         public void PerformImport()
@@ -36,14 +34,7 @@ namespace cassettePlayerSimulator
 
             Directory.CreateDirectory(TapesDirectory);
 
-            if (File.Exists(TapeFile))
-            {
-                var res = MessageBox.Show("Are you sure to overwrite existing tape file?", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                if (res != DialogResult.OK)
-                {
-                    return;
-                }
-            }
+            //TODO: make form for selecting position, for confirmation
 
             ProgressForm progressForm = new ProgressForm(string.Format("Importing {0}...", Path.GetFileName(inputFileFullPath)));
             var thread = new Thread(() =>
@@ -58,31 +49,46 @@ namespace cassettePlayerSimulator
 
         private void Import(string inputFilePath, IProgress<float> progress = null)
         {
-            float[] buffer = new float[1024 * 128];
+            byte[] buffer = new byte[1024 * 128 * 2];
 
-            using (var reader = new NAudio.Wave.AudioFileReader(inputFilePath))
-            using (var writer = new NAudio.Wave.WaveFileWriter(TapeFile, Common.WaveFormat))
-            {
-                int readCount = 0;
+            string outputFilePath = Path.Combine(TapesDirectory, "tape5cA.wav"); //FIXME
 
-                int stepCount = 100;
-                int step = 0;
-                int stepSize = (int)(reader.Length / stepCount);
-                int nextStep = 0;
+            Utils.WAVFile outputWavFile = Utils.WAVFile.Load(outputFilePath, progress); //FIXME
 
-                do
+            try
+            { 
+                outputWavFile.OpenForWriting();
+                outputWavFile.writer.Seek(outputWavFile.dataOffset, SeekOrigin.Begin);
+
+                using (var reader = new NAudio.Wave.AudioFileReader(inputFilePath))
+                using (var tempConverter = new NAudio.Wave.Wave32To16Stream(reader))
+                using (var converter = new NAudio.Wave.WaveFormatConversionStream(Common.WaveFormat, tempConverter))
                 {
-                    readCount = reader.Read(buffer, 0, buffer.Length);
-                    writer.WriteSamples(buffer, 0, readCount);
+                    int readCount = 0;
 
-                    if (progress != null && reader.Position >= nextStep)
+                    int stepCount = 100;
+                    int step = 0;
+                    int stepSize = (int)(reader.Length / stepCount);
+                    int nextStep = 0;
+
+                    do
                     {
-                        nextStep += stepSize;
-                        progress.Report(step / (float)stepCount);
-                        step++;
+                        readCount = converter.Read(buffer, 0, buffer.Length);
+                        outputWavFile.writer.Write(buffer, 0, readCount);
+
+                        if (progress != null && reader.Position >= nextStep)
+                        {
+                            nextStep += stepSize;
+                            progress.Report(step / (float)stepCount);
+                            step++;
+                        }
                     }
+                    while (readCount > 0);
                 }
-                while (readCount > 0);
+            }
+            finally
+            {
+                outputWavFile.CloseForWriting();
             }
         }
 

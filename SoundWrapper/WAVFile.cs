@@ -27,20 +27,6 @@ namespace Utils
         private short[] sampleCache = new short[0];
         private long sampleCacheOffset = 0;
 
-        //to be removed
-        public void OpenForWriting()
-        {
-            if (writer == null)
-            {
-                writer = new BinaryWriter(stream);
-            }
-        }
-
-        //to be removed
-        public void CloseForWriting()
-        {
-        }
-
         public void WriteSamples(short[] buffer, int position)
         {
             if (writer == null)
@@ -54,7 +40,8 @@ namespace Utils
             writer.Seek(dataOffsetBytes + position * 2, SeekOrigin.Begin);
             writer.Write(bytes, 0, bytes.Length);
 
-            //FIXME clear read cache
+            sampleCache = new short[0];
+            sampleCacheOffset = -1;
         }
 
         public short ReadSample(int position)
@@ -84,6 +71,11 @@ namespace Utils
 
             BinaryReader reader = new BinaryReader(stream);
             wav.reader = reader;
+            
+            if (stream.CanWrite)
+            {
+                wav.writer = new BinaryWriter(stream);
+            }
 
             if (reader.BaseStream.Length < 44)
             {
@@ -135,7 +127,7 @@ namespace Utils
 
         public static WAVFile Load(string filename)
         {
-            var file = File.Open(filename, FileMode.Open, FileAccess.ReadWrite);
+            var file = File.Open(filename, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
             return Load(filename, file);
         }
 

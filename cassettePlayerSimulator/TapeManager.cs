@@ -57,7 +57,6 @@ namespace cassettePlayerSimulator
 
             try
             { 
-                outputWavFile.OpenForWriting();
                 outputWavFile.writer.Seek(outputWavFile.dataOffsetBytes, SeekOrigin.Begin);
 
                 using (var reader = new NAudio.Wave.AudioFileReader(inputFilePath))
@@ -88,7 +87,6 @@ namespace cassettePlayerSimulator
             }
             finally
             {
-                outputWavFile.CloseForWriting();
             }
         }
 

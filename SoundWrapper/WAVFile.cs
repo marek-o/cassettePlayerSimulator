@@ -18,8 +18,6 @@ namespace Utils
 
         public int dataOffsetBytes = 0;
 
-        public short[] data;
-
         public string filename;
 
         private Stream stream;
@@ -29,16 +27,34 @@ namespace Utils
         private short[] sampleCache = new short[0];
         private long sampleCacheOffset = 0;
 
+        //to be removed
         public void OpenForWriting()
         {
-            var fileStream = File.Open(filename, FileMode.Open, FileAccess.Write);
-            writer = new BinaryWriter(fileStream);
+            if (writer == null)
+            {
+                writer = new BinaryWriter(stream);
+            }
         }
 
+        //to be removed
         public void CloseForWriting()
         {
-            writer?.Close();
-            writer = null;
+        }
+
+        public void WriteSamples(short[] buffer, int position)
+        {
+            if (writer == null)
+            {
+                return;
+            }
+
+            byte[] bytes = new byte[buffer.Length * 2];
+            Buffer.BlockCopy(buffer, 0, bytes, 0, bytes.Length);
+
+            writer.Seek(dataOffsetBytes + position * 2, SeekOrigin.Begin);
+            writer.Write(bytes, 0, bytes.Length);
+
+            //FIXME clear read cache
         }
 
         public short ReadSample(int position)
@@ -109,8 +125,6 @@ namespace Utils
                 throw new NotImplementedException("Unsupported WAV format");
             }
 
-            wav.data = new short[1024]; //dummy array
-
             return wav;
         }
 
@@ -121,8 +135,20 @@ namespace Utils
 
         public static WAVFile Load(string filename)
         {
-            var file = File.OpenRead(filename);
+            var file = File.Open(filename, FileMode.Open, FileAccess.ReadWrite);
             return Load(filename, file);
+        }
+
+        public void Close()
+        {
+            writer?.Close();
+            writer = null;
+
+            reader?.Close();
+            reader = null;
+
+            stream?.Close();
+            stream = null;
         }
     }
 }

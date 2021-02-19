@@ -105,14 +105,15 @@ namespace cassettePlayerSimulator
         {
             string path = Path.Combine(tapeManager.TapesDirectory, tapeSide.FilePath);
 
-            WAVFile wav = WAVFile.Load(path);
-
             if (music != null && loadedTapeSide != null)
             {
                 loadedTapeSide.Position = music.GetCurrentPositionSeconds();
             }
 
             mixer.RemoveSample(music);
+            music?.wavFile.Close(); //FIXME maybe close also when ejecting
+
+            WAVFile wav = WAVFile.Load(path);
             music = new SoundMixer.Sample(wav, false, false, false, 0.2f, 1.0f);
             mixer.AddSample(music);
             mixer.SetRecordingSample(music);

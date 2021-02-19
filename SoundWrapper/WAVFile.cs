@@ -20,25 +20,18 @@ namespace Utils
 
         public string filename;
 
-        private Stream stream;
-        private BinaryReader reader;
-        public BinaryWriter writer;
+        public Stream stream;
 
         private short[] sampleCache = new short[0];
         private long sampleCacheOffset = 0;
 
         public void WriteSamples(short[] buffer, int position)
         {
-            if (writer == null)
-            {
-                return;
-            }
-
             byte[] bytes = new byte[buffer.Length * 2];
             Buffer.BlockCopy(buffer, 0, bytes, 0, bytes.Length);
 
-            writer.Seek(dataOffsetBytes + position * 2, SeekOrigin.Begin);
-            writer.Write(bytes, 0, bytes.Length);
+            stream.Seek(dataOffsetBytes + position * 2, SeekOrigin.Begin);
+            stream.Write(bytes, 0, bytes.Length);
 
             sampleCache = new short[0];
             sampleCacheOffset = -1;
@@ -48,12 +41,12 @@ namespace Utils
         {
             if (!(position >= sampleCacheOffset && position < sampleCacheOffset + sampleCache.Length))
             {
-                reader.BaseStream.Seek(dataOffsetBytes + position * 2, SeekOrigin.Begin);
+                stream.Seek(dataOffsetBytes + position * 2, SeekOrigin.Begin);
 
                 const int sampleCacheSize = 1024;
                 byte[] tmp = new byte[sampleCacheSize * 2];
                 sampleCache = new short[sampleCacheSize];
-                reader.Read(tmp, 0, tmp.Length);
+                stream.Read(tmp, 0, tmp.Length);
 
                 Buffer.BlockCopy(tmp, 0, sampleCache, 0, tmp.Length);
 
@@ -69,52 +62,60 @@ namespace Utils
             wav.filename = filename;
             wav.stream = stream;
 
-            BinaryReader reader = new BinaryReader(stream);
-            wav.reader = reader;
-            
-            if (stream.CanWrite)
+            BinaryReader reader = null;
+
+            try
             {
-                wav.writer = new BinaryWriter(stream);
+                reader = new BinaryReader(stream, Encoding.UTF8, true);
+
+                if (reader.BaseStream.Length < 44)
+                {
+                    throw new ArgumentException("Invalid WAV file");
+                }
+
+                var magic1 = reader.ReadBytes(4);
+                int chunkSize = reader.ReadInt32();
+                var magic2 = reader.ReadBytes(8);
+                int subchunkSize = reader.ReadInt32();
+                wav.audioFormat = reader.ReadInt16();
+                wav.channels = reader.ReadInt16();
+                wav.sampleRate = reader.ReadInt32();
+                int byteRate = reader.ReadInt32();
+                wav.blockAlign = reader.ReadInt16();
+                wav.bitsPerSample = reader.ReadInt16();
+
+                reader.BaseStream.Seek(20 + subchunkSize, SeekOrigin.Begin);
+
+                var magic3 = reader.ReadBytes(4);
+                wav.dataLengthBytes = reader.ReadInt32();
+
+                wav.dataOffsetBytes = (int)reader.BaseStream.Position;
+
+                if (Encoding.ASCII.GetString(magic1) != "RIFF"
+                    || Encoding.ASCII.GetString(magic2) != "WAVEfmt "
+                    || Encoding.ASCII.GetString(magic3) != "data"
+                    || chunkSize != reader.BaseStream.Length - 8
+                    )
+                {
+                    throw new ArgumentException("Invalid WAV file");
+                }
+
+                if (wav.audioFormat != 1
+                    || wav.channels < 1
+                    || wav.channels > 2
+                    || wav.bitsPerSample != 16)
+                {
+                    throw new NotImplementedException("Unsupported WAV format");
+                }
             }
-
-            if (reader.BaseStream.Length < 44)
+            catch (Exception)
             {
-                throw new ArgumentException("Invalid WAV file");
+                wav.Close();
+                throw;
             }
-
-            var magic1 = reader.ReadBytes(4);
-            int chunkSize = reader.ReadInt32();
-            var magic2 = reader.ReadBytes(8);
-            int subchunkSize = reader.ReadInt32();
-            wav.audioFormat = reader.ReadInt16();
-            wav.channels = reader.ReadInt16();
-            wav.sampleRate = reader.ReadInt32();
-            int byteRate = reader.ReadInt32();
-            wav.blockAlign = reader.ReadInt16();
-            wav.bitsPerSample = reader.ReadInt16();
-
-            reader.BaseStream.Seek(20 + subchunkSize, SeekOrigin.Begin);
-
-            var magic3 = reader.ReadBytes(4);
-            wav.dataLengthBytes = reader.ReadInt32();
-
-            wav.dataOffsetBytes = (int)reader.BaseStream.Position;
-
-            if (Encoding.ASCII.GetString(magic1) != "RIFF"
-                || Encoding.ASCII.GetString(magic2) != "WAVEfmt "
-                || Encoding.ASCII.GetString(magic3) != "data"
-                || chunkSize != reader.BaseStream.Length - 8
-                )
+            finally
             {
-                throw new ArgumentException("Invalid WAV file");
-            }
-
-            if (wav.audioFormat != 1
-                || wav.channels < 1
-                || wav.channels > 2
-                || wav.bitsPerSample != 16)
-            {
-                throw new NotImplementedException("Unsupported WAV format");
+                reader?.Dispose();
             }
 
             return wav;
@@ -133,12 +134,6 @@ namespace Utils
 
         public void Close()
         {
-            writer?.Close();
-            writer = null;
-
-            reader?.Close();
-            reader = null;
-
             stream?.Close();
             stream = null;
         }

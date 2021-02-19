@@ -57,7 +57,7 @@ namespace cassettePlayerSimulator
 
             try
             { 
-                outputWavFile.writer.Seek(outputWavFile.dataOffsetBytes, SeekOrigin.Begin);
+                outputWavFile.stream.Seek(outputWavFile.dataOffsetBytes, SeekOrigin.Begin);
 
                 using (var reader = new NAudio.Wave.AudioFileReader(inputFilePath))
                 using (var tempConverter = new NAudio.Wave.Wave32To16Stream(reader))
@@ -73,7 +73,7 @@ namespace cassettePlayerSimulator
                     do
                     {
                         readCount = converter.Read(buffer, 0, buffer.Length);
-                        outputWavFile.writer.Write(buffer, 0, readCount);
+                        outputWavFile.stream.Write(buffer, 0, readCount);
 
                         if (progress != null && reader.Position >= nextStep)
                         {

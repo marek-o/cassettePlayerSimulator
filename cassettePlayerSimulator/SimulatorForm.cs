@@ -105,17 +105,7 @@ namespace cassettePlayerSimulator
         {
             string path = Path.Combine(tapeManager.TapesDirectory, tapeSide.FilePath);
 
-            WAVFile wav = null;
-            ProgressForm progressForm = new ProgressForm("Loading tape...");
-
-            var thread = new Thread(() =>
-            {
-                wav = WAVFile.Load(path, progressForm);
-                progressForm.Finish();
-            });
-
-            thread.Start();
-            progressForm.ShowDialog();
+            WAVFile wav = WAVFile.Load(path);
 
             if (music != null && loadedTapeSide != null)
             {

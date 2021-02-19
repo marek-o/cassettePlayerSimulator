@@ -52,7 +52,7 @@ namespace cassettePlayerSimulator
 
             private int LastSafePosition()
             {
-                return wavFile.data.Length - 3;
+                return (wavFile.dataLengthBytes / 2) - 3;
             }
 
             public bool IsAtBeginningOrEnd()
@@ -77,7 +77,7 @@ namespace cassettePlayerSimulator
 
             public float GetLengthSeconds()
             {
-                return (float)wavFile.data.Length / wavFile.sampleRate / wavFile.channels;
+                return (float)(wavFile.dataLengthBytes / 2) / wavFile.sampleRate / wavFile.channels;
             }
 
             public void UpdatePlayback(bool isPlaying)
@@ -138,8 +138,9 @@ namespace cassettePlayerSimulator
                                 }
                             }
 
-                            var samp1 = wavFile.data[(int)position];
-                            var samp2 = wavFile.data[(int)position + 2]; //next sample from this channel
+                            var samp1 = wavFile.ReadSample((int)position);
+                            var samp2 = wavFile.ReadSample((int)position + 2); //next sample from this channel
+
                             var ratio = position - Math.Floor(position);
                             var interpolatedSample = samp1 * (1 - ratio) + samp2 * ratio;
 
@@ -178,7 +179,7 @@ namespace cassettePlayerSimulator
                                 byte[] bytes = new byte[buffer.Length * 2];
                                 Buffer.BlockCopy(buffer, 0, bytes, 0, bytes.Length);
 
-                                wavFile.writer.Seek(wavFile.dataOffset + (int)(position * 2), System.IO.SeekOrigin.Begin);
+                                wavFile.writer.Seek(wavFile.dataOffsetBytes + (int)(position * 2), System.IO.SeekOrigin.Begin);
                                 wavFile.writer.Write(bytes, 0, bytes.Length);
                             }
 

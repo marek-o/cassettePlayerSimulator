@@ -53,12 +53,12 @@ namespace cassettePlayerSimulator
 
             string outputFilePath = Path.Combine(TapesDirectory, "tape5cA.wav"); //FIXME
 
-            Utils.WAVFile outputWavFile = Utils.WAVFile.Load(outputFilePath, progress); //FIXME
+            Utils.WAVFile outputWavFile = Utils.WAVFile.Load(outputFilePath); //FIXME
 
             try
             { 
                 outputWavFile.OpenForWriting();
-                outputWavFile.writer.Seek(outputWavFile.dataOffset, SeekOrigin.Begin);
+                outputWavFile.writer.Seek(outputWavFile.dataOffsetBytes, SeekOrigin.Begin);
 
                 using (var reader = new NAudio.Wave.AudioFileReader(inputFilePath))
                 using (var tempConverter = new NAudio.Wave.Wave32To16Stream(reader))

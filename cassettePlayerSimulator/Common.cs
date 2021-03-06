@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace cassettePlayerSimulator
 {
@@ -41,5 +42,11 @@ namespace cassettePlayerSimulator
         public static readonly Brush CounterWheelBrush = new SolidBrush(CounterWheelColor);
 
         public static readonly Brush CassetteBodyBrush = new SolidBrush(CassetteBodyColor);
+
+        public static string FormatTime(int seconds)
+        {
+            var ts = new TimeSpan(0, 0, seconds);
+            return ts.ToString("mm\\:ss");
+        }
     }
 }

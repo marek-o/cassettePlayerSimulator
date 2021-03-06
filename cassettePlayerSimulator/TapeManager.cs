@@ -20,9 +20,8 @@ namespace cassettePlayerSimulator
         {
             string inputFileFullPath;
 
-            using (var dialog = new OpenFileDialog())
+            using (var dialog = new ImportForm())
             {
-                dialog.Filter = "Audio files (*.mp3;*.wma;*.wav)|*.mp3;*.wma;*.wav|All files (*.*)|*.*";
                 var result = dialog.ShowDialog();
                 if (result == DialogResult.Cancel)
                 {
@@ -87,6 +86,7 @@ namespace cassettePlayerSimulator
             }
             finally
             {
+                outputWavFile.Close();
             }
         }
 
@@ -259,9 +259,7 @@ namespace cassettePlayerSimulator
                 }
             }
 
-            var timeSpan = new TimeSpan(0, 0, (int)side.Parent.Length);
-
-            TextRenderer.DrawText(g, string.Format("{0}: {1} ({2})", prefix, side.Label, timeSpan.ToString("mm\\:ss")),
+            TextRenderer.DrawText(g, string.Format("{0}: {1} ({2})", prefix, side.Label, Common.FormatTime((int)side.Parent.Length)),
                 SystemFonts.DefaultFont,
                 new Rectangle(bounds.X + rectSize, bounds.Y, bounds.Width - rectSize, bounds.Height),
                 textColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);

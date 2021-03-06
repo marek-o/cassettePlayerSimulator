@@ -20,6 +20,7 @@ namespace cassettePlayerSimulator
         {
             string inputFileFullPath;
             string outputFilePath = Path.Combine(TapesDirectory, LoadedTapeSide.FilePath);
+            float tapeImportPosition;
 
             using (var dialog = new ImportForm())
             {
@@ -33,16 +34,15 @@ namespace cassettePlayerSimulator
                 }
 
                 inputFileFullPath = dialog.FileName;
+                tapeImportPosition = dialog.TapeImportPosition;
             }
 
             Directory.CreateDirectory(TapesDirectory);
 
-            //TODO: make form for selecting position, for confirmation
-
             ProgressForm progressForm = new ProgressForm(string.Format("Importing {0}...", Path.GetFileName(inputFileFullPath)));
             var thread = new Thread(() =>
             {
-                Import(inputFileFullPath, outputFilePath, progressForm);
+                Import(inputFileFullPath, outputFilePath, tapeImportPosition, progressForm);
                 progressForm.Finish();
             });
 
@@ -50,15 +50,21 @@ namespace cassettePlayerSimulator
             progressForm.ShowDialog();
         }
 
-        private void Import(string inputFilePath, string outputFilePath, IProgress<float> progress = null)
+        private void Import(string inputFilePath, string outputFilePath, float tapeImportPosition, IProgress<float> progress = null)
         {
             byte[] buffer = new byte[1024 * 128 * 2];
 
             Utils.WAVFile outputWavFile = Utils.WAVFile.Load(outputFilePath);
 
             try
-            { 
-                outputWavFile.stream.Seek(outputWavFile.dataOffsetBytes, SeekOrigin.Begin);
+            {
+                long byteImportPosition = outputWavFile.dataOffsetBytes
+                    +
+                    (long)(Common.WaveFormat.SampleRate * tapeImportPosition)
+                    * (Common.WaveFormat.BitsPerSample / 8)
+                    * Common.WaveFormat.Channels;
+
+                outputWavFile.stream.Seek(byteImportPosition, SeekOrigin.Begin);
 
                 using (var reader = new NAudio.Wave.AudioFileReader(inputFilePath))
                 using (var tempConverter = new NAudio.Wave.Wave32To16Stream(reader))

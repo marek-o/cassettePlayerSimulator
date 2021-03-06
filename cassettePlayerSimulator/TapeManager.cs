@@ -19,6 +19,7 @@ namespace cassettePlayerSimulator
         public void PerformImport()
         {
             string inputFileFullPath;
+            string outputFilePath = Path.Combine(TapesDirectory, LoadedTapeSide.FilePath);
 
             using (var dialog = new ImportForm())
             {
@@ -41,7 +42,7 @@ namespace cassettePlayerSimulator
             ProgressForm progressForm = new ProgressForm(string.Format("Importing {0}...", Path.GetFileName(inputFileFullPath)));
             var thread = new Thread(() =>
             {
-                Import(inputFileFullPath, progressForm);
+                Import(inputFileFullPath, outputFilePath, progressForm);
                 progressForm.Finish();
             });
 
@@ -49,13 +50,11 @@ namespace cassettePlayerSimulator
             progressForm.ShowDialog();
         }
 
-        private void Import(string inputFilePath, IProgress<float> progress = null)
+        private void Import(string inputFilePath, string outputFilePath, IProgress<float> progress = null)
         {
             byte[] buffer = new byte[1024 * 128 * 2];
 
-            string outputFilePath = Path.Combine(TapesDirectory, "tape5cA.wav"); //FIXME
-
-            Utils.WAVFile outputWavFile = Utils.WAVFile.Load(outputFilePath); //FIXME
+            Utils.WAVFile outputWavFile = Utils.WAVFile.Load(outputFilePath);
 
             try
             { 

@@ -19,7 +19,27 @@ namespace cassettePlayerSimulator
 
         public string FileName => textBoxFilename.Text;
 
+        public float TapeLengthSeconds { get; set; }
+
+        public float TapeImportPosition { get; set; }
+
+
         private int fileLengthSeconds;
+
+        private void ImportForm_Load(object sender, EventArgs e)
+        {
+            UpdateLabels();
+
+            trackBarPosition.Maximum = (int)TapeLengthSeconds;
+            trackBarPosition.Value = (int)TapeImportPosition;
+        }
+
+        private void UpdateLabels()
+        {
+            labelTapeLength.Text = Common.FormatTime((int)TapeLengthSeconds);
+            labelTapePosition.Text = Common.FormatTime((int)TapeImportPosition);
+            labelLength.Text = Common.FormatTime(fileLengthSeconds);
+        }
 
         private void buttonSelectFile_Click(object sender, EventArgs e)
         {
@@ -41,16 +61,22 @@ namespace cassettePlayerSimulator
                 using (var reader = new NAudio.Wave.AudioFileReader(FileName))
                 {
                     fileLengthSeconds = (int)reader.TotalTime.TotalSeconds;
-                    labelLength.Text = Common.FormatTime(fileLengthSeconds);
                 }
             }
             catch (Exception ex)
             {
                 fileLengthSeconds = 0;
-                labelLength.Text = Common.FormatTime(fileLengthSeconds);
                 textBoxFilename.Text = "";
                 MessageBox.Show(ex.Message, "Cannot open file", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            UpdateLabels();
+        }
+
+        private void trackBarPosition_Scroll(object sender, EventArgs e)
+        {
+            TapeImportPosition = trackBarPosition.Value;
+            UpdateLabels();
         }
     }
 }

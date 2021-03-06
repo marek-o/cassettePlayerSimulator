@@ -38,6 +38,8 @@
             this.trackBarPosition = new System.Windows.Forms.TrackBar();
             this.labelTapePosition = new System.Windows.Forms.Label();
             this.labelLength = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.labelTapeLength = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPosition)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,7 +93,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 128);
+            this.label2.Location = new System.Drawing.Point(12, 138);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(74, 13);
             this.label2.TabIndex = 16;
@@ -100,36 +102,55 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 150);
+            this.label3.Location = new System.Drawing.Point(12, 115);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 13);
+            this.label3.Size = new System.Drawing.Size(58, 13);
             this.label3.TabIndex = 17;
-            this.label3.Text = "Length:";
+            this.label3.Text = "File length:";
             // 
             // trackBarPosition
             // 
-            this.trackBarPosition.Location = new System.Drawing.Point(15, 80);
+            this.trackBarPosition.Location = new System.Drawing.Point(15, 64);
             this.trackBarPosition.Name = "trackBarPosition";
             this.trackBarPosition.Size = new System.Drawing.Size(331, 45);
             this.trackBarPosition.TabIndex = 18;
+            this.trackBarPosition.Scroll += new System.EventHandler(this.trackBarPosition_Scroll);
             // 
             // labelTapePosition
             // 
             this.labelTapePosition.AutoSize = true;
-            this.labelTapePosition.Location = new System.Drawing.Point(92, 128);
+            this.labelTapePosition.Location = new System.Drawing.Point(92, 138);
             this.labelTapePosition.Name = "labelTapePosition";
-            this.labelTapePosition.Size = new System.Drawing.Size(28, 13);
+            this.labelTapePosition.Size = new System.Drawing.Size(22, 13);
             this.labelTapePosition.TabIndex = 19;
-            this.labelTapePosition.Text = "0:00";
+            this.labelTapePosition.Text = "--:--";
             // 
             // labelLength
             // 
             this.labelLength.AutoSize = true;
-            this.labelLength.Location = new System.Drawing.Point(92, 150);
+            this.labelLength.Location = new System.Drawing.Point(92, 115);
             this.labelLength.Name = "labelLength";
-            this.labelLength.Size = new System.Drawing.Size(28, 13);
+            this.labelLength.Size = new System.Drawing.Size(22, 13);
             this.labelLength.TabIndex = 20;
-            this.labelLength.Text = "0:00";
+            this.labelLength.Text = "--:--";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 161);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(67, 13);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "Tape length:";
+            // 
+            // labelTapeLength
+            // 
+            this.labelTapeLength.AutoSize = true;
+            this.labelTapeLength.Location = new System.Drawing.Point(92, 161);
+            this.labelTapeLength.Name = "labelTapeLength";
+            this.labelTapeLength.Size = new System.Drawing.Size(22, 13);
+            this.labelTapeLength.TabIndex = 22;
+            this.labelTapeLength.Text = "--:--";
             // 
             // ImportForm
             // 
@@ -139,6 +160,8 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(353, 212);
+            this.Controls.Add(this.labelTapeLength);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.labelLength);
             this.Controls.Add(this.labelTapePosition);
             this.Controls.Add(this.trackBarPosition);
@@ -156,6 +179,7 @@
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Importing file";
+            this.Load += new System.EventHandler(this.ImportForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPosition)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -174,5 +198,7 @@
         private System.Windows.Forms.TrackBar trackBarPosition;
         private System.Windows.Forms.Label labelTapePosition;
         private System.Windows.Forms.Label labelLength;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelTapeLength;
     }
 }

@@ -92,6 +92,7 @@ namespace cassettePlayerSimulator
 
         private void buttonImport_Click(object sender, EventArgs e)
         {
+            loadedTapeSide.Position = music.GetCurrentPositionSeconds();
             tapeManager.PerformImport();
         }
 

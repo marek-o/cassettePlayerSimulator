@@ -22,6 +22,9 @@ namespace cassettePlayerSimulator
 
             using (var dialog = new ImportForm())
             {
+                dialog.TapeLengthSeconds = LoadedTapeSide.Parent.Length;
+                dialog.TapeImportPosition = LoadedTapeSide.Position;
+
                 var result = dialog.ShowDialog();
                 if (result == DialogResult.Cancel)
                 {

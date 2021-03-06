@@ -80,6 +80,7 @@ namespace cassettePlayerSimulator
                     do
                     {
                         readCount = converter.Read(buffer, 0, buffer.Length);
+                        readCount = (int)Math.Min(readCount, outputWavFile.stream.Length - outputWavFile.stream.Position);
                         outputWavFile.stream.Write(buffer, 0, readCount);
 
                         if (progress != null && reader.Position >= nextStep)

@@ -78,11 +78,13 @@
             this.buttonSelectFile.TabIndex = 14;
             this.buttonSelectFile.Text = "Select";
             this.buttonSelectFile.UseVisualStyleBackColor = true;
+            this.buttonSelectFile.Click += new System.EventHandler(this.buttonSelectFile_Click);
             // 
             // textBoxFilename
             // 
             this.textBoxFilename.Location = new System.Drawing.Point(95, 9);
             this.textBoxFilename.Name = "textBoxFilename";
+            this.textBoxFilename.ReadOnly = true;
             this.textBoxFilename.Size = new System.Drawing.Size(251, 20);
             this.textBoxFilename.TabIndex = 15;
             // 

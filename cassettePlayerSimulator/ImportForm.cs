@@ -39,6 +39,11 @@ namespace cassettePlayerSimulator
             labelTapeLength.Text = Common.FormatTime((int)TapeLengthSeconds);
             labelTapePosition.Text = Common.FormatTime((int)TapeImportPosition);
             labelLength.Text = Common.FormatTime(fileLengthSeconds);
+
+            positionSelectorControl.TotalLengthSeconds = TapeLengthSeconds;
+            positionSelectorControl.SelectionPosition = TapeImportPosition;
+            positionSelectorControl.SelectionLength = fileLengthSeconds;
+            positionSelectorControl.Invalidate();
         }
 
         private void buttonSelectFile_Click(object sender, EventArgs e)

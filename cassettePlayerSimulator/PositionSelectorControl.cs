@@ -12,7 +12,14 @@ namespace cassettePlayerSimulator
 {
     public class PositionSelectorControl : Control
     {
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public float TotalLengthSeconds { get; set; }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public float SelectionPosition { get; set; }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public float SelectionLength { get; set; }
 
         private List<Marker> markers = new List<Marker>();
 
@@ -26,33 +33,27 @@ namespace cassettePlayerSimulator
         public PositionSelectorControl()
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+
+            markers.Add(beginMarker);
+            markers.Add(endMarker);
+            markers.Add(selectionBeginMarker);
+            markers.Add(selectionEndMarker);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            if (DesignMode)
-            {
-                TotalLengthSeconds = 2700;
-
-                endMarker.Position = TotalLengthSeconds;
-                selectionBeginMarker.Position = 0;
-                selectionEndMarker.Position = 0;
-
-                markers.Clear();
-                markers.Add(beginMarker);
-                markers.Add(endMarker);
-                markers.Add(selectionBeginMarker);
-                markers.Add(selectionEndMarker);
-            }
-
             base.OnPaint(e);
 
             e.Graphics.Clear(SystemColors.Control);
 
             var barRect = BarRectangle();
 
-            e.Graphics.FillRectangle(Brushes.Yellow, barRect);
+            e.Graphics.FillRectangle(Brushes.LightGray, barRect);
             e.Graphics.DrawRectangle(Pens.Black, barRect);
+
+            endMarker.Position = TotalLengthSeconds;
+            selectionBeginMarker.Position = SelectionPosition;
+            selectionEndMarker.Position = SelectionPosition + SelectionLength;
 
             //layout
             foreach (var marker in markers)
@@ -67,6 +68,10 @@ namespace cassettePlayerSimulator
                 marker.ScreenPosition = x;
                 marker.ScreenRectangle = new Rectangle(x - textSize.Width / 2, y, textSize.Width, textSize.Height);
             }
+
+            e.Graphics.FillRectangle(Brushes.Yellow,
+                new Rectangle(selectionBeginMarker.ScreenPosition, barRect.Top + 1,
+                selectionEndMarker.ScreenPosition - selectionBeginMarker.ScreenPosition, barRect.Height - 1));
 
             //fix overlapping markers
             if (selectionBeginMarker.ScreenRectangle.IntersectsWith(selectionEndMarker.ScreenRectangle))
@@ -96,6 +101,12 @@ namespace cassettePlayerSimulator
         private int WorldToScreen(float position)
         {
             var fraction = position / TotalLengthSeconds;
+
+            if (TotalLengthSeconds == 0)
+            {
+                fraction = 0;
+            }
+
             var barRect = BarRectangle();
             return barRect.Left + (int)(barRect.Width * fraction);
         }

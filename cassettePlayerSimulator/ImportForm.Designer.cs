@@ -40,14 +40,14 @@
             this.labelLength = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.labelTapeLength = new System.Windows.Forms.Label();
-            this.positionSelectorControl1 = new cassettePlayerSimulator.PositionSelectorControl();
+            this.positionSelectorControl = new cassettePlayerSimulator.PositionSelectorControl();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPosition)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(271, 177);
+            this.buttonCancel.Location = new System.Drawing.Point(270, 255);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 12;
@@ -57,7 +57,7 @@
             // buttonImport
             // 
             this.buttonImport.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonImport.Location = new System.Drawing.Point(190, 177);
+            this.buttonImport.Location = new System.Drawing.Point(189, 255);
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(75, 23);
             this.buttonImport.TabIndex = 11;
@@ -94,7 +94,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 138);
+            this.label2.Location = new System.Drawing.Point(11, 216);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(74, 13);
             this.label2.TabIndex = 16;
@@ -103,7 +103,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 115);
+            this.label3.Location = new System.Drawing.Point(11, 193);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 13);
             this.label3.TabIndex = 17;
@@ -120,7 +120,7 @@
             // labelTapePosition
             // 
             this.labelTapePosition.AutoSize = true;
-            this.labelTapePosition.Location = new System.Drawing.Point(92, 138);
+            this.labelTapePosition.Location = new System.Drawing.Point(91, 216);
             this.labelTapePosition.Name = "labelTapePosition";
             this.labelTapePosition.Size = new System.Drawing.Size(22, 13);
             this.labelTapePosition.TabIndex = 19;
@@ -129,7 +129,7 @@
             // labelLength
             // 
             this.labelLength.AutoSize = true;
-            this.labelLength.Location = new System.Drawing.Point(92, 115);
+            this.labelLength.Location = new System.Drawing.Point(91, 193);
             this.labelLength.Name = "labelLength";
             this.labelLength.Size = new System.Drawing.Size(22, 13);
             this.labelLength.TabIndex = 20;
@@ -138,7 +138,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 161);
+            this.label4.Location = new System.Drawing.Point(11, 239);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(67, 13);
             this.label4.TabIndex = 21;
@@ -147,7 +147,7 @@
             // labelTapeLength
             // 
             this.labelTapeLength.AutoSize = true;
-            this.labelTapeLength.Location = new System.Drawing.Point(92, 161);
+            this.labelTapeLength.Location = new System.Drawing.Point(91, 239);
             this.labelTapeLength.Name = "labelTapeLength";
             this.labelTapeLength.Size = new System.Drawing.Size(22, 13);
             this.labelTapeLength.TabIndex = 22;
@@ -155,12 +155,11 @@
             // 
             // positionSelectorControl1
             // 
-            this.positionSelectorControl1.Location = new System.Drawing.Point(11, 64);
-            this.positionSelectorControl1.Name = "positionSelectorControl1";
-            this.positionSelectorControl1.Size = new System.Drawing.Size(335, 45);
-            this.positionSelectorControl1.TabIndex = 23;
-            this.positionSelectorControl1.Text = "positionSelectorControl1";
-            this.positionSelectorControl1.TotalLengthSeconds = 2700F;
+            this.positionSelectorControl.Location = new System.Drawing.Point(15, 115);
+            this.positionSelectorControl.Name = "positionSelectorControl1";
+            this.positionSelectorControl.Size = new System.Drawing.Size(335, 45);
+            this.positionSelectorControl.TabIndex = 23;
+            this.positionSelectorControl.Text = "positionSelectorControl1";
             // 
             // ImportForm
             // 
@@ -169,8 +168,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(353, 212);
-            this.Controls.Add(this.positionSelectorControl1);
+            this.ClientSize = new System.Drawing.Size(353, 290);
+            this.Controls.Add(this.positionSelectorControl);
             this.Controls.Add(this.labelTapeLength);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.labelLength);
@@ -211,6 +210,6 @@
         private System.Windows.Forms.Label labelLength;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label labelTapeLength;
-        private PositionSelectorControl positionSelectorControl1;
+        private PositionSelectorControl positionSelectorControl;
     }
 }

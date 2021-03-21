@@ -71,6 +71,9 @@
     <Compile Include="ImportForm.Designer.cs">
       <DependentUpon>ImportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PositionSelectorControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ProgressForm.cs">
       <SubType>Form</SubType>
     </Compile>

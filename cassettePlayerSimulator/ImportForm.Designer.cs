@@ -40,6 +40,7 @@
             this.labelLength = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.labelTapeLength = new System.Windows.Forms.Label();
+            this.positionSelectorControl1 = new cassettePlayerSimulator.PositionSelectorControl();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPosition)).BeginInit();
             this.SuspendLayout();
             // 
@@ -152,6 +153,15 @@
             this.labelTapeLength.TabIndex = 22;
             this.labelTapeLength.Text = "--:--";
             // 
+            // positionSelectorControl1
+            // 
+            this.positionSelectorControl1.Location = new System.Drawing.Point(11, 64);
+            this.positionSelectorControl1.Name = "positionSelectorControl1";
+            this.positionSelectorControl1.Size = new System.Drawing.Size(335, 45);
+            this.positionSelectorControl1.TabIndex = 23;
+            this.positionSelectorControl1.Text = "positionSelectorControl1";
+            this.positionSelectorControl1.TotalLengthSeconds = 2700F;
+            // 
             // ImportForm
             // 
             this.AcceptButton = this.buttonImport;
@@ -160,6 +170,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(353, 212);
+            this.Controls.Add(this.positionSelectorControl1);
             this.Controls.Add(this.labelTapeLength);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.labelLength);
@@ -200,5 +211,6 @@
         private System.Windows.Forms.Label labelLength;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label labelTapeLength;
+        private PositionSelectorControl positionSelectorControl1;
     }
 }

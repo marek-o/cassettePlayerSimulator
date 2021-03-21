@@ -35,8 +35,8 @@ namespace cassettePlayerSimulator
                 TotalLengthSeconds = 2700;
 
                 endMarker.Position = TotalLengthSeconds;
-                selectionBeginMarker.Position = 900;
-                selectionEndMarker.Position = 1080;
+                selectionBeginMarker.Position = 0;
+                selectionEndMarker.Position = 0;
 
                 markers.Clear();
                 markers.Add(beginMarker);
@@ -51,20 +51,39 @@ namespace cassettePlayerSimulator
 
             var barRect = BarRectangle();
 
-            e.Graphics.FillRectangle(Brushes.LightYellow, barRect);
+            e.Graphics.FillRectangle(Brushes.Yellow, barRect);
             e.Graphics.DrawRectangle(Pens.Black, barRect);
 
+            //layout
             foreach (var marker in markers)
             {
                 int x = WorldToScreen(marker.Position);
 
-                e.Graphics.DrawLine(Pens.Black, x, barRect.Top, x, barRect.Bottom);
                 string text = Common.FormatTime((int)marker.Position);
 
                 var textSize = TextRenderer.MeasureText(text, Font);
+                int y = marker.IsAbove ? barRect.Top - textSize.Height : barRect.Bottom;
+
+                marker.ScreenPosition = x;
+                marker.ScreenRectangle = new Rectangle(x - textSize.Width / 2, y, textSize.Width, textSize.Height);
+            }
+
+            //fix overlapping markers
+            if (selectionBeginMarker.ScreenRectangle.IntersectsWith(selectionEndMarker.ScreenRectangle))
+            {
+                int overlap = selectionBeginMarker.ScreenRectangle.Right - selectionEndMarker.ScreenRectangle.Left;
+                selectionBeginMarker.ScreenRectangle.Offset(-overlap / 2, 0);
+                selectionEndMarker.ScreenRectangle.Offset(overlap / 2, 0);
+            }
+
+            //paint
+            foreach (var marker in markers)
+            {
+                e.Graphics.DrawLine(Pens.Black, marker.ScreenPosition, barRect.Top, marker.ScreenPosition, barRect.Bottom);
+                string text = Common.FormatTime((int)marker.Position);
 
                 TextRenderer.DrawText(e.Graphics, text, Font,
-                    new Rectangle(x - textSize.Width / 2, barRect.Bottom, textSize.Width, textSize.Height),
+                    marker.ScreenRectangle,
                     Color.Black, TextFormatFlags.HorizontalCenter);
             }
         }
@@ -85,6 +104,9 @@ namespace cassettePlayerSimulator
         {
             public float Position;
             public bool IsAbove;
+
+            public int ScreenPosition;
+            public Rectangle ScreenRectangle;
 
             public Marker(float position, bool isAbove)
             {

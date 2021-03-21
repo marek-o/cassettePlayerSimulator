@@ -28,7 +28,8 @@ namespace cassettePlayerSimulator
         private Marker selectionBeginMarker = new Marker(0, true);
         private Marker selectionEndMarker = new Marker(0, true);
 
-        private int margin = 16;
+        private int marginHorizontal = 32;
+        private int marginVertical = 16;
 
         public PositionSelectorControl()
         {
@@ -49,7 +50,6 @@ namespace cassettePlayerSimulator
             var barRect = BarRectangle();
 
             e.Graphics.FillRectangle(Brushes.LightGray, barRect);
-            e.Graphics.DrawRectangle(Pens.Black, barRect);
 
             endMarker.Position = TotalLengthSeconds;
             selectionBeginMarker.Position = SelectionPosition;
@@ -69,9 +69,20 @@ namespace cassettePlayerSimulator
                 marker.ScreenRectangle = new Rectangle(x - textSize.Width / 2, y, textSize.Width, textSize.Height);
             }
 
+            //selection bar
             e.Graphics.FillRectangle(Brushes.Yellow,
-                new Rectangle(selectionBeginMarker.ScreenPosition, barRect.Top + 1,
-                selectionEndMarker.ScreenPosition - selectionBeginMarker.ScreenPosition, barRect.Height - 1));
+                new Rectangle(selectionBeginMarker.ScreenPosition, barRect.Top,
+                selectionEndMarker.ScreenPosition - selectionBeginMarker.ScreenPosition, barRect.Height));
+
+            Rectangle overflowBegin = new Rectangle(selectionBeginMarker.ScreenPosition, barRect.Top,
+                barRect.Left - selectionBeginMarker.ScreenPosition, barRect.Height);
+            Rectangle overflowEnd = new Rectangle(barRect.Right, barRect.Top,
+                selectionEndMarker.ScreenPosition - barRect.Right, barRect.Height);
+
+            e.Graphics.FillRectangle(Brushes.Red, overflowBegin);
+            e.Graphics.FillRectangle(Brushes.Red, overflowEnd);
+            e.Graphics.DrawRectangle(Pens.Black, overflowBegin);
+            e.Graphics.DrawRectangle(Pens.Black, overflowEnd);
 
             //fix overlapping markers
             if (selectionBeginMarker.ScreenRectangle.IntersectsWith(selectionEndMarker.ScreenRectangle))
@@ -91,11 +102,13 @@ namespace cassettePlayerSimulator
                     marker.ScreenRectangle,
                     Color.Black, TextFormatFlags.HorizontalCenter);
             }
+
+            e.Graphics.DrawRectangle(Pens.Black, barRect);
         }
 
         private Rectangle BarRectangle()
         {
-            return new Rectangle(margin, margin, Width - 2 * margin, Height - 2 * margin);
+            return new Rectangle(marginHorizontal, marginVertical, Width - 2 * marginHorizontal, Height - 2 * marginVertical);
         }
 
         private int WorldToScreen(float position)

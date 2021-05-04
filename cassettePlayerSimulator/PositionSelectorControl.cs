@@ -92,13 +92,20 @@ namespace cassettePlayerSimulator
                 selectionEndMarker.ScreenRectangle.Offset(overlap / 2, 0);
             }
 
+            int markerOffsetValue = 0;
+
             if (selectionBeginMarker.ScreenRectangle.Left < 0 || selectionEndMarker.ScreenRectangle.Left < 0)
             {
-                int beginMarkerOverflow = -selectionBeginMarker.ScreenRectangle.Left;
-
-                selectionBeginMarker.ScreenRectangle.Offset(beginMarkerOverflow, 0);
-                selectionEndMarker.ScreenRectangle.Offset(beginMarkerOverflow, 0);
+                markerOffsetValue = -selectionBeginMarker.ScreenRectangle.Left;
             }
+
+            if (selectionBeginMarker.ScreenRectangle.Right >= Width || selectionEndMarker.ScreenRectangle.Right >= Width)
+            {
+                markerOffsetValue = -(selectionEndMarker.ScreenRectangle.Right - Width);
+            }
+
+            selectionBeginMarker.ScreenRectangle.Offset(markerOffsetValue, 0);
+            selectionEndMarker.ScreenRectangle.Offset(markerOffsetValue, 0);
 
             //paint
             foreach (var marker in markers)

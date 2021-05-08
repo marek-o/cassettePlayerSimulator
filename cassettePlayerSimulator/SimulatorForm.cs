@@ -163,7 +163,7 @@ namespace cassettePlayerSimulator
                 8*1024);
 
             float vol = 2.0f;
-            float speed = 0.5f;
+            float speed = 1.0f;
 
             stopDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopDown), false, false, true, vol, speed);
             stopUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopUp), false, false, true, vol, speed);

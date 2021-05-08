@@ -51,7 +51,7 @@ namespace cassettePlayerSimulator
 
             private int LastSafePosition()
             {
-                return (wavFile.dataLengthBytes / 2) - 3;
+                return (wavFile.dataLengthBytes / 2) - 4;
             }
 
             public bool IsAtBeginningOrEnd()
@@ -113,29 +113,39 @@ namespace cassettePlayerSimulator
             {
                 lock (locker)
                 {
-                    for (int i = 0; i < buffer.Length; ++i)
+                    for (int i = 0; i < buffer.Length; i += 2)
                     {
                         if (isPlaying)
                         {
                             if (rampSampleCounter > 0)
                             {
-                                speed += rampSlope;
-                                --rampSampleCounter;
+                                speed += rampSlope * 2;
+                                rampSampleCounter -= 2;
 
-                                if (rampSampleCounter == 0)
+                                if (rampSampleCounter <= 0)
                                 {
                                     speed = destinationSpeed;
                                 }
                             }
 
-                            var samp1 = wavFile.ReadSample((int)position);
-                            var samp2 = wavFile.ReadSample((int)position + 2); //next sample from this channel
+                            int intPos = (int)position;
+                            int intPosL = intPos & ~0x1;
+                            int intPosR = intPos | 0x1;
+                            var ratio = position - intPosL; //in range 0-2 because of interleaved samples
 
-                            var ratio = position - Math.Floor(position);
-                            var interpolatedSample = samp1 * (1 - ratio) + samp2 * ratio;
+                            //left channel
+                            var samp1L = wavFile.ReadSample(intPosL);
+                            var samp2L = wavFile.ReadSample(intPosL + 2);
+                            var interpolatedSampleL = samp1L * (2 - ratio) + samp2L * ratio;
+                            buffer[i] += Clamp(interpolatedSampleL * volume * speed);
 
-                            buffer[i] += Clamp(interpolatedSample * volume * speed);
-                            position += speed;
+                            //right channel
+                            var samp1R = wavFile.ReadSample(intPosR);
+                            var samp2R = wavFile.ReadSample(intPosR + 2);
+                            var interpolatedSampleR = samp1R * (2 - ratio) + samp2R * ratio;
+                            buffer[i + 1] += Clamp(interpolatedSampleR * volume * speed);
+
+                            position += speed * 2;
 
                             if (speed == 0.0f)
                             {

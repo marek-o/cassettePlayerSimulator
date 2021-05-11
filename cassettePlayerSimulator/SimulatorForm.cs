@@ -233,6 +233,7 @@ namespace cassettePlayerSimulator
                 }
                 else
                 {
+                    music?.wavFile.Close();
                     loadedTapeSide = null;
                 }
 

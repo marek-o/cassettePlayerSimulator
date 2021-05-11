@@ -44,18 +44,18 @@
             // buttonImport
             // 
             this.buttonImport.Enabled = false;
-            this.buttonImport.Location = new System.Drawing.Point(495, 166);
+            this.buttonImport.Location = new System.Drawing.Point(608, 18);
             this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(75, 23);
+            this.buttonImport.Size = new System.Drawing.Size(142, 23);
             this.buttonImport.TabIndex = 1;
-            this.buttonImport.Text = "Import";
+            this.buttonImport.Text = "Import into current tape";
             this.buttonImport.UseVisualStyleBackColor = true;
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
             // labelDebug
             // 
             this.labelDebug.AutoSize = true;
-            this.labelDebug.Location = new System.Drawing.Point(492, 40);
+            this.labelDebug.Location = new System.Drawing.Point(474, 361);
             this.labelDebug.Name = "labelDebug";
             this.labelDebug.Size = new System.Drawing.Size(57, 13);
             this.labelDebug.TabIndex = 7;
@@ -97,16 +97,16 @@
             // listBox
             // 
             this.listBox.FormattingEnabled = true;
-            this.listBox.Location = new System.Drawing.Point(593, 89);
+            this.listBox.Location = new System.Drawing.Point(456, 47);
             this.listBox.Name = "listBox";
             this.listBox.Size = new System.Drawing.Size(294, 199);
             this.listBox.TabIndex = 10;
             // 
             // buttonCreateTape
             // 
-            this.buttonCreateTape.Location = new System.Drawing.Point(674, 40);
+            this.buttonCreateTape.Location = new System.Drawing.Point(456, 18);
             this.buttonCreateTape.Name = "buttonCreateTape";
-            this.buttonCreateTape.Size = new System.Drawing.Size(75, 23);
+            this.buttonCreateTape.Size = new System.Drawing.Size(146, 23);
             this.buttonCreateTape.TabIndex = 12;
             this.buttonCreateTape.Text = "Create tape";
             this.buttonCreateTape.UseVisualStyleBackColor = true;
@@ -118,7 +118,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.DarkGray;
-            this.ClientSize = new System.Drawing.Size(899, 481);
+            this.ClientSize = new System.Drawing.Size(762, 481);
             this.Controls.Add(this.buttonCreateTape);
             this.Controls.Add(this.listBox);
             this.Controls.Add(this.counter);

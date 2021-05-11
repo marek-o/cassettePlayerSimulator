@@ -10,10 +10,10 @@ namespace Utils
     public class WAVFile
     {
         public int audioFormat = 0;
-        public int channels = 0;
-        public int sampleRate = 0;
+        public int channels = 1;
+        public int sampleRate = 1;
         public int blockAlign = 0;
-        public int bitsPerSample = 0;
+        public int bitsPerSample = 1;
         public int dataLengthBytes = 0;
 
         public int dataOffsetBytes = 0;
@@ -39,6 +39,11 @@ namespace Utils
 
         public short ReadSample(int position)
         {
+            if (stream == null)
+            {
+                return 0;
+            }
+
             if (!(position >= sampleCacheOffset && position < sampleCacheOffset + sampleCache.Length))
             {
                 stream.Seek(dataOffsetBytes + position * 2, SeekOrigin.Begin);

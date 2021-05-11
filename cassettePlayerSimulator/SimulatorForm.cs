@@ -113,9 +113,19 @@ namespace cassettePlayerSimulator
             }
 
             mixer.RemoveSample(music);
-            music?.wavFile.Close(); //FIXME maybe close also when ejecting
+            music?.wavFile.Close();
 
-            WAVFile wav = WAVFile.Load(path);
+            WAVFile wav = new WAVFile(); //default value in case of error
+
+            try
+            {
+                wav = WAVFile.Load(path);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error while loading tape", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             music = new SoundMixer.Sample(wav, false, false, false, 0.2f, 1.0f);
             mixer.AddSample(music);
             mixer.SetRecordingSample(music);

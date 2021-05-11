@@ -98,6 +98,7 @@ namespace cassettePlayerSimulator
 
         private void SimulatorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            mixer.Stop();
             StopEjectButton_MouseDown(new CancelEventArgs());
             StopEjectButton_MouseDown(new CancelEventArgs());
         }

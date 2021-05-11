@@ -231,6 +231,11 @@ namespace cassettePlayerSimulator
             player.Start(0);
         }
 
+        public void Stop()
+        {
+            player.Stop();
+        }
+
         public void StartRecording()
         {
             recorder.Start(0);

@@ -247,7 +247,7 @@ namespace cassettePlayerSimulator
                     loadedTapeSide = null;
                 }
 
-                buttonImport.Enabled = tapeManager.LoadedTapeSide != null;
+                buttonImport.Enabled = tapeManager.LoadedTapeSide != null && music.wavFile.isValid;
             }
         }
 

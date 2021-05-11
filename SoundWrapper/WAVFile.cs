@@ -22,6 +22,8 @@ namespace Utils
 
         public Stream stream;
 
+        public bool isValid = false;
+
         private short[] sampleCache = new short[0];
         private long sampleCacheOffset = 0;
 
@@ -112,6 +114,8 @@ namespace Utils
                 {
                     throw new NotImplementedException("Unsupported WAV format");
                 }
+
+                wav.isValid = true;
             }
             catch (Exception)
             {

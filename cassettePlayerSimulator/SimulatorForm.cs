@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
@@ -101,6 +102,21 @@ namespace cassettePlayerSimulator
             mixer.Stop();
             StopEjectButton_MouseDown(new CancelEventArgs());
             StopEjectButton_MouseDown(new CancelEventArgs());
+        }
+
+        private void DoLayout()
+        {
+            float cassetteRatio = 422 / 275.0f;
+            int cassetteMargin = 20;
+            var cassetteWidth = listBox.Left - cassetteMargin * 2;
+
+            cassetteControl.Location = new Point(cassetteMargin, cassetteMargin);
+            cassetteControl.Size = new Size(cassetteWidth, (int)(cassetteWidth / cassetteRatio));
+        }
+
+        private void SimulatorForm_Resize(object sender, EventArgs e)
+        {
+            DoLayout();
         }
 
         private void LoadTapeSide(TapeSide tapeSide)

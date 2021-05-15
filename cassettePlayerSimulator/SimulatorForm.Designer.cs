@@ -43,6 +43,7 @@
             // 
             // buttonImport
             // 
+            this.buttonImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonImport.Enabled = false;
             this.buttonImport.Location = new System.Drawing.Point(608, 18);
             this.buttonImport.Name = "buttonImport";
@@ -75,7 +76,7 @@
             // 
             this.counter.Location = new System.Drawing.Point(17, 299);
             this.counter.Name = "counter";
-            this.counter.Size = new System.Drawing.Size(139, 51);
+            this.counter.Size = new System.Drawing.Size(141, 57);
             this.counter.TabIndex = 8;
             this.counter.Text = "counter1";
             // 
@@ -91,11 +92,12 @@
             this.cassetteControl.BackColor = System.Drawing.Color.Gray;
             this.cassetteControl.Location = new System.Drawing.Point(17, 18);
             this.cassetteControl.Name = "cassetteControl";
-            this.cassetteControl.Size = new System.Drawing.Size(422, 275);
+            this.cassetteControl.Size = new System.Drawing.Size(342, 251);
             this.cassetteControl.TabIndex = 5;
             // 
             // listBox
             // 
+            this.listBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox.FormattingEnabled = true;
             this.listBox.Location = new System.Drawing.Point(456, 47);
             this.listBox.Name = "listBox";
@@ -104,6 +106,7 @@
             // 
             // buttonCreateTape
             // 
+            this.buttonCreateTape.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCreateTape.Location = new System.Drawing.Point(456, 18);
             this.buttonCreateTape.Name = "buttonCreateTape";
             this.buttonCreateTape.Size = new System.Drawing.Size(146, 23);
@@ -127,11 +130,11 @@
             this.Controls.Add(this.cassetteControl);
             this.Controls.Add(this.buttonImport);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
             this.Name = "SimulatorForm";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Cassette Player Simulator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SimulatorForm_FormClosing);
+            this.Resize += new System.EventHandler(this.SimulatorForm_Resize);
             this.ResumeLayout(false);
             this.PerformLayout();
 

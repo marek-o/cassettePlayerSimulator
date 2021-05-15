@@ -117,10 +117,14 @@ namespace cassettePlayerSimulator
             spoolControlLeft.scale = scale;
             spoolControlLeft.Location = new Point((int)centerLeft.X - spoolSize.Width / 2, (int)centerLeft.Y - spoolSize.Height / 2);
             spoolControlLeft.Size = spoolSize;
+            spoolControlLeft.Invalidate();
 
             spoolControlRight.scale = scale;
             spoolControlRight.Location = new Point((int)centerRight.X - spoolSize.Width / 2, (int)centerRight.Y - spoolSize.Height / 2);
             spoolControlRight.Size = spoolSize;
+            spoolControlRight.Invalidate();
+
+            Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs e)

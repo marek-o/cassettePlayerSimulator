@@ -108,6 +108,11 @@ namespace cassettePlayerSimulator
         internal Button StopEjectButton { get; set; } = new Button();
         internal Button PauseButton { get; set; } = new Button();
 
+        private Rectangle hole;
+        private int depthUp;
+        private int depthDown;
+        private int depthPressed;
+
         private void DoLayout()
         {
             float scale = Width / 416.0f;
@@ -125,6 +130,12 @@ namespace cassettePlayerSimulator
 
             RecButton.Size = PlayButton.Size = RewButton.Size
                 = FfButton.Size = StopEjectButton.Size = PauseButton.Size = buttonSize;
+
+            depthUp = 15;
+            depthDown = 6;
+            depthPressed = 3;
+
+            hole = new Rectangle(28, 28, 354, 54);
         }
 
         protected override void OnResize(EventArgs e)
@@ -138,13 +149,8 @@ namespace cassettePlayerSimulator
         {
             base.OnPaint(e);
 
-            const int depthUp = 15;
-            const int depthDown = 6;
-            const int depthPressed = 3;
-
             int depth;
 
-            Rectangle hole = new Rectangle(28, 28, 354, 54);
             //cover bottom
             e.Graphics.FillRectangle(Common.CoverBrush, 0, hole.Bottom, Width, Height - hole.Bottom);
             e.Graphics.DrawLine(Common.BorderPen, hole.Left, hole.Bottom, hole.Right, hole.Bottom);

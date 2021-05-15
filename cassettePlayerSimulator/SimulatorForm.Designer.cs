@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SimulatorForm));
             this.buttonImport = new System.Windows.Forms.Button();
             this.labelDebug = new System.Windows.Forms.Label();
             this.timerDebug = new System.Windows.Forms.Timer(this.components);
@@ -129,7 +128,7 @@
             this.Controls.Add(this.cassetteButtons);
             this.Controls.Add(this.cassetteControl);
             this.Controls.Add(this.buttonImport);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = global::cassettePlayerSimulator.Properties.Resources.icon;
             this.Name = "SimulatorForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Cassette Player Simulator";

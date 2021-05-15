@@ -131,11 +131,11 @@ namespace cassettePlayerSimulator
             RecButton.Size = PlayButton.Size = RewButton.Size
                 = FfButton.Size = StopEjectButton.Size = PauseButton.Size = buttonSize;
 
-            depthUp = 15;
-            depthDown = 6;
-            depthPressed = 3;
+            depthUp = (int)(15 * scale);
+            depthDown = (int)(6 * scale);
+            depthPressed = (int)(3 * scale);
 
-            hole = new Rectangle(28, 28, 354, 54);
+            hole = new Rectangle((int)(28 * scale), (int)(28 * scale), (int)(354 * scale), (int)(54 * scale));
         }
 
         protected override void OnResize(EventArgs e)

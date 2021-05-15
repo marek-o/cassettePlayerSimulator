@@ -106,12 +106,33 @@ namespace cassettePlayerSimulator
 
         private void DoLayout()
         {
-            float cassetteRatio = 422 / 275.0f;
-            int cassetteMargin = 20;
-            var cassetteWidth = listBox.Left - cassetteMargin * 2;
+            float contentRatio = 416 / 457.0f;
+            int contentMargin = 20;
 
-            cassetteControl.Location = new Point(cassetteMargin, cassetteMargin);
-            cassetteControl.Size = new Size(cassetteWidth, (int)(cassetteWidth / cassetteRatio));
+            int contentWidth = listBox.Left - contentMargin * 2;
+            int contentHeight = (int)(contentWidth / contentRatio);
+            int maxContentHeight = ClientRectangle.Height - contentMargin * 2;
+            
+            if (contentHeight > maxContentHeight)
+            {
+                contentHeight = maxContentHeight;
+                contentWidth = (int)(contentHeight * contentRatio);
+            }
+
+            float cassetteRatio = 422 / 275.0f;
+            cassetteControl.Location = new Point(contentMargin, contentMargin);
+            cassetteControl.Size = new Size(contentWidth, (int)(contentWidth / cassetteRatio));
+
+            float counterRatio = 141 / 57.0f;
+            int counterWidth = contentWidth / 3;
+            int counterMargin = (int)(contentWidth * 0.02f);
+            counter.Location = new Point(contentMargin, cassetteControl.Bottom + counterMargin);
+            counter.Size = new Size(counterWidth, (int)(counterWidth / counterRatio));
+
+            float buttonsRatio = 422 / 123.0f;
+            cassetteButtons.Location = new Point(contentMargin, counter.Bottom);
+            cassetteButtons.Size = new Size(contentWidth, (int)(contentWidth / buttonsRatio));
+            cassetteButtons.Invalidate();
         }
 
         private void SimulatorForm_Resize(object sender, EventArgs e)
@@ -161,6 +182,7 @@ namespace cassettePlayerSimulator
         public SimulatorForm()
         {
             InitializeComponent();
+            DoLayout();
 
             cassetteButtons.Enabled = false;
 

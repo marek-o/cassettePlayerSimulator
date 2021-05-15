@@ -85,6 +85,31 @@ namespace cassettePlayerSimulator
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
+            RecButton.ButtonType = Button.Type.LOCKING;
+            PlayButton.ButtonType = Button.Type.LOCKING;
+            RewButton.ButtonType = Button.Type.LOCKING;
+            FfButton.ButtonType = Button.Type.LOCKING;
+            StopEjectButton.ButtonType = Button.Type.NOT_LOCKING;
+            PauseButton.ButtonType = Button.Type.BISTABLE;
+
+            buttons.AddRange(new Button[] { RecButton, PlayButton, RewButton, FfButton, StopEjectButton, PauseButton });
+
+            DoLayout();
+        }
+
+        private List<Button> buttons = new List<Button>();
+
+        private Button buttonPendingMouseUp = null;
+
+        internal Button RecButton { get; set; } = new Button();
+        internal Button PlayButton { get; set; } = new Button();
+        internal Button RewButton { get; set; } = new Button();
+        internal Button FfButton { get; set; } = new Button();
+        internal Button StopEjectButton { get; set; } = new Button();
+        internal Button PauseButton { get; set; } = new Button();
+
+        private void DoLayout()
+        {
             Size buttonSize = new Size(65, 65);
             Point buttonsOrigin = new Point(25, 25);
             int offset = 60;
@@ -98,27 +123,14 @@ namespace cassettePlayerSimulator
 
             RecButton.Size = PlayButton.Size = RewButton.Size
                 = FfButton.Size = StopEjectButton.Size = PauseButton.Size = buttonSize;
-
-            RecButton.ButtonType = Button.Type.LOCKING;
-            PlayButton.ButtonType = Button.Type.LOCKING;
-            RewButton.ButtonType = Button.Type.LOCKING;
-            FfButton.ButtonType = Button.Type.LOCKING;
-            StopEjectButton.ButtonType = Button.Type.NOT_LOCKING;
-            PauseButton.ButtonType = Button.Type.BISTABLE;
-
-            buttons.AddRange(new Button[] { RecButton, PlayButton, RewButton, FfButton, StopEjectButton, PauseButton });
         }
 
-        private List<Button> buttons = new List<Button>();
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
 
-        private Button buttonPendingMouseUp = null;
-
-        internal Button RecButton { get; set; } = new Button();
-        internal Button PlayButton { get; set; } = new Button();
-        internal Button RewButton { get; set; } = new Button();
-        internal Button FfButton { get; set; } = new Button();
-        internal Button StopEjectButton { get; set; } = new Button();
-        internal Button PauseButton { get; set; } = new Button();
+            DoLayout();
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {

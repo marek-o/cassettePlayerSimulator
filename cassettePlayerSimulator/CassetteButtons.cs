@@ -110,10 +110,12 @@ namespace cassettePlayerSimulator
 
         private void DoLayout()
         {
-            Size buttonSize = new Size(65, 65);
-            Point buttonsOrigin = new Point(25, 25);
-            int offset = 60;
+            float scale = Width / 416.0f;
 
+            Size buttonSize = new Size((int)(65 * scale), (int)(65 * scale));
+            Point buttonsOrigin = new Point((int)(25 * scale), (int)(25 * scale));
+            int offset = (int)(60 * scale);
+            
             RecButton.Location = new Point(buttonsOrigin.X + offset * 0, buttonsOrigin.Y);
             PlayButton.Location = new Point(buttonsOrigin.X + offset * 1, buttonsOrigin.Y);
             RewButton.Location = new Point(buttonsOrigin.X + offset * 2, buttonsOrigin.Y);

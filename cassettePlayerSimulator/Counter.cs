@@ -55,11 +55,25 @@ namespace cassettePlayerSimulator
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
 
+            DoLayout();
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+
+            DoLayout();
+        }
+
+        private void DoLayout()
+        {
+            font?.Dispose();
             font = new Font(FontFamily.GenericMonospace, 20.0f, FontStyle.Bold);
             var digitSize = TextRenderer.MeasureText("0", font);
             digitWidth = (int)(digitSize.Width * 0.8);
             digitHeight = (int)(digitSize.Height * 0.8);
 
+            wheelBitmap?.Dispose();
             wheelBitmap = new Bitmap(digitWidth, digitHeight * 11);
             using (var g = Graphics.FromImage(wheelBitmap))
             {

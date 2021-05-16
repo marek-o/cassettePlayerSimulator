@@ -17,9 +17,11 @@ namespace cassettePlayerSimulator
 
             img = Properties.Resources.cassette;
             baseSize = new SizeF(img.Width * 1.1f, img.Height * 1.1f);
+
+            DoLayout();
         }
 
-        private Font tapeSideFont = new Font(FontFamily.GenericSansSerif, 15.0f, FontStyle.Bold);
+        private Font tapeSideFont;
 
         public float scale;
 
@@ -103,12 +105,20 @@ namespace cassettePlayerSimulator
         {
             base.OnResize(e);
 
+            DoLayout();
+        }
+
+        private void DoLayout()
+        {
             scale = Width / baseSize.Width;
 
             if (baseSize.Height * scale > Height)
             {
                 scale = Height / baseSize.Height;
             }
+
+            tapeSideFont?.Dispose();
+            tapeSideFont = new Font(FontFamily.GenericSansSerif, Math.Max(45.0f * scale, 1.0f), FontStyle.Bold);
 
             cassetteOffset = new PointF((int)(img.Width * 0.05f * scale), (int)(img.Height * 0.05f * scale));
 

@@ -16,14 +16,16 @@ namespace cassettePlayerSimulator
         private int digitWidth;
         private int digitHeight;
 
-        private int counterDepth = 5;
+        private int counterDepth;
         private RectangleF counterRect;
         private PointF counterOrigin;
         private Point buttonOrigin;
         private int buttonFaceWidth;
         private int buttonFaceHeight;
-        private int buttonDepthUp = 8;
-        private int buttonDepthDown = 2;
+        private int buttonDepthUp;
+        private int buttonDepthDown;
+
+        private float scale;
 
         private bool ignoreNextSetPosition = false;
 
@@ -67,8 +69,14 @@ namespace cassettePlayerSimulator
 
         private void DoLayout()
         {
+            scale = Width / 141.0f;
+
+            counterDepth = (int)(5 * scale);
+            buttonDepthUp = (int)(8 * scale);
+            buttonDepthDown = (int)(2 * scale);
+
             font?.Dispose();
-            font = new Font(FontFamily.GenericMonospace, 20.0f, FontStyle.Bold);
+            font = new Font(FontFamily.GenericMonospace, Math.Max(20.0f * scale, 1.0f), FontStyle.Bold);
             var digitSize = TextRenderer.MeasureText("0", font);
             digitWidth = (int)(digitSize.Width * 0.8);
             digitHeight = (int)(digitSize.Height * 0.8);

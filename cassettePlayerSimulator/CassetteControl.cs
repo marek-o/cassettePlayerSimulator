@@ -21,6 +21,7 @@ namespace cassettePlayerSimulator
             DoLayout();
         }
 
+        private Font tapeLabelFont;
         private Font tapeSideFont;
 
         public float scale;
@@ -117,6 +118,9 @@ namespace cassettePlayerSimulator
                 scale = Height / baseSize.Height;
             }
 
+            tapeLabelFont?.Dispose();
+            tapeLabelFont = new Font(FontFamily.GenericSansSerif, Math.Max(27.5f * scale, 1.0f), FontStyle.Regular);
+
             tapeSideFont?.Dispose();
             tapeSideFont = new Font(FontFamily.GenericSansSerif, Math.Max(45.0f * scale, 1.0f), FontStyle.Bold);
 
@@ -198,7 +202,7 @@ namespace cassettePlayerSimulator
             {
                 e.Graphics.DrawImage(imgScaled, cassetteOffset);
 
-                TextRenderer.DrawText(e.Graphics, loadedTapeSide.Label, Font,
+                TextRenderer.DrawText(e.Graphics, loadedTapeSide.Label, tapeLabelFont,
                     new Rectangle((int)(266 * scale), (int)(153 * scale), (int)(813 * scale), (int)(70 * scale)),
                     Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
 

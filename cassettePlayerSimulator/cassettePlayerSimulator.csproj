@@ -91,6 +91,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Scaler.cs" />
     <Compile Include="SimulatorForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -46,6 +46,35 @@ namespace cassettePlayerSimulator
                 S(input.Width),
                 S(input.Height));
         }
+
+        public RectangleF S(RectangleF input)
+        {
+            return new RectangleF(
+                S(input.X),
+                S(input.Y),
+                S(input.Width),
+                S(input.Height));
+        }
+
+        public Size S(Size input)
+        {
+            return new Size(S(input.Width), S(input.Height));
+        }
+
+        public SizeF S(SizeF input)
+        {
+            return new SizeF(S(input.Width), S(input.Height));
+        }
+
+        public Point S(Point input)
+        {
+            return new Point(S(input.X), S(input.Y));
+        }
+
+        public PointF S(PointF input)
+        {
+            return new PointF(S(input.X), S(input.Y));
+        }
     }
 
     public class DpiScaler : Scaler

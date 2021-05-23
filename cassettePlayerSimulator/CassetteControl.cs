@@ -24,9 +24,10 @@ namespace cassettePlayerSimulator
         private Font tapeLabelFont;
         private Font tapeSideFont;
 
+        public Scaler scaler;
         public float scale;
 
-        internal float spoolMinRadius => 144 * scale;
+        internal float spoolMinRadius => scaler.S(144.0f);
 
         private float spoolLeftRadius;
         private float spoolRightRadius;
@@ -36,15 +37,15 @@ namespace cassettePlayerSimulator
 
         internal PointF cassetteOffset;
 
-        internal PointF centerLeft => new PointF(cassetteOffset.X + 371 * scale, cassetteOffset.Y + 377 * scale);
-        internal PointF centerRight => new PointF(cassetteOffset.X + 899 * scale, cassetteOffset.Y + 377 * scale);
+        internal PointF centerLeft => PointF.Add(cassetteOffset, scaler.S(new SizeF(371, 377)));
+        internal PointF centerRight => PointF.Add(cassetteOffset, scaler.S(new SizeF(899, 377)));
 
-        internal PointF capstan => new PointF(cassetteOffset.X + 942 * scale, cassetteOffset.Y + 774 * scale);
-        internal PointF roller => new PointF(cassetteOffset.X + 942 * scale, cassetteOffset.Y + (rollerEngaged ? 833 : 863) * scale);
-        internal PointF head => new PointF(cassetteOffset.X + 632 * scale, cassetteOffset.Y + (headEngaged ? 788 : 843) * scale);
+        internal PointF capstan => PointF.Add(cassetteOffset, scaler.S(new SizeF(942, 774)));
+        internal PointF roller => PointF.Add(cassetteOffset, scaler.S(new SizeF(942, rollerEngaged ? 833 : 863)));
+        internal PointF head => PointF.Add(cassetteOffset, scaler.S(new SizeF(632, headEngaged ? 788 : 843)));
 
-        internal float capstanRadius => 10 * scale;
-        internal float rollerRadius => 50 * scale;
+        internal float capstanRadius => scaler.S(10.0f);
+        internal float rollerRadius => scaler.S(50.0f);
 
         internal SpoolControl spoolControlLeft;
         internal SpoolControl spoolControlRight;
@@ -111,6 +112,7 @@ namespace cassettePlayerSimulator
 
         private void DoLayout()
         {
+            scaler = new Scaler(Width / baseSize.Width);
             scale = Width / baseSize.Width;
 
             if (baseSize.Height * scale > Height)
@@ -119,14 +121,14 @@ namespace cassettePlayerSimulator
             }
 
             tapeLabelFont?.Dispose();
-            tapeLabelFont = new Font(FontFamily.GenericSansSerif, Math.Max(27.5f * scale, 1.0f), FontStyle.Regular);
+            tapeLabelFont = new Font(FontFamily.GenericSansSerif, Math.Max(scaler.S(27.5f), 1.0f), FontStyle.Regular);
 
             tapeSideFont?.Dispose();
-            tapeSideFont = new Font(FontFamily.GenericSansSerif, Math.Max(45.0f * scale, 1.0f), FontStyle.Bold);
+            tapeSideFont = new Font(FontFamily.GenericSansSerif, Math.Max(scaler.S(45.0f), 1.0f), FontStyle.Bold);
 
             cassetteOffset = new PointF((int)(img.Width * 0.05f * scale), (int)(img.Height * 0.05f * scale));
 
-            var spoolSize = new Size((int)(160 * scale), (int)(160 * scale));
+            var spoolSize = scaler.S(new Size(160, 160));
             
             spoolControlLeft.scale = scale;
             spoolControlLeft.Location = new Point((int)centerLeft.X - spoolSize.Width / 2, (int)centerLeft.Y - spoolSize.Height / 2);
@@ -145,7 +147,7 @@ namespace cassettePlayerSimulator
         {
             base.OnPaint(e);
 
-            RectangleF destRect = new RectangleF(0, 0, img.Width * scale, img.Height * scale);
+            RectangleF destRect = scaler.S(new RectangleF(0, 0, img.Width, img.Height));
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
@@ -165,9 +167,9 @@ namespace cassettePlayerSimulator
             e.Graphics.FillEllipse(Common.AxisBrush, roller.X - capstanRadius, roller.Y - capstanRadius,
                 capstanRadius * 2, capstanRadius * 2);
 
-            float headWidth = 120 * scale;
-            float headRoundHeight = 25 * scale;
-            float headHeight = 70 * scale;
+            float headWidth = scaler.S(120.0f);
+            float headRoundHeight = scaler.S(25.0f);
+            float headHeight = scaler.S(70.0f);
             e.Graphics.FillPie(Common.AxisBrush, head.X - headWidth / 2, head.Y,
                 headWidth, headRoundHeight * 2, 180, 180);
             e.Graphics.FillRectangle(Common.AxisBrush, head.X - headWidth / 2, head.Y + headRoundHeight - 1,

@@ -115,11 +115,11 @@ namespace cassettePlayerSimulator
 
         private void DoLayout()
         {
-            float scale = Width / 416.0f;
+            Scaler scaler = new Scaler(Width / 416.0f);
 
-            Size buttonSize = new Size((int)(65 * scale), (int)(65 * scale));
-            Point buttonsOrigin = new Point((int)(25 * scale), (int)(25 * scale));
-            int offset = (int)(60 * scale);
+            Size buttonSize = scaler.S(new Size(65, 65));
+            Point buttonsOrigin = scaler.S(new Point(25, 25));
+            int offset = scaler.S(60);
             
             RecButton.Location = new Point(buttonsOrigin.X + offset * 0, buttonsOrigin.Y);
             PlayButton.Location = new Point(buttonsOrigin.X + offset * 1, buttonsOrigin.Y);
@@ -131,11 +131,11 @@ namespace cassettePlayerSimulator
             RecButton.Size = PlayButton.Size = RewButton.Size
                 = FfButton.Size = StopEjectButton.Size = PauseButton.Size = buttonSize;
 
-            depthUp = (int)(15 * scale);
-            depthDown = (int)(6 * scale);
-            depthPressed = (int)(3 * scale);
+            depthUp = scaler.S(15);
+            depthDown = scaler.S(6);
+            depthPressed = scaler.S(3);
 
-            hole = new Rectangle((int)(28 * scale), (int)(28 * scale), (int)(354 * scale), (int)(54 * scale));
+            hole = scaler.S(new Rectangle(28, 28, 354, 54));
         }
 
         protected override void OnResize(EventArgs e)

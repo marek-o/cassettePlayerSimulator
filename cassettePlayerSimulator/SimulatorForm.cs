@@ -32,7 +32,7 @@ namespace cassettePlayerSimulator
                 State.ToString(),
                 isPauseFullyPressed.ToString(),
                 music != null ? music.GetCurrentPositionSeconds() : 0.0f,
-                cassetteControl.scale);
+                cassetteControl.scaler.ScalingFactor);
         }
 
         private Stopwatch rewindStopwatch = new Stopwatch();

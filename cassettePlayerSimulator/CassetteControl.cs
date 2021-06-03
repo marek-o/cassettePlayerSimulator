@@ -25,7 +25,6 @@ namespace cassettePlayerSimulator
         private Font tapeSideFont;
 
         public Scaler scaler;
-        public float scale;
 
         internal float spoolMinRadius => scaler.S(144.0f);
 
@@ -113,11 +112,10 @@ namespace cassettePlayerSimulator
         private void DoLayout()
         {
             scaler = new Scaler(Width / baseSize.Width);
-            scale = Width / baseSize.Width;
 
-            if (baseSize.Height * scale > Height)
+            if (baseSize.Height * scaler.ScalingFactor > Height)
             {
-                scale = Height / baseSize.Height;
+                scaler.ScalingFactor = Height / baseSize.Height;
             }
 
             tapeLabelFont?.Dispose();
@@ -126,16 +124,16 @@ namespace cassettePlayerSimulator
             tapeSideFont?.Dispose();
             tapeSideFont = new Font(FontFamily.GenericSansSerif, Math.Max(scaler.S(45.0f), 1.0f), FontStyle.Bold);
 
-            cassetteOffset = new PointF((int)(img.Width * 0.05f * scale), (int)(img.Height * 0.05f * scale));
+            cassetteOffset = Point.Truncate(scaler.S(new PointF(img.Width * 0.05f, img.Height * 0.05f)));
 
             var spoolSize = scaler.S(new Size(160, 160));
             
-            spoolControlLeft.scale = scale;
+            spoolControlLeft.scale = scaler.ScalingFactor;
             spoolControlLeft.Location = new Point((int)centerLeft.X - spoolSize.Width / 2, (int)centerLeft.Y - spoolSize.Height / 2);
             spoolControlLeft.Size = spoolSize;
             spoolControlLeft.Invalidate();
 
-            spoolControlRight.scale = scale;
+            spoolControlRight.scale = scaler.ScalingFactor;
             spoolControlRight.Location = new Point((int)centerRight.X - spoolSize.Width / 2, (int)centerRight.Y - spoolSize.Height / 2);
             spoolControlRight.Size = spoolSize;
             spoolControlRight.Invalidate();
@@ -175,7 +173,7 @@ namespace cassettePlayerSimulator
             e.Graphics.FillRectangle(Common.AxisBrush, head.X - headWidth / 2, head.Y + headRoundHeight - 1,
                 headWidth, headHeight);
             e.Graphics.FillRectangle(Common.AxisBrush, head.X + headWidth / 2, head.Y - headRoundHeight / 4,
-                5 * scale, headRoundHeight / 4 + headRoundHeight + headHeight);
+                scaler.S(5.0f), headRoundHeight / 4 + headRoundHeight + headHeight);
 
             Color cassetteColor = loadedTapeSide?.Parent.Color ?? Color.Transparent;
 
@@ -192,10 +190,10 @@ namespace cassettePlayerSimulator
                 using (Graphics g = Graphics.FromImage(imgScaled))
                 using (var b = new SolidBrush(cassetteColor))
                 {
-                    g.FillRectangle(b, 50 * scale, 200 * scale, 230 * scale, 400 * scale);
-                    g.FillRectangle(b, 980 * scale, 200 * scale, 230 * scale, 400 * scale);
-                    g.FillRectangle(b, 50 * scale, 200 * scale, 1200 * scale, 70 * scale);
-                    g.FillRectangle(b, 50 * scale, 480 * scale, 1200 * scale, 130 * scale);
+                    g.FillRectangle(b, scaler.S(new RectangleF(50, 200, 230, 400)));
+                    g.FillRectangle(b, scaler.S(new RectangleF(980, 200, 230, 400)));
+                    g.FillRectangle(b, scaler.S(new RectangleF(50, 200, 1200, 70)));
+                    g.FillRectangle(b, scaler.S(new RectangleF(50, 480, 1200, 130)));
                     g.DrawImage(img, destRect, new RectangleF(0, 0, img.Width, img.Height), GraphicsUnit.Pixel);
                 }
             }
@@ -205,15 +203,15 @@ namespace cassettePlayerSimulator
                 e.Graphics.DrawImage(imgScaled, cassetteOffset);
 
                 TextRenderer.DrawText(e.Graphics, loadedTapeSide.Label, tapeLabelFont,
-                    new Rectangle((int)(266 * scale), (int)(153 * scale), (int)(813 * scale), (int)(70 * scale)),
+                    scaler.S(new Rectangle(266, 153, 813, 70)),
                     Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
 
                 TextRenderer.DrawText(e.Graphics, (loadedTapeSide.Parent.SideA == loadedTapeSide) ? "A" : "B", tapeSideFont,
-                    new Rectangle((int)(180 * scale), (int)(142 * scale), (int)(90 * scale), (int)(90 * scale)),
+                    scaler.S(new Rectangle(180, 142, 90, 90)),
                     Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPadding);
 
                 TextRenderer.DrawText(e.Graphics, ((int)Math.Round(loadedTapeSide.Parent.Length / 900.0f) * 30).ToString(), tapeSideFont,
-                    new Rectangle((int)(1112 * scale), (int)(410 * scale), (int)(90 * scale), (int)(90 * scale)),
+                    scaler.S(new Rectangle(1112, 410, 90, 90)),
                     Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPadding);
             }
 
@@ -247,8 +245,8 @@ namespace cassettePlayerSimulator
                 seconds * tapeVelocity * tapeThickness / Math.PI
                 + Math.Pow(spoolMinRadiusReal, 2));
 
-            spoolLeftRadius = spoolLeftRadiusReal * pixelsPerCm * scale;
-            spoolRightRadius = spoolRightRadiusReal * pixelsPerCm * scale;
+            spoolLeftRadius = scaler.S(spoolLeftRadiusReal * pixelsPerCm);
+            spoolRightRadius = scaler.S(spoolRightRadiusReal * pixelsPerCm);
         }
 
         public float AngularToLinear(bool rightSpool, float seconds, float angularOffset)

@@ -28,9 +28,6 @@ namespace cassettePlayerSimulator
         private Marker selectionBeginMarker = new Marker(0, true);
         private Marker selectionEndMarker = new Marker(0, true);
 
-        private int marginHorizontal = 32;
-        private int marginVertical = 16;
-
         public PositionSelectorControl()
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
@@ -123,6 +120,10 @@ namespace cassettePlayerSimulator
 
         private Rectangle BarRectangle()
         {
+            var scaler = new Scaler();
+            int marginHorizontal = scaler.S(32);
+            int marginVertical = scaler.S(16);
+
             return new Rectangle(marginHorizontal, marginVertical, Width - 2 * marginHorizontal, Height - 2 * marginVertical);
         }
 

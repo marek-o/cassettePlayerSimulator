@@ -106,8 +106,10 @@ namespace cassettePlayerSimulator
 
         private void DoLayout()
         {
+            Scaler scaler = new Scaler();
+
             float contentRatio = 416 / 457.0f;
-            int contentMargin = 20;
+            int contentMargin = scaler.S(20);
 
             int contentWidth = listBox.Left - contentMargin * 2;
             int contentHeight = (int)(contentWidth / contentRatio);

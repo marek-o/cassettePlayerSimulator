@@ -127,13 +127,13 @@ namespace cassettePlayerSimulator
             cassetteOffset = Point.Truncate(scaler.S(new PointF(img.Width * 0.05f, img.Height * 0.05f)));
 
             var spoolSize = scaler.S(new Size(160, 160));
-            
-            spoolControlLeft.scale = scaler.ScalingFactor;
+
+            spoolControlLeft.scaler = scaler;
             spoolControlLeft.Location = new Point((int)centerLeft.X - spoolSize.Width / 2, (int)centerLeft.Y - spoolSize.Height / 2);
             spoolControlLeft.Size = spoolSize;
             spoolControlLeft.Invalidate();
 
-            spoolControlRight.scale = scaler.ScalingFactor;
+            spoolControlRight.scaler = scaler;
             spoolControlRight.Location = new Point((int)centerRight.X - spoolSize.Width / 2, (int)centerRight.Y - spoolSize.Height / 2);
             spoolControlRight.Size = spoolSize;
             spoolControlRight.Invalidate();

@@ -13,13 +13,13 @@ namespace cassettePlayerSimulator
 
         private SolidBrush backgroundBrush = new SolidBrush(DefaultBackColor);
 
-        public float scale;
+        public Scaler scaler;
 
         public float angleDegrees = 0;
 
-        private float spoolInnerRadius => 68 * scale;
-        private float blackWheelRadius => 50 * scale;
-        private float axisRadius => 10 * scale;
+        private float spoolInnerRadius => scaler.S(68.0f);
+        private float blackWheelRadius => scaler.S(50.0f);
+        private float axisRadius => scaler.S(10.0f);
 
         public bool CassetteInserted { get; set; }
 
@@ -66,8 +66,8 @@ namespace cassettePlayerSimulator
                 {
                     g.FillPolygon(Common.SpoolBrush, new PointF[]
                     {
-                        PolarToCartesian(center, 55 * scale, a - 2),
-                        PolarToCartesian(center, 55 * scale, a + 22),
+                        PolarToCartesian(center, scaler.S(55.0f), a - 2),
+                        PolarToCartesian(center, scaler.S(55.0f), a + 22),
                         PolarToCartesian(center, spoolInnerRadius, a + 20),
                         PolarToCartesian(center, spoolInnerRadius, a),
                     });
@@ -75,8 +75,8 @@ namespace cassettePlayerSimulator
 
                 g.FillPolygon(Common.BlackWheelBrush, new PointF[]
                 {
-                    PolarToCartesian(center, 60 * scale, a + 30),
-                    PolarToCartesian(center, 60 * scale, a + 50),
+                    PolarToCartesian(center, scaler.S(60.0f), a + 30),
+                    PolarToCartesian(center, scaler.S(60.0f), a + 50),
                     PolarToCartesian(center, blackWheelRadius, a + 55),
                     PolarToCartesian(center, blackWheelRadius, a + 25),
                 });

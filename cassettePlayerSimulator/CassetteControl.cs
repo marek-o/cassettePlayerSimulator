@@ -149,7 +149,9 @@ namespace cassettePlayerSimulator
                 WinApi.ResumeRedraw(spoolControlRight.Handle);
             }
 
-            Invalidate();
+            UpdateRadiusesOfSpools();
+
+            Refresh(); //force full repaint
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -246,7 +248,7 @@ namespace cassettePlayerSimulator
 
         private const float pixelsPerCm = 130;
 
-        private void UpdateRadiusesOfSpools(float seconds)
+        private void UpdateRealRadiusesOfSpools(float seconds)
         {
             spoolLeftRadiusReal = (float)Math.Sqrt(
                 (tapeDuration - seconds) * tapeVelocity * tapeThickness / Math.PI
@@ -256,13 +258,18 @@ namespace cassettePlayerSimulator
                 seconds * tapeVelocity * tapeThickness / Math.PI
                 + Math.Pow(spoolMinRadiusReal, 2));
 
+            UpdateRadiusesOfSpools();
+        }
+
+        private void UpdateRadiusesOfSpools()
+        {
             spoolLeftRadius = scaler.S(spoolLeftRadiusReal * pixelsPerCm);
             spoolRightRadius = scaler.S(spoolRightRadiusReal * pixelsPerCm);
         }
 
         public float AngularToLinear(bool rightSpool, float seconds, float angularOffset)
         {
-            UpdateRadiusesOfSpools(seconds);
+            UpdateRealRadiusesOfSpools(seconds);
 
             var spoolRadiusReal = rightSpool ? spoolRightRadiusReal : spoolLeftRadiusReal;
 
@@ -272,7 +279,7 @@ namespace cassettePlayerSimulator
 
         public float GetSpoolAngleDegrees(bool rightSpool, float seconds)
         {
-            UpdateRadiusesOfSpools(seconds);
+            UpdateRealRadiusesOfSpools(seconds);
             var angle = SpoolAngle(rightSpool ? spoolRightRadiusReal : spoolLeftRadiusReal);
             return angle * 180 / (float)Math.PI;
         }
@@ -293,7 +300,7 @@ namespace cassettePlayerSimulator
 
         public void AnimateSpools(float seconds)
         {
-            UpdateRadiusesOfSpools(seconds);
+            UpdateRealRadiusesOfSpools(seconds);
 
             if (animationFrame >= animationSuspendedFrameCount)
             {

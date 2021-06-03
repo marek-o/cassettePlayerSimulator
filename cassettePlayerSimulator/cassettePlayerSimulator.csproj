@@ -106,6 +106,7 @@
     </Compile>
     <Compile Include="Tape.cs" />
     <Compile Include="TapeManager.cs" />
+    <Compile Include="WinApi.cs" />
     <EmbeddedResource Include="EditTapeForm.resx">
       <DependentUpon>EditTapeForm.cs</DependentUpon>
       <SubType>Designer</SubType>

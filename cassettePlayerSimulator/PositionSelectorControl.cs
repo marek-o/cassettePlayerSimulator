@@ -120,7 +120,7 @@ namespace cassettePlayerSimulator
 
         private Rectangle BarRectangle()
         {
-            var scaler = new Scaler();
+            var scaler = new DpiScaler();
             int marginHorizontal = scaler.S(32);
             int marginVertical = scaler.S(16);
 

@@ -74,7 +74,7 @@ namespace cassettePlayerSimulator
             buttonDepthDown = scaler.S(2);
 
             font?.Dispose();
-            font = new Font(FontFamily.GenericMonospace, Math.Max(scaler.S(20.0f), 1.0f), FontStyle.Bold);
+            font = new Font(FontFamily.GenericMonospace, Math.Max(scaler.S(20.0f / DpiScaler.DpiScaleFactor), 1.0f), FontStyle.Bold);
             var digitSize = TextRenderer.MeasureText("0", font);
             digitWidth = (int)(digitSize.Width * 0.8);
             digitHeight = (int)(digitSize.Height * 0.8);

@@ -119,10 +119,10 @@ namespace cassettePlayerSimulator
             }
 
             tapeLabelFont?.Dispose();
-            tapeLabelFont = new Font(FontFamily.GenericSansSerif, Math.Max(scaler.S(27.5f), 1.0f), FontStyle.Regular);
+            tapeLabelFont = new Font(FontFamily.GenericSansSerif, Math.Max(scaler.S(27.5f / DpiScaler.DpiScaleFactor), 1.0f), FontStyle.Regular);
 
             tapeSideFont?.Dispose();
-            tapeSideFont = new Font(FontFamily.GenericSansSerif, Math.Max(scaler.S(45.0f), 1.0f), FontStyle.Bold);
+            tapeSideFont = new Font(FontFamily.GenericSansSerif, Math.Max(scaler.S(45.0f / DpiScaler.DpiScaleFactor), 1.0f), FontStyle.Bold);
 
             cassetteOffset = Point.Truncate(scaler.S(new PointF(img.Width * 0.05f, img.Height * 0.05f)));
 

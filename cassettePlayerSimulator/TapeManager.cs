@@ -422,8 +422,10 @@ namespace cassettePlayerSimulator
             this.toolStripMenuItemDelete.Text = "Delete";
             this.toolStripMenuItemDelete.Click += ToolStripMenuItemDelete_Click;
 
+            DpiScaler scaler = new DpiScaler();
+
             this.listBox.DrawMode = DrawMode.OwnerDrawFixed;
-            this.listBox.ItemHeight = 50;
+            this.listBox.ItemHeight = scaler.S(50);
             this.listBox.DrawItem += listBox_DrawItem;
             this.listBox.MouseDoubleClick += listBox_MouseDoubleClick;
             this.listBox.MouseDown += listBox_MouseDown;

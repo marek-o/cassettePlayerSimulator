@@ -12,6 +12,7 @@ namespace cassettePlayerSimulator
         public static readonly Color ButtonFaceColor = Color.FromArgb(169, 169, 169);
         public static readonly Color ButtonTopColor = Color.FromArgb(211, 211, 211);
         public static readonly Color ButtonLeftColor = Color.FromArgb(128, 128, 128);
+        public static readonly Color ButtonRightColor = Color.FromArgb(96, 96, 96);
         public static readonly Color SymbolBlackColor = Color.FromArgb(0, 0, 0);
         public static readonly Color SymbolRedColor = Color.FromArgb(255, 0, 0);
 
@@ -31,6 +32,7 @@ namespace cassettePlayerSimulator
         public static readonly Brush ButtonFaceBrush = new SolidBrush(ButtonFaceColor);
         public static readonly Brush ButtonTopBrush = new SolidBrush(ButtonTopColor);
         public static readonly Brush ButtonLeftBrush = new SolidBrush(ButtonLeftColor);
+        public static readonly Brush ButtonRightBrush = new SolidBrush(ButtonRightColor);
         public static readonly Brush SymbolBlackBrush = new SolidBrush(SymbolBlackColor);
         public static readonly Brush SymbolRedBrush = new SolidBrush(SymbolRedColor);
 

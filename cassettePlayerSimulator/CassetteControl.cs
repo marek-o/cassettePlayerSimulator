@@ -128,26 +128,15 @@ namespace cassettePlayerSimulator
 
             var spoolSize = scaler.S(new Size(160, 160));
 
-            try
-            {
-                WinApi.SuspendRedraw(spoolControlLeft.Handle);
-                WinApi.SuspendRedraw(spoolControlRight.Handle);
+            spoolControlLeft.scaler = scaler;
+            spoolControlLeft.Location = new Point((int)centerLeft.X - spoolSize.Width / 2, (int)centerLeft.Y - spoolSize.Height / 2);
+            spoolControlLeft.Size = spoolSize;
+            spoolControlLeft.Invalidate();
 
-                spoolControlLeft.scaler = scaler;
-                spoolControlLeft.Location = new Point((int)centerLeft.X - spoolSize.Width / 2, (int)centerLeft.Y - spoolSize.Height / 2);
-                spoolControlLeft.Size = spoolSize;
-                spoolControlLeft.Invalidate();
-
-                spoolControlRight.scaler = scaler;
-                spoolControlRight.Location = new Point((int)centerRight.X - spoolSize.Width / 2, (int)centerRight.Y - spoolSize.Height / 2);
-                spoolControlRight.Size = spoolSize;
-                spoolControlRight.Invalidate();
-            }
-            finally
-            {
-                WinApi.ResumeRedraw(spoolControlLeft.Handle);
-                WinApi.ResumeRedraw(spoolControlRight.Handle);
-            }
+            spoolControlRight.scaler = scaler;
+            spoolControlRight.Location = new Point((int)centerRight.X - spoolSize.Width / 2, (int)centerRight.Y - spoolSize.Height / 2);
+            spoolControlRight.Size = spoolSize;
+            spoolControlRight.Invalidate();
 
             UpdateRadiusesOfSpools();
 

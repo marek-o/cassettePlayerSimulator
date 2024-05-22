@@ -197,8 +197,8 @@ namespace cassettePlayerSimulator
                 var faceLTBase = new Point(faceRectBase.Left, faceRectBase.Top);
                 var faceRBBase = new Point(faceRectBase.Right, faceRectBase.Bottom);
 
-                var faceLT = Perspective(faceLTBase, depth);
-                var faceRB = Perspective(faceRBBase, depth);
+                var faceLT = Perspective(faceLTBase, depth/50);
+                var faceRB = Perspective(faceRBBase, depth/50);
 
                 var faceRect = new Rectangle(faceLT.X, faceLT.Y, faceRB.X - faceLT.X, faceRB.Y - faceLT.Y);
 
@@ -316,7 +316,7 @@ namespace cassettePlayerSimulator
         {
             PointF v = new PointF(input.X - perspectiveCenter.X, input.Y - perspectiveCenter.Y);
 
-            PointF delta = new PointF(v.X * depth / Math.Abs(v.Y), v.Y * depth / Math.Abs(v.Y));
+            PointF delta = new PointF(v.X * depth, v.Y * depth);
 
             return new Point((int)(input.X + delta.X), (int)(input.Y + delta.Y));
         }

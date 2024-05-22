@@ -133,7 +133,7 @@ namespace cassettePlayerSimulator
             RecButton.Size = PlayButton.Size = RewButton.Size
                 = FfButton.Size = StopEjectButton.Size = PauseButton.Size = buttonSize;
 
-            perspectiveCenter = new Point(RewButton.Location.X + (offset + buttonSize.Width) / 2, buttonsOrigin.Y + buttonSize.Height / 2);
+            perspectiveCenter = new Point(RewButton.Location.X + (offset + buttonSize.Width) / 2, buttonsOrigin.Y + buttonSize.Height * 3);
 
             depthUp = scaler.S(5);
             depthDown = scaler.S(1.5f);
@@ -292,6 +292,13 @@ namespace cassettePlayerSimulator
                     new PointF(faceRBBase.X, faceLTBase.Y),
                     faceRBBase
                 };
+                var downPolygon = new PointF[]
+                {
+                    new PointF(faceLT.X, faceRB.Y),
+                    new PointF(faceLTBase.X, faceRBBase.Y),
+                    faceRBBase,
+                    faceRB
+                };
 
                 if (buttonIndex > 2)
                 { 
@@ -305,6 +312,10 @@ namespace cassettePlayerSimulator
                     e.Graphics.FillPolygon(Common.ButtonRightBrush, rightPolygon);
                     e.Graphics.DrawPolygon(Common.BorderPen, rightPolygon);
                 }
+
+                //down face
+                e.Graphics.FillPolygon(Common.ButtonLeftBrush, downPolygon);
+                e.Graphics.DrawPolygon(Common.BorderPen, downPolygon);
             }
 
             //debug

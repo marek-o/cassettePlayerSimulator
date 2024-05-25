@@ -109,17 +109,19 @@ namespace cassettePlayerSimulator
         internal Button PauseButton { get; set; } = new Button();
 
         private Rectangle hole;
-        private int depthUp;
-        private int depthDown;
-        private int depthPressed;
+        private float depthUp;
+        private float depthDown;
+        private float depthPressed;
+
+        private Point perspectiveCenter;
 
         private void DoLayout()
         {
             Scaler scaler = new Scaler(Width / 416.0f);
 
-            Size buttonSize = scaler.S(new Size(65, 65));
-            Point buttonsOrigin = scaler.S(new Point(25, 25));
-            int offset = scaler.S(60);
+            Size buttonSize = scaler.S(new Size(50, 50));
+            Point buttonsOrigin = scaler.S(new Point(40, 25));
+            int offset = scaler.S(55);
             
             RecButton.Location = new Point(buttonsOrigin.X + offset * 0, buttonsOrigin.Y);
             PlayButton.Location = new Point(buttonsOrigin.X + offset * 1, buttonsOrigin.Y);
@@ -131,11 +133,13 @@ namespace cassettePlayerSimulator
             RecButton.Size = PlayButton.Size = RewButton.Size
                 = FfButton.Size = StopEjectButton.Size = PauseButton.Size = buttonSize;
 
-            depthUp = scaler.S(15);
-            depthDown = scaler.S(6);
-            depthPressed = scaler.S(3);
+            perspectiveCenter = new Point(RewButton.Location.X + (offset + buttonSize.Width) / 2, buttonsOrigin.Y + buttonSize.Height * 3);
 
-            hole = scaler.S(new Rectangle(28, 28, 354, 54));
+            depthUp = 7;
+            depthDown = 1.5f;
+            depthPressed = 0;
+
+            hole = scaler.S(new Rectangle(36, 21, 333, 58));
         }
 
         protected override void OnResize(EventArgs e)
@@ -149,7 +153,7 @@ namespace cassettePlayerSimulator
         {
             base.OnPaint(e);
 
-            int depth;
+            float depth;
 
             //cover bottom
             e.Graphics.FillRectangle(Common.CoverBrush, 0, hole.Bottom, Width, Height - hole.Bottom);
@@ -158,8 +162,20 @@ namespace cassettePlayerSimulator
             e.Graphics.FillRectangle(Common.CoverBrush, hole.Right, 0, Width - hole.Right, Height);
             e.Graphics.DrawLine(Common.BorderPen, hole.Right, hole.Top, hole.Right, hole.Bottom);
 
-            foreach (var button in buttons.Reverse<Button>())
+            //cover left
+            e.Graphics.FillRectangle(Common.CoverBrush, 0, 0, hole.Left, Height);
+            e.Graphics.DrawLine(Common.BorderPen, hole.Left, hole.Top, hole.Left, hole.Bottom);
+            //cover top
+            e.Graphics.FillRectangle(Common.CoverBrush, 0, 0, Width, hole.Top);
+            e.Graphics.DrawLine(Common.BorderPen, hole.Left, hole.Top, hole.Right, hole.Top);
+
+            //TODO: simplify cover drawing
+
+            //from outer to inner
+            foreach (int buttonIndex in new int[] { 0, 5, 1, 4, 2, 3 })
             {
+                var button = buttons[buttonIndex];
+
                 if (button.ButtonState == Button.State.UP)
                 {
                     depth = depthUp;
@@ -173,10 +189,18 @@ namespace cassettePlayerSimulator
                     depth = depthPressed;
                 }
 
-                int buttonFaceWidth = button.Size.Width - depthUp;
-                int buttonFaceHeight = button.Size.Height - depthUp;
+                //debug:
+                //depth = depthPressed;
 
-                var faceRect = new Rectangle(button.Location.X + depth, button.Location.Y + depth, buttonFaceWidth, buttonFaceHeight);
+                var faceRectBase = new Rectangle(button.Location.X, button.Location.Y, button.Size.Width, button.Size.Height);
+
+                var faceLTBase = new Point(faceRectBase.Left, faceRectBase.Top);
+                var faceRBBase = new Point(faceRectBase.Right, faceRectBase.Bottom);
+
+                var faceLT = Perspective(faceLTBase, depth/100, depth/50);
+                var faceRB = Perspective(faceRBBase, depth/100, depth/50);
+
+                var faceRect = new Rectangle(faceLT.X, faceLT.Y, faceRB.X - faceLT.X, faceRB.Y - faceLT.Y);
 
                 //front face
                 e.Graphics.FillRectangle(Common.ButtonFaceBrush, faceRect);
@@ -184,7 +208,7 @@ namespace cassettePlayerSimulator
 
                 //symbols
                 var symbolRect = new Rectangle(faceRect.Left + faceRect.Width / 2, faceRect.Top + faceRect.Height / 2,
-                    buttonFaceWidth / 4, buttonFaceHeight / 4);
+                    faceRect.Width / 4, faceRect.Height / 4);
                 symbolRect.X -= symbolRect.Width / 2;
                 symbolRect.Y -= symbolRect.Height / 2;
 
@@ -254,37 +278,58 @@ namespace cassettePlayerSimulator
                         symbolRect.Width / 3, symbolRect.Height);
                 }
 
-                var topPolygon = new PointF[]
-                {
-                new PointF(button.Location.X, button.Location.Y),
-                new PointF(button.Location.X + buttonFaceWidth, button.Location.Y),
-                new PointF(button.Location.X + buttonFaceWidth + depth, button.Location.Y + depth),
-                new PointF(button.Location.X + depth, button.Location.Y + depth),
-                };
-
-                //top face
-                e.Graphics.FillPolygon(Common.ButtonTopBrush, topPolygon);
-                e.Graphics.DrawPolygon(Common.BorderPen, topPolygon);
-
                 var leftPolygon = new PointF[]
                 {
-                new PointF(button.Location.X, button.Location.Y),
-                new PointF(button.Location.X, button.Location.Y + buttonFaceHeight),
-                new PointF(button.Location.X + depth, button.Location.Y + buttonFaceHeight + depth),
-                new PointF(button.Location.X + depth, button.Location.Y + depth),
+                    faceLT,
+                    new PointF(faceLT.X, faceRB.Y),
+                    new PointF(faceLTBase.X, faceRBBase.Y),
+                    faceLTBase
+                };
+                var rightPolygon = new PointF[]
+                {
+                    faceRB,
+                    new PointF(faceRB.X, faceLT.Y),
+                    new PointF(faceRBBase.X, faceLTBase.Y),
+                    faceRBBase
+                };
+                var downPolygon = new PointF[]
+                {
+                    new PointF(faceLT.X, faceRB.Y),
+                    new PointF(faceLTBase.X, faceRBBase.Y),
+                    faceRBBase,
+                    faceRB
                 };
 
-                //left face
-                e.Graphics.FillPolygon(Common.ButtonLeftBrush, leftPolygon);
-                e.Graphics.DrawPolygon(Common.BorderPen, leftPolygon);
+                if (buttonIndex > 2)
+                { 
+                    //left face
+                    e.Graphics.FillPolygon(Common.ButtonLeftBrush, leftPolygon);
+                    e.Graphics.DrawPolygon(Common.BorderPen, leftPolygon);
+                }
+                else
+                {
+                    //right face
+                    e.Graphics.FillPolygon(Common.ButtonRightBrush, rightPolygon);
+                    e.Graphics.DrawPolygon(Common.BorderPen, rightPolygon);
+                }
+
+                //down face
+                e.Graphics.FillPolygon(Common.ButtonLeftBrush, downPolygon);
+                e.Graphics.DrawPolygon(Common.BorderPen, downPolygon);
             }
 
-            //cover left
-            e.Graphics.FillRectangle(Common.CoverBrush, 0, 0, hole.Left, Height);
-            e.Graphics.DrawLine(Common.BorderPen, hole.Left, hole.Top, hole.Left, hole.Bottom);
-            //cover top
-            e.Graphics.FillRectangle(Common.CoverBrush, 0, 0, Width, hole.Top);
-            e.Graphics.DrawLine(Common.BorderPen, hole.Left, hole.Top, hole.Right, hole.Top);
+            //debug
+            e.Graphics.FillEllipse(Brushes.Red, perspectiveCenter.X - 2, perspectiveCenter.Y - 2, 4, 4);
+            e.Graphics.DrawRectangle(Pens.Black, 0, 0, Width - 1, Height - 1);
+        }
+
+        private Point Perspective(Point input, float depthX, float depthY)
+        {
+            PointF v = new PointF(input.X - perspectiveCenter.X, input.Y - perspectiveCenter.Y);
+
+            PointF delta = new PointF(v.X * depthX, v.Y * depthY);
+
+            return new Point((int)(input.X + delta.X), (int)(input.Y + delta.Y));
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

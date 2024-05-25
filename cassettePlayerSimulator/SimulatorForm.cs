@@ -130,6 +130,7 @@ namespace cassettePlayerSimulator
             int counterMargin = (int)(contentWidth * 0.02f);
             counter.Location = new Point(contentMargin, cassetteControl.Bottom + counterMargin);
             counter.Size = new Size(counterWidth, (int)(counterWidth / counterRatio));
+            counter.Invalidate();
 
             float buttonsRatio = 422 / 123.0f;
             cassetteButtons.Location = new Point(contentMargin, counter.Bottom);

@@ -135,9 +135,9 @@ namespace cassettePlayerSimulator
 
             perspectiveCenter = new Point(RewButton.Location.X + (offset + buttonSize.Width) / 2, buttonsOrigin.Y + buttonSize.Height * 3);
 
-            depthUp = scaler.S(5);
-            depthDown = scaler.S(1.5f);
-            depthPressed = scaler.S(0);
+            depthUp = 7;
+            depthDown = 1.5f;
+            depthPressed = 0;
 
             hole = scaler.S(new Rectangle(36, 21, 333, 58));
         }

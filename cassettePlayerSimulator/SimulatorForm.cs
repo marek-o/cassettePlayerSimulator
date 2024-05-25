@@ -297,6 +297,14 @@ namespace cassettePlayerSimulator
             tapeManager.CreateTape();
         }
 
+        private void buttonAbout_Click(object sender, EventArgs e)
+        {
+            using (var about = new AboutForm())
+            {
+                about.ShowDialog(this);
+            }
+        }
+
         private void DisengageButtons()
         {
             if (State == PlayerState.PLAYING)

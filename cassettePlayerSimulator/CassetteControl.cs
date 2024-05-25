@@ -207,15 +207,15 @@ namespace cassettePlayerSimulator
                 e.Graphics.DrawImage(imgScaled, cassetteOffset);
 
                 TextRenderer.DrawText(e.Graphics, loadedTapeSide.Label, tapeLabelFont,
-                    scaler.S(new Rectangle(266, 153, 813, 70)),
-                    Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
+                    scaler.S(new Rectangle(180, 153, 1070, 70)),
+                    Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
 
                 TextRenderer.DrawText(e.Graphics, (loadedTapeSide.Parent.SideA == loadedTapeSide) ? "A" : "B", tapeSideFont,
-                    scaler.S(new Rectangle(180, 142, 90, 90)),
-                    Color.White, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPadding);
+                    scaler.S(new Rectangle(190, 375, 90, 90)),
+                    Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPadding);
 
-                TextRenderer.DrawText(e.Graphics, ((int)Math.Round(loadedTapeSide.Parent.Length / 900.0f) * 30).ToString(), tapeSideFont,
-                    scaler.S(new Rectangle(1112, 410, 90, 90)),
+                TextRenderer.DrawText(e.Graphics, "C" + ((int)Math.Round(loadedTapeSide.Parent.Length / 900.0f) * 30).ToString(), tapeSideFont,
+                    scaler.S(new Rectangle(1100, 375, 120, 90)),
                     Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPadding);
             }
 

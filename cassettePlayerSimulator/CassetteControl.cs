@@ -148,6 +148,8 @@ namespace cassettePlayerSimulator
             base.OnPaint(e);
 
             RectangleF destRect = scaler.S(new RectangleF(0, 0, img.Width, img.Height));
+            destRect.Width = Math.Max(1, destRect.Width);
+            destRect.Height = Math.Max(1, destRect.Height);
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 

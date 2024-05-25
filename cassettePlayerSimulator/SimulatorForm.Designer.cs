@@ -118,9 +118,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
             this.BackColor = System.Drawing.Color.DarkGray;
             this.ClientSize = new System.Drawing.Size(762, 481);
+            this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Controls.Add(this.buttonCreateTape);
             this.Controls.Add(this.listBox);
             this.Controls.Add(this.counter);

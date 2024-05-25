@@ -197,8 +197,8 @@ namespace cassettePlayerSimulator
                 var faceLTBase = new Point(faceRectBase.Left, faceRectBase.Top);
                 var faceRBBase = new Point(faceRectBase.Right, faceRectBase.Bottom);
 
-                var faceLT = Perspective(faceLTBase, depth/50);
-                var faceRB = Perspective(faceRBBase, depth/50);
+                var faceLT = Perspective(faceLTBase, depth/100, depth/50);
+                var faceRB = Perspective(faceRBBase, depth/100, depth/50);
 
                 var faceRect = new Rectangle(faceLT.X, faceLT.Y, faceRB.X - faceLT.X, faceRB.Y - faceLT.Y);
 
@@ -323,11 +323,11 @@ namespace cassettePlayerSimulator
             e.Graphics.DrawRectangle(Pens.Black, 0, 0, Width - 1, Height - 1);
         }
 
-        private Point Perspective(Point input, float depth)
+        private Point Perspective(Point input, float depthX, float depthY)
         {
             PointF v = new PointF(input.X - perspectiveCenter.X, input.Y - perspectiveCenter.Y);
 
-            PointF delta = new PointF(v.X * depth, v.Y * depth);
+            PointF delta = new PointF(v.X * depthX, v.Y * depthY);
 
             return new Point((int)(input.X + delta.X), (int)(input.Y + delta.Y));
         }

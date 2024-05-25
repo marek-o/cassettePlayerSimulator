@@ -302,6 +302,7 @@ namespace cassettePlayerSimulator
             TapeSide side = GetClickedItem(e);
 
             LoadedTapeSide = side;
+            listBox.Invalidate();
         }
 
         private TapeSide GetClickedItem(MouseEventArgs e)
@@ -325,11 +326,13 @@ namespace cassettePlayerSimulator
         private void ToolStripMenuItemLoadA_Click(object sender, EventArgs e)
         {
             LoadedTapeSide = rightClickedTapeSide.Parent.SideA;
+            listBox.Invalidate();
         }
 
         private void ToolStripMenuItemLoadB_Click(object sender, EventArgs e)
         {
             LoadedTapeSide = rightClickedTapeSide.Parent.SideB;
+            listBox.Invalidate();
         }
 
         private void ToolStripMenuItemEdit_Click(object sender, EventArgs e)

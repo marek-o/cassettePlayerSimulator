@@ -110,7 +110,7 @@ namespace Utils
             {
                 unsafe
                 {
-                    bufferIP[i] = Marshal.AllocHGlobal(32); // to prevent GC from deleting
+                    bufferIP[i] = Marshal.AllocHGlobal(48); // to prevent GC from deleting
 
                     WAVEHDR* bufptr = (WAVEHDR*)bufferIP[i].ToPointer();
 
@@ -123,13 +123,13 @@ namespace Utils
 
                     if (mode == Mode.Record)
                     {
-                        CheckError(waveInPrepareHeader(waveHandle, ref *bufptr, 32));
-                        CheckError(waveInAddBuffer(waveHandle, ref *(WAVEHDR*)bufferIP[i].ToPointer(), 32));
+                        CheckError(waveInPrepareHeader(waveHandle, ref *bufptr, 48));
+                        CheckError(waveInAddBuffer(waveHandle, ref *(WAVEHDR*)bufferIP[i].ToPointer(), 48));
                     }
                     else if (mode == Mode.Play)
                     {
-                        CheckError(waveOutPrepareHeader(waveHandle, ref *bufptr, 32));
-                        CheckError(waveOutWrite(waveHandle, ref *(WAVEHDR*)bufferIP[i].ToPointer(), 32));
+                        CheckError(waveOutPrepareHeader(waveHandle, ref *bufptr, 48));
+                        CheckError(waveOutWrite(waveHandle, ref *(WAVEHDR*)bufferIP[i].ToPointer(), 48));
                     }
                 }
             }
@@ -169,11 +169,11 @@ namespace Utils
 
                     if (mode == Mode.Record)
                     {
-                        CheckError(waveInUnprepareHeader(waveHandle, ref *bufptr, 32));
+                        CheckError(waveInUnprepareHeader(waveHandle, ref *bufptr, 48));
                     }
                     else if (mode == Mode.Play)
                     {
-                        CheckError(waveOutUnprepareHeader(waveHandle, ref *bufptr, 32));
+                        CheckError(waveOutUnprepareHeader(waveHandle, ref *bufptr, 48));
                     }
 
                     Marshal.FreeHGlobal(bufptr->lpData);
@@ -240,11 +240,11 @@ namespace Utils
             public IntPtr lpData;
             public uint dwBufferLength;
             public uint dwBytesRecorded;
-            public uint dwUser;
+            public IntPtr dwUser;
             public uint dwFlags;
             public uint dwLoops;
             public IntPtr lpNext;
-            public uint reserved;
+            public IntPtr reserved;
         }
 
         private struct WAVEINCAPS
@@ -329,9 +329,9 @@ namespace Utils
         [DllImport("winmm.dll")]
         private static extern uint waveOutGetDevCaps(uint uDeviceID, ref WAVEOUTCAPS pwic, uint cbwic);
 
-        private delegate void SoundCallbackDelegate(IntPtr hwi, uint uMsg, SoundWrapper dwInstance, uint dwParam1, uint dwParam2);
+        private delegate void SoundCallbackDelegate(IntPtr hwi, uint uMsg, SoundWrapper dwInstance, ulong dwParam1, ulong dwParam2);
 
-        private static unsafe void SoundCallbackRecording(IntPtr hwi, uint uMsg, SoundWrapper dwInstance, uint dwParam1, uint dwParam2)
+        private static unsafe void SoundCallbackRecording(IntPtr hwi, uint uMsg, SoundWrapper dwInstance, ulong dwParam1, ulong dwParam2)
         {
             if (uMsg == WIM_DATA)
             {
@@ -346,9 +346,9 @@ namespace Utils
 
                     lock (dwInstance.locker)
                     {
-                        retval = waveInUnprepareHeader(dwInstance.waveHandle, ref *bufptr, 32);
-                        retval2 = waveInPrepareHeader(dwInstance.waveHandle, ref *bufptr, 32);
-                        retval3 = waveInAddBuffer(dwInstance.waveHandle, ref *bufptr, 32);
+                        retval = waveInUnprepareHeader(dwInstance.waveHandle, ref *bufptr, 48);
+                        retval2 = waveInPrepareHeader(dwInstance.waveHandle, ref *bufptr, 48);
+                        retval3 = waveInAddBuffer(dwInstance.waveHandle, ref *bufptr, 48);
                     }
 
                     if (retval != 0 || retval2 != 0 || retval3 != 0)
@@ -361,7 +361,7 @@ namespace Utils
             }
         }
 
-        private static unsafe void SoundCallbackPlaying(IntPtr hwi, uint uMsg, SoundWrapper dwInstance, uint dwParam1, uint dwParam2)
+        private static unsafe void SoundCallbackPlaying(IntPtr hwi, uint uMsg, SoundWrapper dwInstance, ulong dwParam1, ulong dwParam2)
         {
             if (uMsg == WOM_DONE)
             {
@@ -378,9 +378,9 @@ namespace Utils
 
                     lock (dwInstance.locker)
                     {
-                        retval = waveOutUnprepareHeader(dwInstance.waveHandle, ref *bufptr, 32);
-                        retval2 = waveOutPrepareHeader(dwInstance.waveHandle, ref *bufptr, 32);
-                        retval3 = waveOutWrite(dwInstance.waveHandle, ref *bufptr, 32);
+                        retval = waveOutUnprepareHeader(dwInstance.waveHandle, ref *bufptr, 48);
+                        retval2 = waveOutPrepareHeader(dwInstance.waveHandle, ref *bufptr, 48);
+                        retval3 = waveOutWrite(dwInstance.waveHandle, ref *bufptr, 48);
                     }
 
                     if (retval != 0 || retval2 != 0 || retval3 != 0)

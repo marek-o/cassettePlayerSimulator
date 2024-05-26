@@ -27,7 +27,8 @@ namespace cassettePlayerSimulator
         {
             base.OnPaint(e);
 
-            backgroundBrush.Color = BackColor;
+            backgroundBrush.Color = Common.CassetteBackgroundColor;
+            e.Graphics.FillRectangle(Common.CassetteBackgroundBrush, new RectangleF(0, 0, Width, Height));
 
             if (CassetteInserted)
             {
@@ -35,6 +36,8 @@ namespace cassettePlayerSimulator
             }
 
             DrawTapeSpool(e.Graphics, new PointF(Width / 2, Height / 2), angleDegrees);
+
+            e.Graphics.FillRectangle(Common.CassetteCoverBrush, 0, 0, Width, Height);
         }
 
         private PointF PolarToCartesian(PointF center, float r, float angleDegrees)
@@ -48,6 +51,7 @@ namespace cassettePlayerSimulator
 
         private void DrawTapeSpool(Graphics g, PointF center, float angleDegrees)
         {
+            var prevSmoothing = g.SmoothingMode;
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
             g.FillEllipse(backgroundBrush, center.X - spoolInnerRadius, center.Y - spoolInnerRadius,
@@ -81,6 +85,8 @@ namespace cassettePlayerSimulator
                     PolarToCartesian(center, blackWheelRadius, a + 25),
                 });
             }
+
+            g.SmoothingMode = prevSmoothing;
         }
     }
 }

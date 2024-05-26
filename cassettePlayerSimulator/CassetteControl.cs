@@ -147,6 +147,12 @@ namespace cassettePlayerSimulator
         {
             base.OnPaint(e);
 
+            int coverLeft = Width * 4 / 100;
+            int coverRight = Width * 96 / 100;
+            int coverOpenHeight = Height * 8 / 10;
+            e.Graphics.FillRectangle(Common.CassetteBackgroundBrush,
+                coverLeft, 0, coverRight - coverLeft, Height - 1);
+
             RectangleF destRect = scaler.S(new RectangleF(0, 0, img.Width, img.Height));
             destRect.Width = Math.Max(1, destRect.Width);
             destRect.Height = Math.Max(1, destRect.Height);
@@ -219,7 +225,17 @@ namespace cassettePlayerSimulator
                     Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPadding);
             }
 
-            e.Graphics.DrawRectangle(Pens.Black, 0, 0, Width - 1, Height - 1);
+            bool closed = loadedTapeSide != null;
+            var coverPoints = new PointF[] {
+                new PointF(coverLeft, 0),
+                new PointF(coverRight, 0),
+                closed ? new PointF(coverRight, Height) : new PointF(Width, coverOpenHeight),
+                closed ? new PointF(coverLeft, Height) : new PointF(0, coverOpenHeight)
+            };
+
+            e.Graphics.DrawRectangle(Pens.Black,
+                coverLeft, 0, coverRight - coverLeft, Height - 1);
+            e.Graphics.FillPolygon(Common.CassetteCoverBrush, coverPoints);
         }
 
         private void DrawTapeSpoolOuter(Graphics g, PointF center, float outerRadius)

@@ -89,7 +89,6 @@
             // 
             // cassetteControl
             // 
-            this.cassetteControl.BackColor = System.Drawing.Color.Gray;
             this.cassetteControl.Location = new System.Drawing.Point(17, 18);
             this.cassetteControl.Name = "cassetteControl";
             this.cassetteControl.Size = new System.Drawing.Size(342, 251);

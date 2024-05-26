@@ -24,6 +24,8 @@ namespace cassettePlayerSimulator
         public static readonly Color CounterWheelColor = Color.FromArgb(96, 96, 96);
 
         public static readonly Color CassetteBodyColor = Color.FromArgb(0, 0, 0);
+        public static readonly Color CassetteBackgroundColor = Color.FromArgb(128, 128, 128);
+        public static readonly Color CassetteCoverColor = Color.FromArgb(128, 0, 0, 0);
 
         public static readonly Pen BorderPen = new Pen(BorderColor);
         public static readonly Pen TapePen = new Pen(TapeColor);
@@ -44,6 +46,8 @@ namespace cassettePlayerSimulator
         public static readonly Brush CounterWheelBrush = new SolidBrush(CounterWheelColor);
 
         public static readonly Brush CassetteBodyBrush = new SolidBrush(CassetteBodyColor);
+        public static readonly Brush CassetteBackgroundBrush = new SolidBrush(CassetteBackgroundColor);
+        public static readonly Brush CassetteCoverBrush = new SolidBrush(CassetteCoverColor);
 
         public static string FormatTime(int seconds)
         {

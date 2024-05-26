@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace cassettePlayerSimulator
@@ -17,7 +18,25 @@ namespace cassettePlayerSimulator
                 groupBox.Enabled = false;
             }
 
-            colorDialog.Color = panelColor.BackColor = Color.Red;
+            colorDialog.Color = panelColor.BackColor = GetRandomSaturatedColor();
+        }
+
+        private Color GetRandomSaturatedColor()
+        {
+            var random = new Random();
+            var r = random.Next(256);
+            var g = random.Next(256);
+            var b = random.Next(256);
+            var min = new int[] { r, g, b }.Min();
+            var max = new int[] { r, g, b }.Max();
+            if (min == max)
+            {
+                max++;
+            }
+            r = (r - min) * 255 / (max - min);
+            g = (g - min) * 255 / (max - min);
+            b = (b - min) * 255 / (max - min);
+            return Color.FromArgb(r, g, b);
         }
 
         private void buttonColor_Click(object sender, EventArgs e)

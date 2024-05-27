@@ -208,11 +208,7 @@ namespace cassettePlayerSimulator
             cassetteButtons.PauseButton.MouseDown += PauseButton_MouseDown;
             cassetteButtons.PauseButton.MouseUp += PauseButton_MouseUp;
 
-            mixer = new SoundMixer(
-                (ushort)Common.WaveFormat.BitsPerSample,
-                (ushort)Common.WaveFormat.Channels,
-                (ushort)Common.WaveFormat.SampleRate,
-                8*1024);
+            mixer = new SoundMixer();
 
             float vol = 2.0f;
             float speed = 1.0f;

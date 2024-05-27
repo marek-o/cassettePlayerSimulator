@@ -1,10 +1,11 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 using Utils;
 
 namespace cassettePlayerSimulator
 {
-    class SoundMixer
+    class SoundMixer : IWaveProvider
     {
         public class Sample
         {
@@ -187,20 +188,22 @@ namespace cassettePlayerSimulator
             }
         }
 
-        private SoundWrapper player;
-        private SoundWrapper recorder;
+        private WaveOut player;
+        private WaveIn recorder;
+
         private List<Sample> samples = new List<Sample>();
         private Sample recordingSample;
 
         private object playingLocker = new object();
 
-        public SoundMixer(ushort bitsPerSample, ushort channels, uint sampleRate, uint bufferLengthBytes)
+        public WaveFormat WaveFormat => Common.WaveFormat;
+
+        public SoundMixer()
         {
-            player = new SoundWrapper(SoundWrapper.Mode.Play, bitsPerSample, channels, sampleRate, bufferLengthBytes);
-            player.NewDataRequested += Player_NewDataRequested;
-            
-            recorder = new SoundWrapper(SoundWrapper.Mode.Record, bitsPerSample, channels, sampleRate, bufferLengthBytes);
-            recorder.NewDataPresent += Recorder_NewDataPresent;
+            player = new WaveOut();
+            player.DesiredLatency = 40;
+            player.NumberOfBuffers = 3;
+            player.Init(this);
         }
 
         public void AddSample(Sample sample)
@@ -228,7 +231,7 @@ namespace cassettePlayerSimulator
 
         public void Start()
         {
-            player.Start(0);
+            player.Play();
         }
 
         public void Stop()
@@ -238,30 +241,51 @@ namespace cassettePlayerSimulator
 
         public void StartRecording()
         {
-            recorder.Start(0);
+            if (recorder == null)
+            {
+                //sometimes it doesn't record when reusing same object
+                recorder = new WaveIn();
+                recorder.WaveFormat = Common.WaveFormat;
+                recorder.DataAvailable += Recorder_NewDataPresent;
+                recorder.BufferMilliseconds = 40;
+                recorder.NumberOfBuffers = 3;
+                recorder.StartRecording();
+            }
         }
 
         public void StopRecording()
         {
-            recorder.Stop();
-        }
-
-        private void Player_NewDataRequested(object sender, Utils.SoundWrapper.NewDataEventArgs e)
-        {
-            lock (playingLocker)
+            if (recorder != null)
             {
-                foreach (var sample in samples)
-                {
-                    sample.PlayIntoBuffer(e.data);
-                }
+                recorder.StopRecording();
+                recorder.Dispose();
+                recorder = null;
             }
         }
 
-        private void Recorder_NewDataPresent(object sender, SoundWrapper.NewDataEventArgs e)
+        public int Read(byte[] buffer, int offset, int count)
+        {
+            lock (playingLocker)
+            {
+                short[] shortBuf = new short[count / 2];
+
+                foreach (var sample in samples)
+                {
+                    sample.PlayIntoBuffer(shortBuf);
+                }
+
+                Buffer.BlockCopy(shortBuf, 0, buffer, offset, count);
+            }
+            return count;
+        }
+
+        private void Recorder_NewDataPresent(object sender, WaveInEventArgs e)
         {
             if (recordingSample != null)
             {
-                recordingSample.RecordFromBuffer(e.data);
+                short[] shortBuf = new short[e.BytesRecorded / 2];
+                Buffer.BlockCopy(e.Buffer, 0, shortBuf, 0, e.BytesRecorded);
+                recordingSample.RecordFromBuffer(shortBuf);
             }
         }
     }

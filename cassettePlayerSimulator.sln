@@ -1,11 +1,8 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29503.13
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cassettePlayerSimulator", "cassettePlayerSimulator\cassettePlayerSimulator.csproj", "{2D87261E-E535-42ED-BE7C-B09A214564A3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoundWrapper", "SoundWrapper\SoundWrapper.csproj", "{99BCE048-8B31-4228-8D27-4495763C5A6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +14,6 @@ Global
 		{2D87261E-E535-42ED-BE7C-B09A214564A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D87261E-E535-42ED-BE7C-B09A214564A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D87261E-E535-42ED-BE7C-B09A214564A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{99BCE048-8B31-4228-8D27-4495763C5A6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99BCE048-8B31-4228-8D27-4495763C5A6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99BCE048-8B31-4228-8D27-4495763C5A6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{99BCE048-8B31-4228-8D27-4495763C5A6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

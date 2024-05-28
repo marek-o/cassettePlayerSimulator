@@ -264,6 +264,8 @@ namespace cassettePlayerSimulator
                 if (isLoaded)
                 {
                     rect.Inflate(-rectSize / 4, -rectSize / 4);
+                    g.FillEllipse(Brushes.White, rect);
+                    rect.Inflate(-rectSize / 8, -rectSize / 8);
                     g.FillEllipse(Brushes.Black, rect);
                 }
             }

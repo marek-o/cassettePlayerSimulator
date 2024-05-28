@@ -86,6 +86,7 @@ namespace cassettePlayerSimulator
         {
             get
             {
+                if (radioButtonC10.Checked) return 5 * 60;
                 if (radioButtonC30.Checked) return 15 * 60;
                 if (radioButtonC60.Checked) return 30 * 60;
                 if (radioButtonC90.Checked) return 45 * 60;

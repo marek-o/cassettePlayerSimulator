@@ -339,7 +339,7 @@ namespace cassettePlayerSimulator
 
         private void SetSoundPlayback(bool setPlaying, bool slowChange)
         {
-            int sampleCount = slowChange ? music.wavFile.sampleRate * 2 / 5 : music.wavFile.sampleRate * 2 / 20;
+            int sampleCount = slowChange ? music.wavFile.format.SampleRate * 2 / 5 : music.wavFile.format.SampleRate * 2 / 20;
 
             if (!isPauseFullyPressed)
             {

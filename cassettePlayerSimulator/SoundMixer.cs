@@ -62,14 +62,14 @@ namespace cassettePlayerSimulator
 
             public float GetCurrentPositionSeconds()
             {
-                return (float)(position / wavFile.sampleRate / wavFile.channels);
+                return (float)(position / wavFile.format.SampleRate / wavFile.format.Channels);
             }
 
             public void SetCurrentPositionSeconds(float seconds)
             {
                 lock (locker)
                 {
-                    position = (int)(seconds * wavFile.sampleRate * wavFile.channels);
+                    position = (int)(seconds * wavFile.format.SampleRate * wavFile.format.Channels);
 
                     position = Math.Max(0, Math.Min(LastSafePosition(), position));
                 }
@@ -77,7 +77,7 @@ namespace cassettePlayerSimulator
 
             public float GetLengthSeconds()
             {
-                return (float)(wavFile.dataLengthBytes / 2) / wavFile.sampleRate / wavFile.channels;
+                return (float)(wavFile.dataLengthBytes / 2) / wavFile.format.SampleRate / wavFile.format.Channels;
             }
 
             public void UpdatePlayback(bool isPlaying)

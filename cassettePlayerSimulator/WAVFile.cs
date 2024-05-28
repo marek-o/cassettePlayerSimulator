@@ -2,19 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Utils
 {
     public class WAVFile
     {
-        public int audioFormat = 0;
-        public int channels = 1;
-        public int sampleRate = 1;
-        public int blockAlign = 0;
-        public int bitsPerSample = 1;
+        public WaveFormat format;
         public int dataLengthBytes = 0;
 
         public int dataOffsetBytes = 0;
@@ -76,28 +70,23 @@ namespace Utils
 
             try
             {
-                waveReader = new WaveFileReader(stream);
-
-                wav.audioFormat = (int)waveReader.WaveFormat.Encoding;
-                wav.channels = waveReader.WaveFormat.Channels;
-                wav.sampleRate = waveReader.WaveFormat.SampleRate;
-                wav.blockAlign = waveReader.WaveFormat.BlockAlign;
-                wav.bitsPerSample = waveReader.WaveFormat.BitsPerSample;
-
                 int subchunkSize = 0;
                 using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
                 {
                     stream.Seek(16, SeekOrigin.Begin);
                     subchunkSize = reader.ReadInt32();
+                    stream.Seek(0, SeekOrigin.Begin);
                 }
 
+                waveReader = new WaveFileReader(stream);
+                wav.format = waveReader.WaveFormat;
                 wav.dataLengthBytes = (int)waveReader.Length;
                 wav.dataOffsetBytes = 28 + subchunkSize;
 
-                if (wav.audioFormat != 1
-                    || wav.channels < 1
-                    || wav.channels > 2
-                    || wav.bitsPerSample != 16)
+                if (wav.format.Encoding != WaveFormatEncoding.Pcm
+                    || wav.format.Channels < 1
+                    || wav.format.Channels > 2
+                    || wav.format.BitsPerSample != 16)
                 {
                     throw new NotImplementedException("Unsupported WAV format");
                 }

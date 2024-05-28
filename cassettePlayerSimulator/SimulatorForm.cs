@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -17,7 +18,10 @@ namespace cassettePlayerSimulator
         private SoundMixer mixer;
         private SoundMixer.Sample stopDown, stopUp, playDown, playUp, rewDown, rewNoise, rewUp, ffDown, ffNoise, ffUp, recordDown, recordUp,
             pauseDown, pauseUp, unpauseDown, unpauseUp, ejectDown, ejectUp, cassetteClose, cassetteInsert;
+        private List<SoundMixer.Sample> effectSamples = new List<SoundMixer.Sample>();
         private SoundMixer.Sample music;
+
+        private float effectsMaxVolume = 2.0f;
 
         private enum PlayerState
         {
@@ -114,7 +118,7 @@ namespace cassettePlayerSimulator
             int contentWidth = listBox.Left - contentMargin * 2;
             int contentHeight = (int)(contentWidth / contentRatio);
             int maxContentHeight = ClientRectangle.Height - contentMargin * 2;
-            
+
             if (contentHeight > maxContentHeight)
             {
                 contentHeight = maxContentHeight;
@@ -210,7 +214,7 @@ namespace cassettePlayerSimulator
 
             mixer = new SoundMixer();
 
-            float vol = 2.0f;
+            float vol = effectsMaxVolume;
             float speed = 1.0f;
 
             stopDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopDown), false, false, true, vol, speed);
@@ -242,26 +246,31 @@ namespace cassettePlayerSimulator
             cassetteClose = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.casetteClose), false, false, true, vol, speed);
             cassetteInsert = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.casetteInsert), false, false, true, vol, speed);
 
-            mixer.AddSample(stopDown);
-            mixer.AddSample(stopUp);
-            mixer.AddSample(playDown);
-            mixer.AddSample(playUp);
-            mixer.AddSample(rewDown);
-            mixer.AddSample(rewNoise);
-            mixer.AddSample(rewUp);
-            mixer.AddSample(ffDown);
-            mixer.AddSample(ffNoise);
-            mixer.AddSample(ffUp);
-            mixer.AddSample(recordDown);
-            mixer.AddSample(recordUp);
-            mixer.AddSample(pauseDown);
-            mixer.AddSample(pauseUp);
-            mixer.AddSample(unpauseDown);
-            mixer.AddSample(unpauseUp);
-            mixer.AddSample(ejectDown);
-            mixer.AddSample(ejectUp);
-            mixer.AddSample(cassetteClose);
-            mixer.AddSample(cassetteInsert);
+            effectSamples.Add(stopDown);
+            effectSamples.Add(stopUp);
+            effectSamples.Add(playDown);
+            effectSamples.Add(playUp);
+            effectSamples.Add(rewDown);
+            effectSamples.Add(rewNoise);
+            effectSamples.Add(rewUp);
+            effectSamples.Add(ffDown);
+            effectSamples.Add(ffNoise);
+            effectSamples.Add(ffUp);
+            effectSamples.Add(recordDown);
+            effectSamples.Add(recordUp);
+            effectSamples.Add(pauseDown);
+            effectSamples.Add(pauseUp);
+            effectSamples.Add(unpauseDown);
+            effectSamples.Add(unpauseUp);
+            effectSamples.Add(ejectDown);
+            effectSamples.Add(ejectUp);
+            effectSamples.Add(cassetteClose);
+            effectSamples.Add(cassetteInsert);
+
+            foreach (var samp in effectSamples)
+            {
+                mixer.AddSample(samp);
+            }
 
             mixer.Start();
 
@@ -522,6 +531,15 @@ namespace cassettePlayerSimulator
                 {
                     SetSoundRecording(true);
                 }
+            }
+        }
+
+        private void trackBarEffectsVolume_Scroll(object sender, EventArgs e)
+        {
+            float vol = effectsMaxVolume * trackBarEffectsVolume.Value / trackBarEffectsVolume.Maximum;
+            foreach (var samp in effectSamples)
+            {
+                samp.SetVolume(vol);
             }
         }
     }

@@ -39,6 +39,8 @@
             this.listBox = new System.Windows.Forms.ListBox();
             this.buttonCreateTape = new System.Windows.Forms.Button();
             this.buttonAbout = new System.Windows.Forms.Button();
+            this.trackBarEffectsVolume = new System.Windows.Forms.TrackBar();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonImport
@@ -125,6 +127,27 @@
             this.buttonAbout.UseVisualStyleBackColor = true;
             this.buttonAbout.Click += new System.EventHandler(this.buttonAbout_Click);
             // 
+            // trackBarEffectsVolume
+            // 
+            this.trackBarEffectsVolume.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.trackBarEffectsVolume.Location = new System.Drawing.Point(536, 276);
+            this.trackBarEffectsVolume.Maximum = 100;
+            this.trackBarEffectsVolume.Name = "trackBarEffectsVolume";
+            this.trackBarEffectsVolume.Size = new System.Drawing.Size(212, 38);
+            this.trackBarEffectsVolume.TabIndex = 13;
+            this.trackBarEffectsVolume.Value = 100;
+            this.trackBarEffectsVolume.Scroll += trackBarEffectsVolume_Scroll;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(456, 276);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(88, 15);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Effects volume:";
+            // 
             // SimulatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -141,6 +164,8 @@
             this.Controls.Add(this.cassetteControl);
             this.Controls.Add(this.buttonImport);
             this.Controls.Add(this.buttonAbout);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.trackBarEffectsVolume);
             this.Icon = global::cassettePlayerSimulator.Properties.Resources.icon;
             this.Name = "SimulatorForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
@@ -163,6 +188,8 @@
         private System.Windows.Forms.ListBox listBox;
         private System.Windows.Forms.Button buttonCreateTape;
         private System.Windows.Forms.Button buttonAbout;
+        private System.Windows.Forms.TrackBar trackBarEffectsVolume;
+        private System.Windows.Forms.Label label1;
     }
 }
 

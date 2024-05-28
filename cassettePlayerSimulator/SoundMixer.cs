@@ -36,6 +36,14 @@ namespace cassettePlayerSimulator
                 this.speed = speed;
             }
 
+            public void SetVolume(float vol)
+            {
+                lock (locker)
+                {
+                    volume = vol;
+                }
+            }
+
             private short Clamp(double sample)
             {
                 if (sample > short.MaxValue)

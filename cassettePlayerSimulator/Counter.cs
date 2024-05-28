@@ -69,7 +69,7 @@ namespace cassettePlayerSimulator
         {
             Scaler scaler = new Scaler(Width / 141.0f);
 
-            counterDepth = scaler.S(5);
+            counterDepth = scaler.S(10);
             buttonDepthUp = scaler.S(8);
             buttonDepthDown = scaler.S(2);
 
@@ -116,9 +116,9 @@ namespace cassettePlayerSimulator
                     digitWidth * 0.1f, digitHeight * 0.25f));
             }
 
-            counterRect = new RectangleF(0, 0, digitWidth * 3 + counterDepth, digitHeight + counterDepth);
-            counterOrigin = new PointF(counterDepth, counterDepth);
-            buttonOrigin = new Point((int)counterRect.Right + counterDepth * 2, counterDepth);
+            counterRect = new RectangleF(0, counterDepth, digitWidth * 3 + counterDepth / 2, digitHeight + counterDepth);
+            counterOrigin = new PointF(counterDepth / 2, counterDepth * 2);
+            buttonOrigin = new Point((int)counterRect.Right + counterDepth, counterDepth);
             buttonFaceWidth = digitWidth + counterDepth;
             buttonFaceHeight = digitWidth + counterDepth;
         }
@@ -169,37 +169,37 @@ namespace cassettePlayerSimulator
                 new RectangleF(0, digitHeight * position001, digitWidth, digitHeight),
                 GraphicsUnit.Pixel);
 
-            var bottomPolygon = new PointF[]
+            var topPolygon = new PointF[]
             {
-                new PointF(0, counterRect.Height),
-                new PointF(counterRect.Width, counterRect.Height),
-                new PointF(counterRect.Width + counterDepth, counterRect.Height + counterDepth),
-                new PointF(counterDepth, counterRect.Height + counterDepth),
+                new PointF(0, counterDepth),
+                new PointF(counterRect.Width, counterDepth),
+                new PointF(counterRect.Width + counterDepth, counterDepth * 2),
+                new PointF(counterDepth / 2, counterDepth * 2),
             };
 
-            //bottom face
-            e.Graphics.FillPolygon(Common.ButtonTopBrush, bottomPolygon);
-            e.Graphics.DrawPolygon(Common.BorderPen, bottomPolygon);
+            //top face
+            e.Graphics.FillPolygon(Common.ButtonLeftBrush, topPolygon);
+            e.Graphics.DrawPolygon(Common.BorderPen, topPolygon);
 
-            var rightPolygon = new PointF[]
+            var leftPolygon = new PointF[]
             {
-                new PointF(counterRect.Width, 0),
-                new PointF(counterRect.Width, counterRect.Height),
-                new PointF(counterRect.Width + counterDepth, counterRect.Height + counterDepth),
-                new PointF(counterRect.Width + counterDepth, counterDepth),
+                new PointF(0, counterDepth),
+                new PointF(counterDepth / 2, counterDepth * 2),
+                new PointF(counterDepth / 2, counterRect.Height + counterDepth),
+                new PointF(0, counterRect.Height + counterDepth),
             };
 
-            //right face
-            e.Graphics.FillPolygon(Common.ButtonLeftBrush, rightPolygon);
-            e.Graphics.DrawPolygon(Common.BorderPen, rightPolygon);
+            //left face
+            e.Graphics.FillPolygon(Common.ButtonRightBrush, leftPolygon);
+            e.Graphics.DrawPolygon(Common.BorderPen, leftPolygon);
 
-            //cover top
-            e.Graphics.FillRectangle(Common.CoverBrush, 0, 0, Width, counterDepth);
-            e.Graphics.DrawLine(Common.BorderPen, counterDepth, counterDepth, counterRect.Width + counterDepth, counterDepth);
+            //cover bottom
+            e.Graphics.FillRectangle(Common.CoverBrush, 0, counterRect.Height + counterDepth, counterRect.Width + counterDepth / 2, counterDepth);
+            e.Graphics.DrawLine(Common.BorderPen, 0, counterRect.Height + counterDepth, counterRect.Width, counterRect.Height + counterDepth);
 
-            //cover left
-            e.Graphics.FillRectangle(Common.CoverBrush, 0, 0, counterDepth, Height);
-            e.Graphics.DrawLine(Common.BorderPen, counterDepth, counterDepth, counterDepth, counterRect.Height + counterDepth);
+            //cover right
+            e.Graphics.FillRectangle(Common.CoverBrush, counterRect.Width, counterDepth, counterDepth, counterRect.Height);
+            e.Graphics.DrawLine(Common.BorderPen, counterRect.Width, counterDepth, counterRect.Width, counterRect.Height + counterDepth);
 
             //drawing button
             int depth = buttonDepthUp;
@@ -208,35 +208,35 @@ namespace cassettePlayerSimulator
                 depth = buttonDepthDown;
             }
 
-            var faceRect = new Rectangle(buttonOrigin.X + depth, buttonOrigin.Y + depth, buttonFaceWidth, buttonFaceHeight);
+            var faceRect = new Rectangle(buttonOrigin.X - depth / 2, buttonOrigin.Y - depth, buttonFaceWidth, buttonFaceHeight);
 
             //front face
             e.Graphics.FillRectangle(Common.ButtonFaceBrush, faceRect);
             e.Graphics.DrawRectangle(Common.BorderPen, faceRect);
 
-            var topPolygon = new PointF[]
+            var bottomButtonPolygon = new PointF[]
             {
-                new PointF(buttonOrigin.X, buttonOrigin.Y),
-                new PointF(buttonOrigin.X + buttonFaceWidth, buttonOrigin.Y),
-                new PointF(buttonOrigin.X + buttonFaceWidth + depth, buttonOrigin.Y + depth),
-                new PointF(buttonOrigin.X + depth, buttonOrigin.Y + depth),
-            };
-
-            //top face
-            e.Graphics.FillPolygon(Common.ButtonTopBrush, topPolygon);
-            e.Graphics.DrawPolygon(Common.BorderPen, topPolygon);
-
-            var leftPolygon = new PointF[]
-            {
-                new PointF(buttonOrigin.X, buttonOrigin.Y),
                 new PointF(buttonOrigin.X, buttonOrigin.Y + buttonFaceHeight),
-                new PointF(buttonOrigin.X + depth, buttonOrigin.Y + buttonFaceHeight + depth),
-                new PointF(buttonOrigin.X + depth, buttonOrigin.Y + depth),
+                new PointF(buttonOrigin.X + buttonFaceWidth, buttonOrigin.Y + buttonFaceHeight),
+                new PointF(buttonOrigin.X + buttonFaceWidth - depth / 2, buttonOrigin.Y + buttonFaceHeight - depth),
+                new PointF(buttonOrigin.X - depth / 2, buttonOrigin.Y + buttonFaceHeight - depth),
             };
 
-            //left face
-            e.Graphics.FillPolygon(Common.ButtonLeftBrush, leftPolygon);
-            e.Graphics.DrawPolygon(Common.BorderPen, leftPolygon);
+            //bottom face
+            e.Graphics.FillPolygon(Common.ButtonLeftBrush, bottomButtonPolygon);
+            e.Graphics.DrawPolygon(Common.BorderPen, bottomButtonPolygon);
+
+            var rightButtonPolygon = new PointF[]
+            {
+                new PointF(buttonOrigin.X + buttonFaceWidth, buttonOrigin.Y),
+                new PointF(buttonOrigin.X + buttonFaceWidth - depth / 2, buttonOrigin.Y - depth),
+                new PointF(buttonOrigin.X + buttonFaceWidth - depth / 2, buttonOrigin.Y + buttonFaceHeight - depth),
+                new PointF(buttonOrigin.X + buttonFaceWidth, buttonOrigin.Y + buttonFaceHeight),
+            };
+
+            //right face
+            e.Graphics.FillPolygon(Common.ButtonRightBrush, rightButtonPolygon);
+            e.Graphics.DrawPolygon(Common.BorderPen, rightButtonPolygon);
         }
 
         private bool isResetPressed = false;

@@ -360,6 +360,8 @@ namespace cassettePlayerSimulator
                         SaveList();
                     }
                 }
+
+                listBox.Invalidate();
             }
         }
 

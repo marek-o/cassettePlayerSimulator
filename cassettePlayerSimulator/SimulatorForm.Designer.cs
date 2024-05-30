@@ -137,8 +137,8 @@
             // 
             // trackBarPosition
             // 
-            this.trackBarPosition.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.trackBarPosition.Location = new System.Drawing.Point(20, 426);
+            this.trackBarPosition.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.trackBarPosition.Location = new System.Drawing.Point(20, 450);
             this.trackBarPosition.Maximum = 1000000;
             this.trackBarPosition.Size = new System.Drawing.Size(410, 38);
             this.trackBarPosition.TabIndex = 13;

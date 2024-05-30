@@ -120,7 +120,7 @@ namespace cassettePlayerSimulator
 
             int contentWidth = listBox.Left - contentMargin * 2;
             int contentHeight = (int)(contentWidth / contentRatio);
-            int maxContentHeight = ClientRectangle.Height - contentMargin * 2;
+            int maxContentHeight = ClientRectangle.Height - contentMargin * 2 - scaler.S(50);
 
             if (contentHeight > maxContentHeight)
             {

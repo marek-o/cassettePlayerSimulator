@@ -120,7 +120,7 @@ namespace cassettePlayerSimulator
             Scaler scaler = new Scaler(Width / 416.0f);
 
             Size buttonSize = scaler.S(new Size(50, 50));
-            Point buttonsOrigin = scaler.S(new Point(40, 25));
+            Point buttonsOrigin = scaler.S(new Point(48, 25));
             int offset = scaler.S(55);
             
             RecButton.Location = new Point(buttonsOrigin.X + offset * 0, buttonsOrigin.Y);
@@ -139,7 +139,7 @@ namespace cassettePlayerSimulator
             depthDown = 1.5f;
             depthPressed = 0;
 
-            hole = scaler.S(new Rectangle(36, 21, 333, 58));
+            hole = scaler.S(new Rectangle(44, 21, 333, 58));
         }
 
         protected override void OnResize(EventArgs e)
@@ -320,7 +320,7 @@ namespace cassettePlayerSimulator
 
             //debug
             e.Graphics.FillEllipse(Brushes.Red, perspectiveCenter.X - 2, perspectiveCenter.Y - 2, 4, 4);
-            e.Graphics.DrawRectangle(Pens.Black, 0, 0, Width - 1, Height - 1);
+            //e.Graphics.DrawRectangle(Pens.Black, 0, 0, Width - 1, Height - 1);
         }
 
         private Point Perspective(Point input, float depthX, float depthY)

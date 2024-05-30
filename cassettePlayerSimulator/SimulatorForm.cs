@@ -115,7 +115,7 @@ namespace cassettePlayerSimulator
         {
             Scaler scaler = new Scaler();
 
-            float contentRatio = 416 / 457.0f;
+            float contentRatio = 416 / 427.0f;
             int contentMargin = scaler.S(20);
 
             int contentWidth = listBox.Left - contentMargin * 2;
@@ -139,7 +139,7 @@ namespace cassettePlayerSimulator
             counter.Size = new Size(counterWidth, (int)(counterWidth / counterRatio));
             counter.Invalidate();
 
-            float buttonsRatio = 422 / 123.0f;
+            float buttonsRatio = 422 / 83.0f;
             cassetteButtons.Location = new Point(contentMargin, counter.Bottom);
             cassetteButtons.Size = new Size(contentWidth, (int)(contentWidth / buttonsRatio));
             cassetteButtons.Invalidate();

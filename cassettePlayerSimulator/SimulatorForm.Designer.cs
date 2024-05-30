@@ -61,6 +61,7 @@
             this.buttonImport.TabIndex = 1;
             this.buttonImport.Text = "Import into current tape...";
             this.buttonImport.UseVisualStyleBackColor = true;
+            this.buttonImport.BackColor = System.Drawing.Color.Transparent;
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
             // labelDebug
@@ -240,7 +241,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
             this.BackColor = System.Drawing.Color.DarkGray;
             this.ClientSize = new System.Drawing.Size(762, 481);
-            this.MinimumSize = new System.Drawing.Size(600, 400);
+            this.MinimumSize = new System.Drawing.Size(600, 530);
             this.Controls.Add(this.buttonCreateTape);
             this.Controls.Add(this.listBox);
             this.Controls.Add(this.counter);

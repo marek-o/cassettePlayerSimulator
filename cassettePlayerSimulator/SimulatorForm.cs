@@ -176,6 +176,7 @@ namespace cassettePlayerSimulator
 
             loadedTapeSide = tapeSide;
             music.SetCurrentPositionSeconds(tapeSide.Position);
+            music.SetLeadInOutLengthSeconds(5);
 
             State = PlayerState.STOPPED;
             cassetteControl.LoadedTapeSide = tapeSide;

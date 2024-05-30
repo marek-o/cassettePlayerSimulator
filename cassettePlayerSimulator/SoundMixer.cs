@@ -21,6 +21,7 @@ namespace cassettePlayerSimulator
             private float destinationSpeed;
             private int rampSampleCounter;
             private float rampSlope;
+            private float leadInOutLength;
 
             private object locker = new object();
 
@@ -41,6 +42,14 @@ namespace cassettePlayerSimulator
                 lock (locker)
                 {
                     volume = vol;
+                }
+            }
+
+            public void SetLeadInOutLengthSeconds(float val)
+            {
+                lock (locker)
+                {
+                    leadInOutLength = val * wavFile.format.SampleRate * wavFile.format.Channels;
                 }
             }
 
@@ -142,17 +151,21 @@ namespace cassettePlayerSimulator
                             int intPosR = intPos | 0x1;
                             var ratio = position - intPosL; //in range 0-2 because of interleaved samples
 
-                            //left channel
-                            var samp1L = wavFile.ReadSample(intPosL);
-                            var samp2L = wavFile.ReadSample(intPosL + 2);
-                            var interpolatedSampleL = samp1L * (2 - ratio) + samp2L * ratio;
-                            buffer[i] += Clamp(interpolatedSampleL * volume * speed);
+                            if (position >= leadInOutLength
+                                && position < LastSafePosition() - leadInOutLength)
+                            {
+                                //left channel
+                                var samp1L = wavFile.ReadSample(intPosL);
+                                var samp2L = wavFile.ReadSample(intPosL + 2);
+                                var interpolatedSampleL = samp1L * (2 - ratio) + samp2L * ratio;
+                                buffer[i] += Clamp(interpolatedSampleL * volume * speed);
 
-                            //right channel
-                            var samp1R = wavFile.ReadSample(intPosR);
-                            var samp2R = wavFile.ReadSample(intPosR + 2);
-                            var interpolatedSampleR = samp1R * (2 - ratio) + samp2R * ratio;
-                            buffer[i + 1] += Clamp(interpolatedSampleR * volume * speed);
+                                //right channel
+                                var samp1R = wavFile.ReadSample(intPosR);
+                                var samp2R = wavFile.ReadSample(intPosR + 2);
+                                var interpolatedSampleR = samp1R * (2 - ratio) + samp2R * ratio;
+                                buffer[i + 1] += Clamp(interpolatedSampleR * volume * speed);
+                            }
 
                             position += speed * 2;
 

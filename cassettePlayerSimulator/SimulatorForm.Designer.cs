@@ -240,7 +240,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
             this.BackColor = System.Drawing.Color.DarkGray;
-            this.ClientSize = new System.Drawing.Size(762, 481);
+            this.Size = new System.Drawing.Size(792, 530);
             this.MinimumSize = new System.Drawing.Size(600, 530);
             this.Controls.Add(this.buttonCreateTape);
             this.Controls.Add(this.listBox);

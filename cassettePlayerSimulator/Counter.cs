@@ -116,8 +116,8 @@ namespace cassettePlayerSimulator
                     digitWidth * 0.1f, digitHeight * 0.25f));
             }
 
-            counterRect = new RectangleF(0, counterDepth, digitWidth * 3 + counterDepth / 2, digitHeight + counterDepth);
-            counterOrigin = new PointF(counterDepth / 2, counterDepth * 2);
+            counterOrigin = new PointF(counterDepth / 2 + scaler.S(17), counterDepth * 2);
+            counterRect = new RectangleF(counterOrigin.X - counterDepth / 2, counterOrigin.Y - counterDepth, digitWidth * 3 + counterDepth / 2, digitHeight + counterDepth);
             buttonOrigin = new Point((int)counterRect.Right + counterDepth, counterDepth);
             buttonFaceWidth = digitWidth + counterDepth;
             buttonFaceHeight = digitWidth + counterDepth;
@@ -171,10 +171,10 @@ namespace cassettePlayerSimulator
 
             var topPolygon = new PointF[]
             {
-                new PointF(0, counterDepth),
-                new PointF(counterRect.Width, counterDepth),
-                new PointF(counterRect.Width + counterDepth, counterDepth * 2),
-                new PointF(counterDepth / 2, counterDepth * 2),
+                new PointF(counterOrigin.X - counterDepth / 2, counterOrigin.Y - counterDepth),
+                new PointF(counterOrigin.X - counterDepth / 2 + counterRect.Width, counterOrigin.Y - counterDepth),
+                new PointF(counterOrigin.X + counterDepth / 2 + counterRect.Width, counterOrigin.Y),
+                new PointF(counterOrigin.X, counterOrigin.Y),
             };
 
             //top face
@@ -183,10 +183,10 @@ namespace cassettePlayerSimulator
 
             var leftPolygon = new PointF[]
             {
-                new PointF(0, counterDepth),
-                new PointF(counterDepth / 2, counterDepth * 2),
-                new PointF(counterDepth / 2, counterRect.Height + counterDepth),
-                new PointF(0, counterRect.Height + counterDepth),
+                new PointF(counterOrigin.X - counterDepth / 2, counterOrigin.Y - counterDepth),
+                new PointF(counterOrigin.X, counterOrigin.Y),
+                new PointF(counterOrigin.X, counterOrigin.Y - counterDepth + counterRect.Height),
+                new PointF(counterOrigin.X - counterDepth / 2, counterOrigin.Y - counterDepth + counterRect.Height),
             };
 
             //left face
@@ -194,12 +194,12 @@ namespace cassettePlayerSimulator
             e.Graphics.DrawPolygon(Common.BorderPen, leftPolygon);
 
             //cover bottom
-            e.Graphics.FillRectangle(Common.CoverBrush, 0, counterRect.Height + counterDepth, counterRect.Width + counterDepth / 2, counterDepth);
-            e.Graphics.DrawLine(Common.BorderPen, 0, counterRect.Height + counterDepth, counterRect.Width, counterRect.Height + counterDepth);
+            e.Graphics.FillRectangle(Common.CoverBrush, counterOrigin.X - counterDepth / 2, counterOrigin.Y - counterDepth + counterRect.Height, counterRect.Width + counterDepth / 2, counterDepth);
+            e.Graphics.DrawLine(Common.BorderPen, counterOrigin.X - counterDepth / 2, counterOrigin.Y - counterDepth + counterRect.Height, counterOrigin.X - counterDepth / 2 + counterRect.Width, counterOrigin.Y - counterDepth + counterRect.Height);
 
             //cover right
-            e.Graphics.FillRectangle(Common.CoverBrush, counterRect.Width, counterDepth, counterDepth, counterRect.Height);
-            e.Graphics.DrawLine(Common.BorderPen, counterRect.Width, counterDepth, counterRect.Width, counterRect.Height + counterDepth);
+            e.Graphics.FillRectangle(Common.CoverBrush, counterOrigin.X - counterDepth / 2 + counterRect.Width, counterOrigin.Y - counterDepth, counterDepth, counterRect.Height);
+            e.Graphics.DrawLine(Common.BorderPen, counterOrigin.X - counterDepth / 2 + counterRect.Width, counterOrigin.Y - counterDepth, counterOrigin.X - counterDepth / 2 + counterRect.Width, counterOrigin.Y - counterDepth + counterRect.Height);
 
             //drawing button
             int depth = buttonDepthUp;

@@ -178,7 +178,7 @@ namespace cassettePlayerSimulator
             loadedTapeSide = tapeSide;
             music.SetCurrentPositionSeconds(tapeSide.Position);
             music.SetLeadInOutLengthSeconds(5);
-            UpdateWow();
+            UpdateMusicSpeedParameters();
 
             State = PlayerState.STOPPED;
             cassetteControl.LoadedTapeSide = tapeSide;
@@ -546,14 +546,20 @@ namespace cassettePlayerSimulator
             }
         }
 
-        private void UpdateWow()
+        private void UpdateMusicSpeedParameters()
         {
+            music?.SetBaseSpeed(trackBarSpeed.Value / 100.0f);
             music?.SetWowIntensity(trackBarWow.Value * 0.1f / trackBarWow.Maximum);
+        }
+
+        private void trackBarSpeed_Scroll(object sender, EventArgs e)
+        {
+            UpdateMusicSpeedParameters();
         }
 
         private void trackBarWow_Scroll(object sender, EventArgs e)
         {
-            UpdateWow();
+            UpdateMusicSpeedParameters();
         }
     }
 }

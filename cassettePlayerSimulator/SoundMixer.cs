@@ -15,7 +15,8 @@ namespace cassettePlayerSimulator
             private bool isRecording;
             private bool isLooped;
             private bool autoRewind;
-            private float volume;
+            private float baseVolume;
+            private float volume = 1.0f;
             private float speed;
 
             private float destinationSpeed;
@@ -28,7 +29,7 @@ namespace cassettePlayerSimulator
 
             private object locker = new object();
 
-            public Sample(WAVFile wavFile, bool isPlaying, bool isLooped, bool autoRewind, float volume, float speed)
+            public Sample(WAVFile wavFile, bool isPlaying, bool isLooped, bool autoRewind, float baseVolume, float speed)
             {
                 this.wavFile = wavFile;
                 position = 0;
@@ -36,7 +37,7 @@ namespace cassettePlayerSimulator
                 this.isPlaying = isPlaying;
                 this.isLooped = isLooped;
                 this.autoRewind = autoRewind;
-                this.volume = volume;
+                this.baseVolume = baseVolume;
                 this.speed = speed;
             }
 
@@ -188,13 +189,13 @@ namespace cassettePlayerSimulator
                                 var samp1L = wavFile.ReadSample(intPosL);
                                 var samp2L = wavFile.ReadSample(intPosL + 2);
                                 var interpolatedSampleL = samp1L * (2 - ratio) + samp2L * ratio;
-                                buffer[i] += Clamp(interpolatedSampleL * volume * speed);
+                                buffer[i] += Clamp(interpolatedSampleL * baseVolume * volume * speed);
 
                                 //right channel
                                 var samp1R = wavFile.ReadSample(intPosR);
                                 var samp2R = wavFile.ReadSample(intPosR + 2);
                                 var interpolatedSampleR = samp1R * (2 - ratio) + samp2R * ratio;
-                                buffer[i + 1] += Clamp(interpolatedSampleR * volume * speed);
+                                buffer[i + 1] += Clamp(interpolatedSampleR * baseVolume * volume * speed);
                             }
 
                             position += speed * 2;

@@ -21,8 +21,6 @@ namespace cassettePlayerSimulator
         private List<SoundMixer.Sample> effectSamples = new List<SoundMixer.Sample>();
         private SoundMixer.Sample music;
 
-        private float effectsMaxVolume = 2.0f;
-
         private enum PlayerState
         {
             OPEN, STOPPED, PLAYING, RECORDING, FF, REWIND
@@ -225,37 +223,36 @@ namespace cassettePlayerSimulator
 
             mixer = new SoundMixer();
 
-            float vol = effectsMaxVolume;
             float speed = 1.0f;
 
-            stopDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopDown), false, false, true, vol, speed);
-            stopUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopUp), false, false, true, vol, speed);
+            stopDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopDown), false, false, true, 2.0f, speed);
+            stopUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.stopUp), false, false, true, 2.0f, speed);
 
-            playDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.playDown), false, false, true, vol, speed);
-            playUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.playUp), false, false, true, vol, speed);
+            playDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.playDown), false, false, true, 2.0f, speed);
+            playUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.playUp), false, false, true, 2.0f, speed);
 
-            rewDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.rewDown), false, false, true, vol, speed);
-            rewUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.rewUp), false, false, true, vol, speed);
-            rewNoise = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.rewNoise), false, true, true, vol, speed);
+            rewDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.rewDown), false, false, true, 2.0f, speed);
+            rewUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.rewUp), false, false, true, 2.0f, speed);
+            rewNoise = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.rewNoise), false, true, true, 8.0f, speed);
 
-            ffDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ffDown), false, false, true, vol, speed);
-            ffUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ffUp), false, false, true, vol, speed);
-            ffNoise = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ffNoise), false, true, true, vol, speed);
+            ffDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ffDown), false, false, true, 2.0f, speed);
+            ffUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ffUp), false, false, true, 2.0f, speed);
+            ffNoise = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ffNoise), false, true, true, 8.0f, speed);
 
-            recordDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.recordDown), false, false, true, vol, speed);
-            recordUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.recordUp), false, false, true, vol, speed);
+            recordDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.recordDown), false, false, true, 2.0f, speed);
+            recordUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.recordUp), false, false, true, 2.0f, speed);
 
-            pauseDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.pauseDown), false, false, true, vol, speed);
-            pauseUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.pauseUp), false, false, true, vol, speed);
+            pauseDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.pauseDown), false, false, true, 2.0f, speed);
+            pauseUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.pauseUp), false, false, true, 2.0f, speed);
 
-            unpauseDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.unpauseDown), false, false, true, vol, speed);
-            unpauseUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.unpauseUp), false, false, true, vol, speed);
+            unpauseDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.unpauseDown), false, false, true, 2.0f, speed);
+            unpauseUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.unpauseUp), false, false, true, 2.0f, speed);
 
-            ejectDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ejectDown), false, false, true, vol, speed);
-            ejectUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ejectUp), false, false, true, vol, speed);
+            ejectDown = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ejectDown), false, false, true, 2.0f, speed);
+            ejectUp = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.ejectUp), false, false, true, 2.0f, speed);
 
-            cassetteClose = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.casetteClose), false, false, true, vol, speed);
-            cassetteInsert = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.casetteInsert), false, false, true, vol, speed);
+            cassetteClose = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.casetteClose), false, false, true, 2.0f, speed);
+            cassetteInsert = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.casetteInsert), false, false, true, 2.0f, speed);
 
             effectSamples.Add(stopDown);
             effectSamples.Add(stopUp);
@@ -277,6 +274,8 @@ namespace cassettePlayerSimulator
             effectSamples.Add(ejectUp);
             effectSamples.Add(cassetteClose);
             effectSamples.Add(cassetteInsert);
+
+            UpdateEffectsVolume();
 
             foreach (var samp in effectSamples)
             {
@@ -571,13 +570,18 @@ namespace cassettePlayerSimulator
             }
         }
 
-        private void trackBarEffectsVolume_Scroll(object sender, EventArgs e)
+        private void UpdateEffectsVolume()
         {
-            float vol = effectsMaxVolume * trackBarEffectsVolume.Value / trackBarEffectsVolume.Maximum;
+            float vol = (float)trackBarEffectsVolume.Value / trackBarEffectsVolume.Maximum;
             foreach (var samp in effectSamples)
             {
                 samp.SetVolume(vol);
             }
+        }
+
+        private void trackBarEffectsVolume_Scroll(object sender, EventArgs e)
+        {
+            UpdateEffectsVolume();
         }
 
         private void UpdateMusicSpeedParameters()

@@ -165,7 +165,7 @@
             this.trackBarEffectsVolume.Name = "trackBarEffectsVolume";
             this.trackBarEffectsVolume.Size = new System.Drawing.Size(212, 38);
             this.trackBarEffectsVolume.TabIndex = 13;
-            this.trackBarEffectsVolume.Value = 100;
+            this.trackBarEffectsVolume.Value = 50;
             this.trackBarEffectsVolume.Scroll += trackBarEffectsVolume_Scroll;
             // 
             // label1

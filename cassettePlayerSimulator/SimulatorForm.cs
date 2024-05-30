@@ -67,6 +67,9 @@ namespace cassettePlayerSimulator
 
             counter.SetPosition(-cassetteControl.GetSpoolAngleDegrees(false, music.GetCurrentPositionSeconds()) / 360 / 2);
 
+            labelPosition.Text = string.Format("{0:D2}:{1:D2}",
+                (int)(music.GetCurrentPositionSeconds() / 60),
+                (int)(music.GetCurrentPositionSeconds() % 60));
             trackBarPosition.Value = (int)(music.GetCurrentPositionSeconds() * trackBarPosition.Maximum / music.GetLengthSeconds());
 
             if ((State == PlayerState.FF

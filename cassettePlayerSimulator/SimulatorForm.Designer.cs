@@ -39,6 +39,7 @@
             this.listBox = new System.Windows.Forms.ListBox();
             this.buttonCreateTape = new System.Windows.Forms.Button();
             this.buttonAbout = new System.Windows.Forms.Button();
+            this.labelPosition = new System.Windows.Forms.Label();
             this.trackBarPosition = new System.Windows.Forms.TrackBar();
             this.trackBarEffectsVolume = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
@@ -136,12 +137,22 @@
             this.buttonAbout.UseVisualStyleBackColor = true;
             this.buttonAbout.Click += new System.EventHandler(this.buttonAbout_Click);
             // 
+            // labelPosition
+            // 
+            this.labelPosition.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            this.labelPosition.Font = new System.Drawing.Font(System.Drawing.FontFamily.GenericSansSerif, 12.0f);
+            this.labelPosition.Location = new System.Drawing.Point(0, 450);
+            this.labelPosition.Size = new System.Drawing.Size(50, 20);
+            this.labelPosition.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.labelPosition.TabIndex = 14;
+            this.labelPosition.Text = "00:00";
+            // 
             // trackBarPosition
             // 
             this.trackBarPosition.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.trackBarPosition.Location = new System.Drawing.Point(20, 450);
+            this.trackBarPosition.Location = new System.Drawing.Point(50, 450);
             this.trackBarPosition.Maximum = 1000000;
-            this.trackBarPosition.Size = new System.Drawing.Size(410, 38);
+            this.trackBarPosition.Size = new System.Drawing.Size(380, 38);
             this.trackBarPosition.TabIndex = 13;
             this.trackBarPosition.Value = 100;
             this.trackBarPosition.Scroll += trackBarPosition_Scroll;
@@ -251,6 +262,7 @@
             this.Controls.Add(this.buttonImport);
             this.Controls.Add(this.buttonAbout);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelPosition);
             this.Controls.Add(this.trackBarPosition);
             this.Controls.Add(this.trackBarEffectsVolume);
             this.Controls.Add(this.label3);
@@ -282,6 +294,7 @@
         private System.Windows.Forms.ListBox listBox;
         private System.Windows.Forms.Button buttonCreateTape;
         private System.Windows.Forms.Button buttonAbout;
+        private System.Windows.Forms.Label labelPosition;
         private System.Windows.Forms.TrackBar trackBarPosition;
         private System.Windows.Forms.TrackBar trackBarEffectsVolume;
         private System.Windows.Forms.Label label1;

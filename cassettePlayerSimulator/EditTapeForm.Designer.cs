@@ -53,7 +53,7 @@
             this.radioButtonC10.Size = new System.Drawing.Size(122, 17);
             this.radioButtonC10.TabIndex = 0;
             this.radioButtonC10.TabStop = true;
-            this.radioButtonC10.Text = "C10 (5+5 minutes)";
+            this.radioButtonC10.Text = "C10 (5+5 minutes, 100MB)";
             this.radioButtonC10.UseVisualStyleBackColor = true;
             // 
             // radioButtonC30
@@ -64,7 +64,7 @@
             this.radioButtonC30.Size = new System.Drawing.Size(122, 17);
             this.radioButtonC30.TabIndex = 0;
             this.radioButtonC30.TabStop = true;
-            this.radioButtonC30.Text = "C30 (15+15 minutes)";
+            this.radioButtonC30.Text = "C30 (15+15 minutes, 300MB)";
             this.radioButtonC30.UseVisualStyleBackColor = true;
             // 
             // radioButtonC60
@@ -75,7 +75,7 @@
             this.radioButtonC60.Size = new System.Drawing.Size(122, 17);
             this.radioButtonC60.TabIndex = 1;
             this.radioButtonC60.TabStop = true;
-            this.radioButtonC60.Text = "C60 (30+30 minutes)";
+            this.radioButtonC60.Text = "C60 (30+30 minutes, 600MB)";
             this.radioButtonC60.UseVisualStyleBackColor = true;
             // 
             // radioButtonC90
@@ -86,7 +86,7 @@
             this.radioButtonC90.Size = new System.Drawing.Size(122, 17);
             this.radioButtonC90.TabIndex = 2;
             this.radioButtonC90.TabStop = true;
-            this.radioButtonC90.Text = "C90 (45+45 minutes)";
+            this.radioButtonC90.Text = "C90 (45+45 minutes, 900MB)";
             this.radioButtonC90.UseVisualStyleBackColor = true;
             // 
             // groupBox1

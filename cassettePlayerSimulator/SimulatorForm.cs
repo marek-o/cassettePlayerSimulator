@@ -32,10 +32,9 @@ namespace cassettePlayerSimulator
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            labelDebug.Text = string.Format("{0}\r\npaused:{1}\r\n{2:F2}\r\nscale {3:F3}\r\nspeed {4:F3}",
+            labelDebug.Text = string.Format("{0}\r\npaused:{1}\r\nscale {2:F3}\r\nspeed {3:F3}",
                 State.ToString(),
                 isPauseFullyPressed.ToString(),
-                music != null ? music.GetCurrentPositionSeconds() : 0.0f,
                 cassetteControl.scaler.ScalingFactor,
                 music != null ? music.GetSpeed() : 0.0f);
         }
@@ -67,9 +66,7 @@ namespace cassettePlayerSimulator
 
             counter.SetPosition(-cassetteControl.GetSpoolAngleDegrees(false, music.GetCurrentPositionSeconds()) / 360 / 2);
 
-            labelPosition.Text = string.Format("{0:D2}:{1:D2}",
-                (int)(music.GetCurrentPositionSeconds() / 60),
-                (int)(music.GetCurrentPositionSeconds() % 60));
+            labelPosition.Text = Common.FormatTime((int)music.GetCurrentPositionSeconds());
             trackBarPosition.Value = (int)(music.GetCurrentPositionSeconds() * trackBarPosition.Maximum / music.GetLengthSeconds());
 
             if ((State == PlayerState.FF

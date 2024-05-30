@@ -270,7 +270,8 @@ namespace cassettePlayerSimulator
                 }
             }
 
-            TextRenderer.DrawText(g, string.Format("{0}: {1} ({2})", prefix, side.Label, Common.FormatTime((int)side.Parent.Length)),
+            TextRenderer.DrawText(g, string.Format("{0}: {1} ({2}, {3:F0} MB)", prefix, side.Label, Common.FormatTime((int)side.Parent.Length),
+                side.Parent.Length * Common.WaveFormat.SampleRate * Common.WaveFormat.Channels * Common.WaveFormat.BitsPerSample / 8 / 1024 / 1024),
                 SystemFonts.DefaultFont,
                 new Rectangle(bounds.X + rectSize, bounds.Y, bounds.Width - rectSize, bounds.Height),
                 textColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);

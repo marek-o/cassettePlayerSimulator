@@ -548,16 +548,12 @@ namespace cassettePlayerSimulator
 
         private void UpdateMusicSpeedParameters()
         {
-            music?.SetBaseSpeed(trackBarSpeed.Value / 100.0f);
-            music?.SetWowIntensity(trackBarWow.Value * 0.1f / trackBarWow.Maximum);
+            music?.SetSpeedParameters(trackBarSpeed.Value / 100.0f,
+                trackBarWow.Value * 0.1f / trackBarWow.Maximum,
+                trackBarFlutter.Value * 0.1f / trackBarFlutter.Maximum);
         }
 
-        private void trackBarSpeed_Scroll(object sender, EventArgs e)
-        {
-            UpdateMusicSpeedParameters();
-        }
-
-        private void trackBarWow_Scroll(object sender, EventArgs e)
+        private void trackBarSpeedParameters_Scroll(object sender, EventArgs e)
         {
             UpdateMusicSpeedParameters();
         }

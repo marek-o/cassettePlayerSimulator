@@ -45,6 +45,8 @@
             this.trackBarSpeed = new System.Windows.Forms.TrackBar();
             this.label2 = new System.Windows.Forms.Label();
             this.trackBarWow = new System.Windows.Forms.TrackBar();
+            this.label4 = new System.Windows.Forms.Label();
+            this.trackBarFlutter = new System.Windows.Forms.TrackBar();
             this.SuspendLayout();
             // 
             // buttonImport
@@ -62,7 +64,7 @@
             // labelDebug
             // 
             this.labelDebug.AutoSize = true;
-            this.labelDebug.Location = new System.Drawing.Point(474, 361);
+            this.labelDebug.Location = new System.Drawing.Point(0, 361);
             this.labelDebug.Name = "labelDebug";
             this.labelDebug.Size = new System.Drawing.Size(57, 13);
             this.labelDebug.TabIndex = 7;
@@ -170,7 +172,7 @@
             this.trackBarSpeed.Size = new System.Drawing.Size(212, 38);
             this.trackBarSpeed.TabIndex = 13;
             this.trackBarSpeed.Value = 100;
-            this.trackBarSpeed.Scroll += trackBarSpeed_Scroll;
+            this.trackBarSpeed.Scroll += trackBarSpeedParameters_Scroll;
             // 
             // label2
             // 
@@ -189,7 +191,26 @@
             this.trackBarWow.Size = new System.Drawing.Size(212, 38);
             this.trackBarWow.TabIndex = 13;
             this.trackBarWow.Value = 0;
-            this.trackBarWow.Scroll += trackBarWow_Scroll;
+            this.trackBarWow.Scroll += trackBarSpeedParameters_Scroll;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(456, 396);
+            this.label4.Size = new System.Drawing.Size(88, 15);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Flutter intensity:";
+            // 
+            // trackBarFlutter
+            // 
+            this.trackBarFlutter.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.trackBarFlutter.Location = new System.Drawing.Point(536, 396);
+            this.trackBarFlutter.Maximum = 100;
+            this.trackBarFlutter.Size = new System.Drawing.Size(212, 38);
+            this.trackBarFlutter.TabIndex = 13;
+            this.trackBarFlutter.Value = 0;
+            this.trackBarFlutter.Scroll += trackBarSpeedParameters_Scroll;
             // 
             // SimulatorForm
             // 
@@ -213,6 +234,8 @@
             this.Controls.Add(this.trackBarSpeed);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.trackBarWow);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.trackBarFlutter);
             this.Icon = global::cassettePlayerSimulator.Properties.Resources.icon;
             this.Name = "SimulatorForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
@@ -241,6 +264,8 @@
         private System.Windows.Forms.TrackBar trackBarSpeed;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TrackBar trackBarWow;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TrackBar trackBarFlutter;
     }
 }
 

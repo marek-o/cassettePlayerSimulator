@@ -24,6 +24,7 @@ namespace cassettePlayerSimulator
             private float leadInOutLength;
             private float baseSpeed = 1.0f;
             private float wowIntensity;
+            private float flutterIntensity;
 
             private object locker = new object();
 
@@ -60,19 +61,13 @@ namespace cassettePlayerSimulator
                 }
             }
 
-            public void SetWowIntensity(float val)
+            public void SetSpeedParameters(float baseSpeed, float wow, float flutter)
             {
                 lock (locker)
                 {
-                    wowIntensity = val;
-                }
-            }
-
-            public void SetBaseSpeed(float val)
-            {
-                lock (locker)
-                {
-                    baseSpeed = val;
+                    this.baseSpeed = baseSpeed;
+                    wowIntensity = wow;
+                    flutterIntensity = flutter;
                 }
             }
 
@@ -171,9 +166,14 @@ namespace cassettePlayerSimulator
                             else
                             {
                                 float wowFreq = 1/2.5f;
+                                float flutterFreq = 20.0f;
                                 speed = (float)Math.Sin(position * 2 * Math.PI * wowFreq
                                     / wavFile.format.SampleRate / wavFile.format.Channels)
-                                    * wowIntensity / 2 + baseSpeed;
+                                    * wowIntensity / 2
+                                    + (float)Math.Sin(position * 2 * Math.PI * flutterFreq
+                                    / wavFile.format.SampleRate / wavFile.format.Channels)
+                                    * flutterIntensity / 2
+                                    + baseSpeed;
                             }
 
                             int intPos = (int)position;

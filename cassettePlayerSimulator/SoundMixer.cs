@@ -22,6 +22,7 @@ namespace cassettePlayerSimulator
             private int rampSampleCounter;
             private float rampSlope;
             private float leadInOutLength;
+            private float wowIntensity;
 
             private object locker = new object();
 
@@ -37,6 +38,11 @@ namespace cassettePlayerSimulator
                 this.speed = speed;
             }
 
+            public float GetSpeed()
+            {
+                return speed;
+            }
+
             public void SetVolume(float vol)
             {
                 lock (locker)
@@ -50,6 +56,14 @@ namespace cassettePlayerSimulator
                 lock (locker)
                 {
                     leadInOutLength = val * wavFile.format.SampleRate * wavFile.format.Channels;
+                }
+            }
+
+            public void SetWowIntensity(float val)
+            {
+                lock (locker)
+                {
+                    wowIntensity = val;
                 }
             }
 
@@ -144,6 +158,13 @@ namespace cassettePlayerSimulator
                                 {
                                     speed = destinationSpeed;
                                 }
+                            }
+                            else
+                            {
+                                float wowFreq = 1/2.5f;
+                                speed = (float)Math.Sin(position * 2 * Math.PI * wowFreq
+                                    / wavFile.format.SampleRate / wavFile.format.Channels)
+                                    * wowIntensity / 2 + 1.0f;
                             }
 
                             int intPos = (int)position;

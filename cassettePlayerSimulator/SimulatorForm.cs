@@ -32,11 +32,12 @@ namespace cassettePlayerSimulator
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            labelDebug.Text = string.Format("{0}\r\npaused:{1}\r\n{2:F2}\r\nscale {3:F3}",
+            labelDebug.Text = string.Format("{0}\r\npaused:{1}\r\n{2:F2}\r\nscale {3:F3}\r\nspeed {4:F3}",
                 State.ToString(),
                 isPauseFullyPressed.ToString(),
                 music != null ? music.GetCurrentPositionSeconds() : 0.0f,
-                cassetteControl.scaler.ScalingFactor);
+                cassetteControl.scaler.ScalingFactor,
+                music != null ? music.GetSpeed() : 0.0f);
         }
 
         private Stopwatch rewindStopwatch = new Stopwatch();
@@ -177,6 +178,7 @@ namespace cassettePlayerSimulator
             loadedTapeSide = tapeSide;
             music.SetCurrentPositionSeconds(tapeSide.Position);
             music.SetLeadInOutLengthSeconds(5);
+            UpdateWow();
 
             State = PlayerState.STOPPED;
             cassetteControl.LoadedTapeSide = tapeSide;
@@ -542,6 +544,16 @@ namespace cassettePlayerSimulator
             {
                 samp.SetVolume(vol);
             }
+        }
+
+        private void UpdateWow()
+        {
+            music?.SetWowIntensity(trackBarWow.Value * 0.1f / trackBarWow.Maximum);
+        }
+
+        private void trackBarWow_Scroll(object sender, EventArgs e)
+        {
+            UpdateWow();
         }
     }
 }

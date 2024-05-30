@@ -41,6 +41,8 @@
             this.buttonAbout = new System.Windows.Forms.Button();
             this.trackBarEffectsVolume = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.trackBarWow = new System.Windows.Forms.TrackBar();
             this.SuspendLayout();
             // 
             // buttonImport
@@ -148,6 +150,25 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Effects volume:";
             // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(456, 316);
+            this.label2.Size = new System.Drawing.Size(88, 15);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Wow intensity:";
+            // 
+            // trackBarWow
+            // 
+            this.trackBarWow.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.trackBarWow.Location = new System.Drawing.Point(536, 316);
+            this.trackBarWow.Maximum = 100;
+            this.trackBarWow.Size = new System.Drawing.Size(212, 38);
+            this.trackBarWow.TabIndex = 13;
+            this.trackBarWow.Value = 0;
+            this.trackBarWow.Scroll += trackBarWow_Scroll;
+            // 
             // SimulatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -166,6 +187,8 @@
             this.Controls.Add(this.buttonAbout);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.trackBarEffectsVolume);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.trackBarWow);
             this.Icon = global::cassettePlayerSimulator.Properties.Resources.icon;
             this.Name = "SimulatorForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
@@ -190,6 +213,8 @@
         private System.Windows.Forms.Button buttonAbout;
         private System.Windows.Forms.TrackBar trackBarEffectsVolume;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TrackBar trackBarWow;
     }
 }
 

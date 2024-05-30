@@ -58,6 +58,12 @@ namespace cassettePlayerSimulator
                 var timeOffset = cassetteControl.AngularToLinear(State == PlayerState.FF, pos, elapsed * 360 * 5);
                 timeOffset *= (State == PlayerState.REWIND) ? -1 : 1;
                 music.SetCurrentPositionSeconds(pos + timeOffset);
+
+                if (music.IsAtBeginningOrEnd())
+                {
+                    ffNoise.UpdatePlayback(false);
+                    rewNoise.UpdatePlayback(false);
+                }
             }
 
             cassetteControl.HeadEngaged = State == PlayerState.PLAYING || State == PlayerState.RECORDING;
@@ -547,9 +553,20 @@ namespace cassettePlayerSimulator
                 music.SetCurrentPositionSeconds(pos);
                 
                 //workaround for stopping playback after dragging slider to the end
-                if (State == PlayerState.PLAYING)
+                if (!music.IsAtBeginningOrEnd())
                 {
-                    music.UpdatePlayback(true);
+                    if (State == PlayerState.PLAYING)
+                    {
+                        music.UpdatePlayback(true);
+                    }
+                    else if (State == PlayerState.FF)
+                    {
+                        ffNoise.UpdatePlayback(true);
+                    }
+                    else if (State == PlayerState.REWIND)
+                    {
+                        rewNoise.UpdatePlayback(true);
+                    }
                 }
             }
         }

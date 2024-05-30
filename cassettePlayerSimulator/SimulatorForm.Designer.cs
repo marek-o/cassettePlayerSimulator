@@ -47,6 +47,7 @@
             this.trackBarWow = new System.Windows.Forms.TrackBar();
             this.label4 = new System.Windows.Forms.Label();
             this.trackBarFlutter = new System.Windows.Forms.TrackBar();
+            this.buttonResetSpeedParameters = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonImport
@@ -212,6 +213,15 @@
             this.trackBarFlutter.Value = 0;
             this.trackBarFlutter.Scroll += trackBarSpeedParameters_Scroll;
             // 
+            // buttonResetSpeedParameters
+            // 
+            this.buttonResetSpeedParameters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonResetSpeedParameters.Location = new System.Drawing.Point(456, 436);
+            this.buttonResetSpeedParameters.Size = new System.Drawing.Size(146, 23);
+            this.buttonResetSpeedParameters.Text = "Reset distortion effects";
+            this.buttonResetSpeedParameters.UseVisualStyleBackColor = true;
+            this.buttonResetSpeedParameters.Click += new System.EventHandler(this.buttonResetSpeedParameters_Click);
+            // 
             // SimulatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -236,6 +246,7 @@
             this.Controls.Add(this.trackBarWow);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.trackBarFlutter);
+            this.Controls.Add(this.buttonResetSpeedParameters);
             this.Icon = global::cassettePlayerSimulator.Properties.Resources.icon;
             this.Name = "SimulatorForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
@@ -266,6 +277,7 @@
         private System.Windows.Forms.TrackBar trackBarWow;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TrackBar trackBarFlutter;
+        private System.Windows.Forms.Button buttonResetSpeedParameters;
     }
 }
 

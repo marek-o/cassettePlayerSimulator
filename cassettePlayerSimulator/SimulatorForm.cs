@@ -557,5 +557,13 @@ namespace cassettePlayerSimulator
         {
             UpdateMusicSpeedParameters();
         }
+
+        private void buttonResetSpeedParameters_Click(object sender, EventArgs e)
+        {
+            trackBarSpeed.Value = 100;
+            trackBarWow.Value = 0;
+            trackBarFlutter.Value = 0;
+            UpdateMusicSpeedParameters();
+        }
     }
 }

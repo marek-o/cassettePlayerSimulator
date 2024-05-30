@@ -39,6 +39,7 @@
             this.listBox = new System.Windows.Forms.ListBox();
             this.buttonCreateTape = new System.Windows.Forms.Button();
             this.buttonAbout = new System.Windows.Forms.Button();
+            this.trackBarPosition = new System.Windows.Forms.TrackBar();
             this.trackBarEffectsVolume = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -133,6 +134,16 @@
             this.buttonAbout.Text = "About...";
             this.buttonAbout.UseVisualStyleBackColor = true;
             this.buttonAbout.Click += new System.EventHandler(this.buttonAbout_Click);
+            // 
+            // trackBarPosition
+            // 
+            this.trackBarPosition.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.trackBarPosition.Location = new System.Drawing.Point(20, 426);
+            this.trackBarPosition.Maximum = 1000000;
+            this.trackBarPosition.Size = new System.Drawing.Size(410, 38);
+            this.trackBarPosition.TabIndex = 13;
+            this.trackBarPosition.Value = 100;
+            this.trackBarPosition.Scroll += trackBarPosition_Scroll;
             // 
             // trackBarEffectsVolume
             // 
@@ -239,6 +250,7 @@
             this.Controls.Add(this.buttonImport);
             this.Controls.Add(this.buttonAbout);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.trackBarPosition);
             this.Controls.Add(this.trackBarEffectsVolume);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.trackBarSpeed);
@@ -269,6 +281,7 @@
         private System.Windows.Forms.ListBox listBox;
         private System.Windows.Forms.Button buttonCreateTape;
         private System.Windows.Forms.Button buttonAbout;
+        private System.Windows.Forms.TrackBar trackBarPosition;
         private System.Windows.Forms.TrackBar trackBarEffectsVolume;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;

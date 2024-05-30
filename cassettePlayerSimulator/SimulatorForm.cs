@@ -67,6 +67,8 @@ namespace cassettePlayerSimulator
 
             counter.SetPosition(-cassetteControl.GetSpoolAngleDegrees(false, music.GetCurrentPositionSeconds()) / 360 / 2);
 
+            trackBarPosition.Value = (int)(music.GetCurrentPositionSeconds() * trackBarPosition.Maximum / music.GetLengthSeconds());
+
             if ((State == PlayerState.FF
                 || State == PlayerState.REWIND
                 || (State == PlayerState.RECORDING && !isPauseFullyPressed)
@@ -533,6 +535,21 @@ namespace cassettePlayerSimulator
                 else if (State == PlayerState.RECORDING)
                 {
                     SetSoundRecording(true);
+                }
+            }
+        }
+
+        private void trackBarPosition_Scroll(object sender, EventArgs e)
+        {
+            if (music != null)
+            {
+                var pos = music.GetLengthSeconds() * trackBarPosition.Value / trackBarPosition.Maximum;
+                music.SetCurrentPositionSeconds(pos);
+                
+                //workaround for stopping playback after dragging slider to the end
+                if (State == PlayerState.PLAYING)
+                {
+                    music.UpdatePlayback(true);
                 }
             }
         }

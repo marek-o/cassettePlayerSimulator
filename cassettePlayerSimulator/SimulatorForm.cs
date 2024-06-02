@@ -301,6 +301,7 @@ namespace cassettePlayerSimulator
                 {
                     music?.wavFile.Close();
                     loadedTapeSide = null;
+                    cassetteControl.LoadedTapeSide = null;
                 }
 
                 buttonImport.Enabled = tapeManager.LoadedTapeSide != null && music.wavFile.isValid;
@@ -478,7 +479,6 @@ namespace cassettePlayerSimulator
             else if (State == PlayerState.STOPPED)
             {
                 State = PlayerState.OPEN;
-                cassetteControl.LoadedTapeSide = null;
                 loadedTapeSide.Position = music.GetCurrentPositionSeconds();
 
                 tapeManager.EjectTape();

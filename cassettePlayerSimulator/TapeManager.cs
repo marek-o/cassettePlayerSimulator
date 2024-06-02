@@ -290,8 +290,6 @@ namespace cassettePlayerSimulator
                 toolStripMenuItemLoadA.Font = isSideA ? boldFont : normalFont;
                 toolStripMenuItemLoadB.Font = !isSideA ? boldFont : normalFont;
 
-                toolStripMenuItemDelete.Enabled = (LoadedTapeSide == null);
-
                 contextMenuStrip.Show(listBox.PointToScreen(e.Location));
             }
         }
@@ -377,6 +375,11 @@ namespace cassettePlayerSimulator
 
                 if (result == DialogResult.OK)
                 {
+                    if (LoadedTapeSide == tape.SideA || LoadedTapeSide == tape.SideB)
+                    {
+                        EjectTape();
+                    }
+
                     var file1 = Path.Combine(TapesDirectory, tape.SideA.FilePath);
                     var file2 = Path.Combine(TapesDirectory, tape.SideB.FilePath);
 

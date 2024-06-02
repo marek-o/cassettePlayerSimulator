@@ -199,6 +199,14 @@ namespace cassettePlayerSimulator
 
                 cassetteClose.UpdatePlayback(true);
             }
+            else
+            {
+                if (State != PlayerState.OPEN)
+                {
+                    State = PlayerState.OPEN;
+                    cassetteButtons.Enabled = false;
+                }
+            }
         }
 
         public SimulatorForm()

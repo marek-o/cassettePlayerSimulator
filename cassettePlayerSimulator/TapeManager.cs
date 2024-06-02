@@ -111,7 +111,7 @@ namespace cassettePlayerSimulator
             }
             set
             {
-                if (loadedTapeSide != value && (loadedTapeSide == null || value == null))
+                if (loadedTapeSide != value)
                 {
                     if (value != null)
                     {
@@ -290,8 +290,6 @@ namespace cassettePlayerSimulator
                 toolStripMenuItemLoadA.Font = isSideA ? boldFont : normalFont;
                 toolStripMenuItemLoadB.Font = !isSideA ? boldFont : normalFont;
 
-                toolStripMenuItemLoadA.Enabled = (LoadedTapeSide == null);
-                toolStripMenuItemLoadB.Enabled = (LoadedTapeSide == null);
                 toolStripMenuItemDelete.Enabled = (LoadedTapeSide == null);
 
                 contextMenuStrip.Show(listBox.PointToScreen(e.Location));

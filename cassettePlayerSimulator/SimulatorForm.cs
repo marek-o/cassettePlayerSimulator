@@ -156,6 +156,8 @@ namespace cassettePlayerSimulator
 
         private void LoadTapeSide(TapeSide tapeSide)
         {
+            DisengageButtons();
+
             if (music != null && loadedTapeSide != null)
             {
                 loadedTapeSide.Position = music.GetCurrentPositionSeconds();
@@ -163,7 +165,7 @@ namespace cassettePlayerSimulator
 
             mixer.RemoveSample(music);
             music?.wavFile.Close();
-
+            
             loadedTapeSide = tapeSide;
             cassetteControl.LoadedTapeSide = tapeSide;
 
@@ -191,6 +193,7 @@ namespace cassettePlayerSimulator
 
                 State = PlayerState.STOPPED;
                 cassetteButtons.Enabled = true;
+                cassetteButtons.Invalidate();
 
                 counter.IgnoreNextSetPosition();
 

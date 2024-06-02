@@ -156,8 +156,6 @@ namespace cassettePlayerSimulator
 
         private void LoadTapeSide(TapeSide tapeSide)
         {
-            string path = Path.Combine(tapeManager.TapesDirectory, tapeSide.FilePath);
-
             if (music != null && loadedTapeSide != null)
             {
                 loadedTapeSide.Position = music.GetCurrentPositionSeconds();
@@ -166,33 +164,38 @@ namespace cassettePlayerSimulator
             mixer.RemoveSample(music);
             music?.wavFile.Close();
 
-            WAVFile wav = new WAVFile(); //default value in case of error
-
-            try
-            {
-                wav = WAVFile.Load(path);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error while loading tape", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            music = new SoundMixer.Sample(wav, false, false, false, 0.2f, 1.0f);
-            mixer.AddSample(music);
-            mixer.SetRecordingSample(music);
-
             loadedTapeSide = tapeSide;
-            music.SetCurrentPositionSeconds(tapeSide.Position);
-            music.SetLeadInOutLengthSeconds(5);
-            UpdateMusicSpeedParameters();
-
-            State = PlayerState.STOPPED;
             cassetteControl.LoadedTapeSide = tapeSide;
-            cassetteButtons.Enabled = true;
 
-            counter.IgnoreNextSetPosition();
+            if (tapeSide != null)
+            {
+                WAVFile wav = new WAVFile(); //default value in case of error
+                string path = Path.Combine(tapeManager.TapesDirectory, tapeSide.FilePath);
 
-            cassetteClose.UpdatePlayback(true);
+                try
+                {
+                    wav = WAVFile.Load(path);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error while loading tape", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                music = new SoundMixer.Sample(wav, false, false, false, 0.2f, 1.0f);
+                mixer.AddSample(music);
+                mixer.SetRecordingSample(music);
+
+                music.SetCurrentPositionSeconds(tapeSide.Position);
+                music.SetLeadInOutLengthSeconds(5);
+                UpdateMusicSpeedParameters();
+
+                State = PlayerState.STOPPED;
+                cassetteButtons.Enabled = true;
+
+                counter.IgnoreNextSetPosition();
+
+                cassetteClose.UpdatePlayback(true);
+            }
         }
 
         public SimulatorForm()
@@ -293,16 +296,7 @@ namespace cassettePlayerSimulator
         {
             if (tapeManager.LoadedTapeSide != loadedTapeSide)
             {
-                if (tapeManager.LoadedTapeSide != null)
-                {
-                    LoadTapeSide(tapeManager.LoadedTapeSide);
-                }
-                else
-                {
-                    music?.wavFile.Close();
-                    loadedTapeSide = null;
-                    cassetteControl.LoadedTapeSide = null;
-                }
+                LoadTapeSide(tapeManager.LoadedTapeSide);
 
                 buttonImport.Enabled = tapeManager.LoadedTapeSide != null && music.wavFile.isValid;
             }
@@ -479,10 +473,7 @@ namespace cassettePlayerSimulator
             else if (State == PlayerState.STOPPED)
             {
                 State = PlayerState.OPEN;
-                loadedTapeSide.Position = music.GetCurrentPositionSeconds();
-
                 tapeManager.EjectTape();
-
                 ejectDown.UpdatePlayback(true);
             }
         }

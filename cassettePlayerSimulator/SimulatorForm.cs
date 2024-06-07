@@ -189,7 +189,7 @@ namespace cassettePlayerSimulator
 
                 music.SetCurrentPositionSeconds(tapeSide.Position);
                 music.SetLeadInOutLengthSeconds(5);
-                UpdateMusicSpeedParameters();
+                UpdateDistortionParameters();
 
                 State = PlayerState.STOPPED;
                 cassetteButtons.Enabled = true;
@@ -586,24 +586,26 @@ namespace cassettePlayerSimulator
             UpdateEffectsVolume();
         }
 
-        private void UpdateMusicSpeedParameters()
+        private void UpdateDistortionParameters()
         {
-            music?.SetSpeedParameters(trackBarSpeed.Value / 100.0f,
+            music?.SetDistortionParameters(trackBarSpeed.Value / 100.0f,
                 trackBarWow.Value * 0.1f / trackBarWow.Maximum,
-                trackBarFlutter.Value * 0.1f / trackBarFlutter.Maximum);
+                trackBarFlutter.Value * 0.1f / trackBarFlutter.Maximum,
+                trackBarDistortion.Value / (float)trackBarDistortion.Maximum);
         }
 
-        private void trackBarSpeedParameters_Scroll(object sender, EventArgs e)
+        private void trackBarDistortionParameters_Scroll(object sender, EventArgs e)
         {
-            UpdateMusicSpeedParameters();
+            UpdateDistortionParameters();
         }
 
-        private void buttonResetSpeedParameters_Click(object sender, EventArgs e)
+        private void buttonResetDistortionParameters_Click(object sender, EventArgs e)
         {
             trackBarSpeed.Value = 100;
             trackBarWow.Value = 0;
             trackBarFlutter.Value = 0;
-            UpdateMusicSpeedParameters();
+            trackBarDistortion.Value = 0;
+            UpdateDistortionParameters();
         }
     }
 }

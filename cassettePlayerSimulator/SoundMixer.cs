@@ -26,6 +26,7 @@ namespace cassettePlayerSimulator
             private float baseSpeed = 1.0f;
             private float wowIntensity;
             private float flutterIntensity;
+            private float distortion;
 
             private object locker = new object();
 
@@ -62,13 +63,14 @@ namespace cassettePlayerSimulator
                 }
             }
 
-            public void SetSpeedParameters(float baseSpeed, float wow, float flutter)
+            public void SetDistortionParameters(float baseSpeed, float wow, float flutter, float distortion)
             {
                 lock (locker)
                 {
                     this.baseSpeed = baseSpeed;
                     wowIntensity = wow;
                     flutterIntensity = flutter;
+                    this.distortion = distortion;
                 }
             }
 
@@ -189,13 +191,26 @@ namespace cassettePlayerSimulator
                                 var samp1L = wavFile.ReadSample(intPosL);
                                 var samp2L = wavFile.ReadSample(intPosL + 2);
                                 var interpolatedSampleL = samp1L * (2 - ratio) + samp2L * ratio;
-                                buffer[i] += Clamp(interpolatedSampleL * baseVolume * volume * speed);
+                                var sampL = Clamp(interpolatedSampleL * baseVolume * volume * speed);
 
                                 //right channel
                                 var samp1R = wavFile.ReadSample(intPosR);
                                 var samp2R = wavFile.ReadSample(intPosR + 2);
                                 var interpolatedSampleR = samp1R * (2 - ratio) + samp2R * ratio;
-                                buffer[i + 1] += Clamp(interpolatedSampleR * baseVolume * volume * speed);
+                                var sampR = Clamp(interpolatedSampleR * baseVolume * volume * speed);
+
+                                if (distortion != 0.0f)
+                                {
+                                    short limit = (short)(short.MaxValue * (1 - distortion * 0.75f));
+
+                                    sampL = (short)Math.Clamp(sampL * (distortion * 10 + 1),
+                                        (short)-limit, limit);
+                                    sampR = (short)Math.Clamp(sampR * (distortion * 10 + 1),
+                                        (short)-limit, limit);
+                                }
+
+                                buffer[i] += sampL;
+                                buffer[i + 1] += sampR;
                             }
 
                             position += speed * 2;

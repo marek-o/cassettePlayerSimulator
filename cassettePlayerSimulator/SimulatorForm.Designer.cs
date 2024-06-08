@@ -52,6 +52,8 @@
             this.trackBarFlutter = new System.Windows.Forms.TrackBar();
             this.label5 = new System.Windows.Forms.Label();
             this.trackBarDistortion = new System.Windows.Forms.TrackBar();
+            this.label6 = new System.Windows.Forms.Label();
+            this.trackBarHiss = new System.Windows.Forms.TrackBar();
             this.buttonResetDistortionParameters = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -162,7 +164,9 @@
             //
             this.slidersPanel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.slidersPanel.Location = new System.Drawing.Point(456, 276);
-            this.slidersPanel.Size = new System.Drawing.Size(300, 158);
+            this.slidersPanel.Size = new System.Drawing.Size(300, 183);
+            this.slidersPanel.Controls.Add(label6);
+            this.slidersPanel.Controls.Add(trackBarHiss);
             this.slidersPanel.Controls.Add(label5);
             this.slidersPanel.Controls.Add(trackBarDistortion);
             this.slidersPanel.Controls.Add(label4);
@@ -257,11 +261,24 @@
             this.trackBarDistortion.TabIndex = 13;
             this.trackBarDistortion.Value = 0;
             this.trackBarDistortion.Scroll += trackBarDistortionParameters_Scroll;
+            //
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(0, 150);
+            this.label6.Size = new System.Drawing.Size(88, 15);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "Hiss:";
+            // 
+            this.trackBarHiss.Location = new System.Drawing.Point(80, 150);
+            this.trackBarHiss.Maximum = 100;
+            this.trackBarHiss.Size = new System.Drawing.Size(212, 30);
+            this.trackBarHiss.TabIndex = 13;
+            this.trackBarHiss.Value = 0;
+            this.trackBarHiss.Scroll += trackBarDistortionParameters_Scroll;
             // 
             // buttonResetSpeedParameters
             // 
             this.buttonResetDistortionParameters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonResetDistortionParameters.Location = new System.Drawing.Point(456, 436);
+            this.buttonResetDistortionParameters.Location = new System.Drawing.Point(456, 461);
             this.buttonResetDistortionParameters.Size = new System.Drawing.Size(146, 23);
             this.buttonResetDistortionParameters.Text = "Reset distortion effects";
             this.buttonResetDistortionParameters.UseVisualStyleBackColor = true;
@@ -273,8 +290,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
             this.BackColor = System.Drawing.Color.DarkGray;
-            this.Size = new System.Drawing.Size(792, 530);
-            this.MinimumSize = new System.Drawing.Size(600, 530);
+            this.Size = new System.Drawing.Size(792, 550);
+            this.MinimumSize = new System.Drawing.Size(600, 550);
             this.Controls.Add(this.buttonCreateTape);
             this.Controls.Add(this.listBox);
             this.Controls.Add(this.counter);
@@ -322,6 +339,8 @@
         private System.Windows.Forms.TrackBar trackBarFlutter;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TrackBar trackBarDistortion;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TrackBar trackBarHiss;
         private System.Windows.Forms.Button buttonResetDistortionParameters;
     }
 }

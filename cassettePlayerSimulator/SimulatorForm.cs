@@ -19,7 +19,7 @@ namespace cassettePlayerSimulator
         private SoundMixer.Sample stopDown, stopUp, playDown, playUp, rewDown, rewNoise, rewUp, ffDown, ffNoise, ffUp, recordDown, recordUp,
             pauseDown, pauseUp, unpauseDown, unpauseUp, ejectDown, ejectUp, cassetteClose, cassetteInsert;
         private List<SoundMixer.Sample> effectSamples = new List<SoundMixer.Sample>();
-        private SoundMixer.Sample music;
+        private SoundMixer.Sample music, hiss;
 
         private enum PlayerState
         {
@@ -268,6 +268,8 @@ namespace cassettePlayerSimulator
             cassetteClose = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.casetteClose), false, false, true, 2.0f, speed);
             cassetteInsert = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.casetteInsert), false, false, true, 2.0f, speed);
 
+            hiss = new SoundMixer.Sample(WAVFile.Load(Properties.Resources.hiss), false, true, true, 0.5f, speed);
+
             effectSamples.Add(stopDown);
             effectSamples.Add(stopUp);
             effectSamples.Add(playDown);
@@ -296,6 +298,7 @@ namespace cassettePlayerSimulator
                 mixer.AddSample(samp);
             }
 
+            mixer.AddSample(hiss);
             mixer.Start();
 
             tapeManager = new TapeManager(listBox);
@@ -372,11 +375,14 @@ namespace cassettePlayerSimulator
                 {
                     music.RampSpeed(0.0f, 1.0f, sampleCount);
                     music.UpdatePlayback(true);
+                    hiss.RampSpeed(0.0f, 1.0f, sampleCount);
+                    hiss.UpdatePlayback(true);
                     isTapePaused = false;
                 }
                 else
                 {
                     music.RampSpeed(1.0f, 0.0f, sampleCount);
+                    hiss.RampSpeed(1.0f, 0.0f, sampleCount);
                     isTapePaused = true;
                 }
             }
@@ -592,6 +598,11 @@ namespace cassettePlayerSimulator
                 trackBarWow.Value * 0.1f / trackBarWow.Maximum,
                 trackBarFlutter.Value * 0.1f / trackBarFlutter.Maximum,
                 trackBarDistortion.Value / (float)trackBarDistortion.Maximum);
+            hiss?.SetDistortionParameters(trackBarSpeed.Value / 100.0f,
+                trackBarWow.Value * 0.1f / trackBarWow.Maximum,
+                trackBarFlutter.Value * 0.1f / trackBarFlutter.Maximum,
+                trackBarDistortion.Value / (float)trackBarDistortion.Maximum);
+            hiss?.SetVolume(trackBarHiss.Value / (float)trackBarHiss.Maximum);
         }
 
         private void trackBarDistortionParameters_Scroll(object sender, EventArgs e)
@@ -605,6 +616,7 @@ namespace cassettePlayerSimulator
             trackBarWow.Value = 0;
             trackBarFlutter.Value = 0;
             trackBarDistortion.Value = 0;
+            trackBarHiss.Value = 0;
             UpdateDistortionParameters();
         }
     }

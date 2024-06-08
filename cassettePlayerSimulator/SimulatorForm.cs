@@ -184,6 +184,10 @@ namespace cassettePlayerSimulator
                 }
 
                 music = new SoundMixer.Sample(wav, false, false, false, 0.2f, 1.0f);
+                music.LeadInOutEngaged += (bool b) =>
+                {
+                    hiss.SetVolume(b ? 0.0f : trackBarHiss.Value / (float)trackBarHiss.Maximum);
+                };
                 mixer.AddSample(music);
                 mixer.SetRecordingSample(music);
 

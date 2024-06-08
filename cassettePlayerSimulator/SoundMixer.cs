@@ -30,6 +30,8 @@ namespace cassettePlayerSimulator
 
             private object locker = new object();
 
+            public event Action<bool> LeadInOutEngaged = (bool b) => { };
+
             public Sample(WAVFile wavFile, bool isPlaying, bool isLooped, bool autoRewind, float baseVolume, float speed)
             {
                 this.wavFile = wavFile;
@@ -150,6 +152,8 @@ namespace cassettePlayerSimulator
 
             internal void PlayIntoBuffer(short[] buffer)
             {
+                bool leadInOutEngaged = false;
+
                 lock (locker)
                 {
                     for (int i = 0; i < buffer.Length; i += 2)
@@ -212,6 +216,10 @@ namespace cassettePlayerSimulator
                                 buffer[i] += sampL;
                                 buffer[i + 1] += sampR;
                             }
+                            else
+                            {
+                                leadInOutEngaged = true;
+                            }
 
                             position += speed * 2;
 
@@ -232,6 +240,8 @@ namespace cassettePlayerSimulator
                         }
                     }
                 }
+
+                LeadInOutEngaged(IsAtBeginningOrEnd() || leadInOutEngaged);
             }
 
             internal void RecordFromBuffer(short[] buffer)

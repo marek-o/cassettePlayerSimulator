@@ -1,4 +1,6 @@
-﻿namespace cassettePlayerSimulator
+﻿using static cassettePlayerSimulator.Translations;
+
+namespace cassettePlayerSimulator
 {
     partial class AboutForm
     {
@@ -52,7 +54,7 @@
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(75, 23);
             button1.TabIndex = 1;
-            button1.Text = "Close";
+            button1.Text = _("Close");
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
@@ -70,7 +72,7 @@
             Name = "AboutForm";
             ShowIcon = false;
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            Text = "About";
+            Text = _("About");
             ResumeLayout(false);
             PerformLayout();
         }

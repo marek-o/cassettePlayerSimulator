@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static cassettePlayerSimulator.Translations;
 
 namespace cassettePlayerSimulator
 {
@@ -51,7 +52,7 @@ namespace cassettePlayerSimulator
             using (var dialog = new OpenFileDialog())
             {
                 dialog.FileName = textBoxFilename.Text;
-                dialog.Filter = "Audio files (*.mp3;*.wma;*.wav)|*.mp3;*.wma;*.wav|All files (*.*)|*.*";
+                dialog.Filter = string.Format("{0} (*.mp3;*.wma;*.wav)|*.mp3;*.wma;*.wav|{1} (*.*)|*.*", _("Audio files"), _("All files"));
                 var result = dialog.ShowDialog();
                 if (result == DialogResult.Cancel)
                 {
@@ -72,7 +73,7 @@ namespace cassettePlayerSimulator
             {
                 fileLengthSeconds = 0;
                 textBoxFilename.Text = "";
-                MessageBox.Show(ex.Message, "Cannot open file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, _("Cannot open file"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             UpdateLabels();

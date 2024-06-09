@@ -1,4 +1,6 @@
-﻿namespace cassettePlayerSimulator
+﻿using static cassettePlayerSimulator.Translations;
+
+namespace cassettePlayerSimulator
 {
     partial class ImportForm
     {
@@ -51,7 +53,7 @@
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 12;
-            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.Text = _("Cancel");
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
             // buttonImport
@@ -61,7 +63,7 @@
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(75, 23);
             this.buttonImport.TabIndex = 11;
-            this.buttonImport.Text = "Import";
+            this.buttonImport.Text = _("Import");
             this.buttonImport.UseVisualStyleBackColor = true;
             // 
             // label1
@@ -71,7 +73,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(50, 13);
             this.label1.TabIndex = 13;
-            this.label1.Text = "Input file:";
+            this.label1.Text = _("Input file:");
             // 
             // buttonSelectFile
             // 
@@ -79,7 +81,7 @@
             this.buttonSelectFile.Name = "buttonSelectFile";
             this.buttonSelectFile.Size = new System.Drawing.Size(57, 23);
             this.buttonSelectFile.TabIndex = 14;
-            this.buttonSelectFile.Text = "Select";
+            this.buttonSelectFile.Text = _("Select");
             this.buttonSelectFile.UseVisualStyleBackColor = true;
             this.buttonSelectFile.Click += new System.EventHandler(this.buttonSelectFile_Click);
             // 
@@ -98,7 +100,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(74, 13);
             this.label2.TabIndex = 16;
-            this.label2.Text = "Tape position:";
+            this.label2.Text = _("Tape position:");
             // 
             // label3
             // 
@@ -107,7 +109,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 13);
             this.label3.TabIndex = 17;
-            this.label3.Text = "File length:";
+            this.label3.Text = _("File length:");
             // 
             // trackBarPosition
             // 
@@ -142,7 +144,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(67, 13);
             this.label4.TabIndex = 21;
-            this.label4.Text = "Tape length:";
+            this.label4.Text = _("Tape length:");
             // 
             // labelTapeLength
             // 
@@ -188,7 +190,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "Importing file";
+            this.Text = _("Importing file");
             this.Load += new System.EventHandler(this.ImportForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPosition)).EndInit();
             this.ResumeLayout(false);

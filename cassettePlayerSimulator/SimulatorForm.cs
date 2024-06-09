@@ -639,7 +639,18 @@ namespace cassettePlayerSimulator
                 InitTranslations();
             }
 
-            Text = _("hello");
+            labelLanguage.Text = _("Language:");
+            buttonImport.Text = _("Import into current tape...");
+            buttonCreateTape.Text = _("Create tape...");
+            buttonAbout.Text = _("About...");
+            label1.Text = _("Effects volume:");
+            label3.Text = _("Speed:");
+            label2.Text = _("Wow intensity:");
+            label4.Text = _("Flutter intensity:");
+            label5.Text = _("Distortion:");
+            label6.Text = _("Hiss:");
+            buttonResetDistortionParameters.Text = _("Reset distortion effects");
+            Text = _("Cassette Player Simulator");
         }
     }
 }

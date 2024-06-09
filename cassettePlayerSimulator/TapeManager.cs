@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using static cassettePlayerSimulator.Translations;
 
 namespace cassettePlayerSimulator
 {
@@ -39,7 +40,7 @@ namespace cassettePlayerSimulator
 
             Directory.CreateDirectory(TapesDirectory);
 
-            ProgressForm progressForm = new ProgressForm(string.Format("Importing {0}...", Path.GetFileName(inputFileFullPath)));
+            ProgressForm progressForm = new ProgressForm(string.Format(_("Importing {0}..."), Path.GetFileName(inputFileFullPath)));
             var thread = new Thread(() =>
             {
                 Import(inputFileFullPath, outputFilePath, tapeImportPosition, progressForm);
@@ -119,7 +120,7 @@ namespace cassettePlayerSimulator
 
                         if (!File.Exists(path))
                         {
-                            MessageBox.Show("File not found: " + path, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(string.Format(_("File not found: {0}"), path), _("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
                     }
@@ -148,7 +149,7 @@ namespace cassettePlayerSimulator
                 {
                     Tape tape = null;
 
-                    ProgressForm progressForm = new ProgressForm(string.Format("Creating tape..."));
+                    ProgressForm progressForm = new ProgressForm(string.Format(_("Creating tape...")));
                     var thread = new Thread(() =>
                     {
                         tape = CreateTape(form.SideLengthSeconds, form.LabelSideA, form.LabelSideB, form.Color, progressForm);
@@ -238,8 +239,8 @@ namespace cassettePlayerSimulator
 
                 bool isSelected = (e.State & DrawItemState.Selected) != 0;
 
-                RenderListItemSide(tape.SideA, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height / 2), "Side A", isSelected);
-                RenderListItemSide(tape.SideB, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y + e.Bounds.Height / 2 - 1, e.Bounds.Width, e.Bounds.Height / 2), "Side B", isSelected);
+                RenderListItemSide(tape.SideA, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height / 2), _("Side A"), isSelected);
+                RenderListItemSide(tape.SideB, e.Graphics, new Rectangle(e.Bounds.X, e.Bounds.Y + e.Bounds.Height / 2 - 1, e.Bounds.Width, e.Bounds.Height / 2), _("Side B"), isSelected);
 
                 e.Graphics.DrawRectangle(Pens.Black, e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 2, e.Bounds.Height - 2);
             }
@@ -369,9 +370,9 @@ namespace cassettePlayerSimulator
                 var tape = rightClickedTapeSide.Parent;
 
                 var result = MessageBox.Show(
-                    string.Format("This will remove both tape sides: \"{0}\" and \"{1}\". Are you sure?",
+                    string.Format(_("This will remove both tape sides: \"{0}\" and \"{1}\". Are you sure?"),
                     tape.SideA.Label, tape.SideB.Label),
-                    "Deleting tape", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                    _("Deleting tape"), MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.OK)
                 {
@@ -422,13 +423,13 @@ namespace cassettePlayerSimulator
             this.toolStripMenuItemLoadB,
             this.toolStripMenuItemEdit,
             this.toolStripMenuItemDelete});
-            this.toolStripMenuItemLoadA.Text = "Load Side A";
+            this.toolStripMenuItemLoadA.Text = _("Load Side A");
             this.toolStripMenuItemLoadA.Click += ToolStripMenuItemLoadA_Click;
-            this.toolStripMenuItemLoadB.Text = "Load Side B";
+            this.toolStripMenuItemLoadB.Text = _("Load Side B");
             this.toolStripMenuItemLoadB.Click += ToolStripMenuItemLoadB_Click;
-            this.toolStripMenuItemEdit.Text = "Edit";
+            this.toolStripMenuItemEdit.Text = _("Edit");
             this.toolStripMenuItemEdit.Click += ToolStripMenuItemEdit_Click;
-            this.toolStripMenuItemDelete.Text = "Delete";
+            this.toolStripMenuItemDelete.Text = _("Delete");
             this.toolStripMenuItemDelete.Click += ToolStripMenuItemDelete_Click;
 
             DpiScaler scaler = new DpiScaler();

@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-09 20:20+0200\n"
-"PO-Revision-Date: 2024-06-09 20:21+0200\n"
+"POT-Creation-Date: 2024-06-09 21:18+0200\n"
+"PO-Revision-Date: 2024-06-09 21:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -13,10 +13,198 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.4\n"
 
-#: Program.cs:22
-msgid "hello"
-msgstr "cześć"
+#: AboutForm.Designer.cs:57
+msgid "Close"
+msgstr ""
+
+#: AboutForm.Designer.cs:75
+msgid "About"
+msgstr ""
+
+#: EditTapeForm.Designer.cs:58 EditTapeForm.Designer.cs:69
+#: EditTapeForm.Designer.cs:80 EditTapeForm.Designer.cs:91
+msgid "minutes"
+msgstr ""
+
+#: EditTapeForm.Designer.cs:105
+msgid "Length"
+msgstr ""
+
+#: EditTapeForm.Designer.cs:114
+msgid "Label (side A):"
+msgstr ""
+
+#: EditTapeForm.Designer.cs:123
+msgid "Label (side B):"
+msgstr ""
+
+#: EditTapeForm.Designer.cs:145
+msgid "Select color"
+msgstr ""
+
+#: EditTapeForm.Designer.cs:156
+msgid "Create"
+msgstr ""
+
+#: EditTapeForm.Designer.cs:166 ImportForm.Designer.cs:56
+msgid "Cancel"
+msgstr ""
+
+#: EditTapeForm.Designer.cs:200
+msgid "Creating empty tape"
+msgstr ""
+
+#: EditTapeForm.cs:17
+msgid "Editing tape"
+msgstr ""
+
+#: EditTapeForm.cs:18
+msgid "Save"
+msgstr ""
+
+#: ImportForm.Designer.cs:66
+msgid "Import"
+msgstr ""
+
+#: ImportForm.Designer.cs:76
+msgid "Input file:"
+msgstr ""
+
+#: ImportForm.Designer.cs:84
+msgid "Select"
+msgstr ""
+
+#: ImportForm.Designer.cs:103
+msgid "Tape position:"
+msgstr ""
+
+#: ImportForm.Designer.cs:112
+msgid "File length:"
+msgstr ""
+
+#: ImportForm.Designer.cs:147
+msgid "Tape length:"
+msgstr ""
+
+#: ImportForm.Designer.cs:193
+msgid "Importing file"
+msgstr ""
+
+#: ImportForm.cs:55
+msgid "Audio files"
+msgstr ""
+
+#: ImportForm.cs:55
+msgid "All files"
+msgstr ""
+
+#: ImportForm.cs:76
+msgid "Cannot open file"
+msgstr ""
+
+#: ProgressForm.Designer.cs:79
+msgid "Operation in progress"
+msgstr ""
 
 #: SimulatorForm.cs:184
 msgid "Error while loading tape"
 msgstr "Błąd przy ładowaniu taśmy"
+
+#: SimulatorForm.cs:642
+msgid "Language:"
+msgstr ""
+
+#: SimulatorForm.cs:643
+msgid "Import into current tape..."
+msgstr ""
+
+#: SimulatorForm.cs:644
+msgid "Create tape..."
+msgstr ""
+
+#: SimulatorForm.cs:645
+msgid "About..."
+msgstr ""
+
+#: SimulatorForm.cs:646
+msgid "Effects volume:"
+msgstr ""
+
+#: SimulatorForm.cs:647
+msgid "Speed:"
+msgstr ""
+
+#: SimulatorForm.cs:648
+msgid "Wow intensity:"
+msgstr ""
+
+#: SimulatorForm.cs:649
+msgid "Flutter intensity:"
+msgstr ""
+
+#: SimulatorForm.cs:650
+msgid "Distortion:"
+msgstr ""
+
+#: SimulatorForm.cs:651
+msgid "Hiss:"
+msgstr ""
+
+#: SimulatorForm.cs:652
+msgid "Reset distortion effects"
+msgstr ""
+
+#: SimulatorForm.cs:653
+msgid "Cassette Player Simulator"
+msgstr ""
+
+#: TapeManager.cs:43
+#, csharp-format
+msgid "Importing {0}..."
+msgstr ""
+
+#: TapeManager.cs:123
+#, csharp-format
+msgid "File not found: {0}"
+msgstr ""
+
+#: TapeManager.cs:123
+msgid "Error"
+msgstr ""
+
+#: TapeManager.cs:152
+msgid "Creating tape..."
+msgstr ""
+
+#: TapeManager.cs:242
+msgid "Side A"
+msgstr ""
+
+#: TapeManager.cs:243
+msgid "Side B"
+msgstr ""
+
+#: TapeManager.cs:373
+#, csharp-format
+msgid "This will remove both tape sides: \"{0}\" and \"{1}\". Are you sure?"
+msgstr ""
+
+#: TapeManager.cs:375
+msgid "Deleting tape"
+msgstr ""
+
+#: TapeManager.cs:426
+msgid "Load Side A"
+msgstr ""
+
+#: TapeManager.cs:428
+msgid "Load Side B"
+msgstr ""
+
+#: TapeManager.cs:430
+msgid "Edit"
+msgstr ""
+
+#: TapeManager.cs:432
+msgid "Delete"
+msgstr ""

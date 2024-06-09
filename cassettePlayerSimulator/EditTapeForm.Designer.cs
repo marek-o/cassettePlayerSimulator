@@ -1,4 +1,6 @@
-﻿namespace cassettePlayerSimulator
+﻿using static cassettePlayerSimulator.Translations;
+
+namespace cassettePlayerSimulator
 {
     partial class EditTapeForm
     {
@@ -53,7 +55,7 @@
             this.radioButtonC10.Size = new System.Drawing.Size(122, 17);
             this.radioButtonC10.TabIndex = 0;
             this.radioButtonC10.TabStop = true;
-            this.radioButtonC10.Text = "C10 (5+5 minutes, 100MB)";
+            this.radioButtonC10.Text = "C10 (5+5 " + _("minutes") + ", 100MB)";
             this.radioButtonC10.UseVisualStyleBackColor = true;
             // 
             // radioButtonC30
@@ -64,7 +66,7 @@
             this.radioButtonC30.Size = new System.Drawing.Size(122, 17);
             this.radioButtonC30.TabIndex = 0;
             this.radioButtonC30.TabStop = true;
-            this.radioButtonC30.Text = "C30 (15+15 minutes, 300MB)";
+            this.radioButtonC30.Text = "C30 (15+15 " + _("minutes") + ", 300MB)";
             this.radioButtonC30.UseVisualStyleBackColor = true;
             // 
             // radioButtonC60
@@ -75,7 +77,7 @@
             this.radioButtonC60.Size = new System.Drawing.Size(122, 17);
             this.radioButtonC60.TabIndex = 1;
             this.radioButtonC60.TabStop = true;
-            this.radioButtonC60.Text = "C60 (30+30 minutes, 600MB)";
+            this.radioButtonC60.Text = "C60 (30+30 " + _("minutes") + ", 600MB)";
             this.radioButtonC60.UseVisualStyleBackColor = true;
             // 
             // radioButtonC90
@@ -86,7 +88,7 @@
             this.radioButtonC90.Size = new System.Drawing.Size(122, 17);
             this.radioButtonC90.TabIndex = 2;
             this.radioButtonC90.TabStop = true;
-            this.radioButtonC90.Text = "C90 (45+45 minutes, 900MB)";
+            this.radioButtonC90.Text = "C90 (45+45 " + _("minutes") + ", 900MB)";
             this.radioButtonC90.UseVisualStyleBackColor = true;
             // 
             // groupBox1
@@ -100,7 +102,7 @@
             this.groupBox.Size = new System.Drawing.Size(316, 122);
             this.groupBox.TabIndex = 3;
             this.groupBox.TabStop = false;
-            this.groupBox.Text = "Length";
+            this.groupBox.Text = _("Length");
             // 
             // label1
             // 
@@ -109,7 +111,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(74, 13);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Label (side A):";
+            this.label1.Text = _("Label (side A):");
             // 
             // label2
             // 
@@ -118,7 +120,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(74, 13);
             this.label2.TabIndex = 5;
-            this.label2.Text = "Label (side B):";
+            this.label2.Text = _("Label (side B):");
             // 
             // textBoxLabelA
             // 
@@ -140,7 +142,7 @@
             this.buttonColor.Name = "buttonColor";
             this.buttonColor.Size = new System.Drawing.Size(75, 23);
             this.buttonColor.TabIndex = 8;
-            this.buttonColor.Text = "Select color";
+            this.buttonColor.Text = _("Select color");
             this.buttonColor.UseVisualStyleBackColor = true;
             this.buttonColor.Click += new System.EventHandler(this.buttonColor_Click);
             // 
@@ -151,7 +153,7 @@
             this.buttonCreate.Name = "buttonCreate";
             this.buttonCreate.Size = new System.Drawing.Size(75, 23);
             this.buttonCreate.TabIndex = 9;
-            this.buttonCreate.Text = "Create";
+            this.buttonCreate.Text = _("Create");
             this.buttonCreate.UseVisualStyleBackColor = true;
             // 
             // buttonCancel
@@ -161,7 +163,7 @@
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 10;
-            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.Text = _("Cancel");
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
             // panelColor
@@ -195,7 +197,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "Creating empty tape";
+            this.Text = _("Creating empty tape");
             this.groupBox.ResumeLayout(false);
             this.groupBox.PerformLayout();
             this.ResumeLayout(false);

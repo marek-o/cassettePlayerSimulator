@@ -65,7 +65,6 @@ namespace cassettePlayerSimulator
             labelLanguage.Anchor = AnchorStyles.Right | AnchorStyles.Top;
             labelLanguage.AutoSize = true;
             labelLanguage.Location = new System.Drawing.Point(456, 10);
-            labelLanguage.Text = "Language:";
             //
             comboBoxLanguage.Anchor = AnchorStyles.Right | AnchorStyles.Top;
             comboBoxLanguage.Location = new System.Drawing.Point(530, 10);
@@ -81,7 +80,6 @@ namespace cassettePlayerSimulator
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(142, 23);
             this.buttonImport.TabIndex = 1;
-            this.buttonImport.Text = "Import into current tape...";
             this.buttonImport.UseVisualStyleBackColor = true;
             this.buttonImport.BackColor = System.Drawing.Color.Transparent;
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
@@ -143,7 +141,6 @@ namespace cassettePlayerSimulator
             this.buttonCreateTape.Name = "buttonCreateTape";
             this.buttonCreateTape.Size = new System.Drawing.Size(146, 23);
             this.buttonCreateTape.TabIndex = 12;
-            this.buttonCreateTape.Text = "Create tape...";
             this.buttonCreateTape.UseVisualStyleBackColor = true;
             this.buttonCreateTape.Click += new System.EventHandler(this.buttonCreateTape_Click);
             // 
@@ -154,7 +151,6 @@ namespace cassettePlayerSimulator
             this.buttonAbout.Name = "buttonAbout";
             this.buttonAbout.Size = new System.Drawing.Size(142, 23);
             this.buttonAbout.TabIndex = 12;
-            this.buttonAbout.Text = "About...";
             this.buttonAbout.UseVisualStyleBackColor = true;
             this.buttonAbout.Click += new System.EventHandler(this.buttonAbout_Click);
             // 
@@ -211,7 +207,6 @@ namespace cassettePlayerSimulator
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 15);
             this.label1.TabIndex = 14;
-            this.label1.Text = "Effects volume:";
             // 
             // label3
             // 
@@ -219,7 +214,6 @@ namespace cassettePlayerSimulator
             this.label3.Location = new System.Drawing.Point(0, 30);
             this.label3.Size = new System.Drawing.Size(88, 15);
             this.label3.TabIndex = 14;
-            this.label3.Text = "Speed:";
             // 
             // trackBarSpeed
             // 
@@ -237,7 +231,6 @@ namespace cassettePlayerSimulator
             this.label2.Location = new System.Drawing.Point(0, 60);
             this.label2.Size = new System.Drawing.Size(88, 15);
             this.label2.TabIndex = 14;
-            this.label2.Text = "Wow intensity:";
             // 
             // trackBarWow
             // 
@@ -254,7 +247,6 @@ namespace cassettePlayerSimulator
             this.label4.Location = new System.Drawing.Point(0, 90);
             this.label4.Size = new System.Drawing.Size(88, 15);
             this.label4.TabIndex = 14;
-            this.label4.Text = "Flutter intensity:";
             // 
             // trackBarFlutter
             // 
@@ -269,7 +261,6 @@ namespace cassettePlayerSimulator
             this.label5.Location = new System.Drawing.Point(0, 120);
             this.label5.Size = new System.Drawing.Size(88, 15);
             this.label5.TabIndex = 14;
-            this.label5.Text = "Distortion:";
             // 
             this.trackBarDistortion.Location = new System.Drawing.Point(80, 120);
             this.trackBarDistortion.Maximum = 100;
@@ -282,7 +273,6 @@ namespace cassettePlayerSimulator
             this.label6.Location = new System.Drawing.Point(0, 150);
             this.label6.Size = new System.Drawing.Size(88, 15);
             this.label6.TabIndex = 14;
-            this.label6.Text = "Hiss:";
             // 
             this.trackBarHiss.Location = new System.Drawing.Point(80, 150);
             this.trackBarHiss.Maximum = 100;
@@ -296,7 +286,6 @@ namespace cassettePlayerSimulator
             this.buttonResetDistortionParameters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonResetDistortionParameters.Location = new System.Drawing.Point(456, 461);
             this.buttonResetDistortionParameters.Size = new System.Drawing.Size(146, 23);
-            this.buttonResetDistortionParameters.Text = "Reset distortion effects";
             this.buttonResetDistortionParameters.UseVisualStyleBackColor = true;
             this.buttonResetDistortionParameters.Click += new System.EventHandler(this.buttonResetDistortionParameters_Click);
             // 
@@ -325,7 +314,6 @@ namespace cassettePlayerSimulator
             this.Icon = global::cassettePlayerSimulator.Properties.Resources.icon;
             this.Name = "SimulatorForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
-            this.Text = "Cassette Player Simulator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SimulatorForm_FormClosing);
             this.Resize += new System.EventHandler(this.SimulatorForm_Resize);
             this.ResumeLayout(false);

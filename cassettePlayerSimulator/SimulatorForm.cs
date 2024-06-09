@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using Utils;
+using static cassettePlayerSimulator.Translations;
 
 namespace cassettePlayerSimulator
 {
@@ -180,7 +181,7 @@ namespace cassettePlayerSimulator
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error while loading tape", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, _("Error while loading tape"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 music = new SoundMixer.Sample(wav, false, false, false, 0.2f, 1.0f);
@@ -217,6 +218,9 @@ namespace cassettePlayerSimulator
         {
             InitializeComponent();
             DoLayout();
+
+            comboBoxLanguage.Items.AddRange(new string[] { "EN", "PL" });
+            comboBoxLanguage.SelectedIndex = 0;
 
             cassetteButtons.Enabled = false;
 
@@ -622,6 +626,23 @@ namespace cassettePlayerSimulator
             trackBarDistortion.Value = 0;
             trackBarHiss.Value = 0;
             UpdateDistortionParameters();
+        }
+
+        private void ComboBoxLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxLanguage.SelectedItem as string == "PL")
+            {
+                using (var file = File.Open("../../../translations/pl.mo", FileMode.Open))
+                {
+                    InitTranslations(file);
+                }
+            }
+            else
+            {
+                InitTranslations();
+            }
+
+            Text = _("hello");
         }
     }
 }

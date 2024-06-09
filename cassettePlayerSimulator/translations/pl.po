@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-09 19:38+0200\n"
-"PO-Revision-Date: 2024-06-09 19:44+0200\n"
+"POT-Creation-Date: 2024-06-09 20:20+0200\n"
+"PO-Revision-Date: 2024-06-09 20:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -13,6 +13,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.4\n"
 
-#: Program.cs:20
+#: Program.cs:22
 msgid "hello"
 msgstr "cześć"
+
+#: SimulatorForm.cs:184
+msgid "Error while loading tape"
+msgstr "Błąd przy ładowaniu taśmy"

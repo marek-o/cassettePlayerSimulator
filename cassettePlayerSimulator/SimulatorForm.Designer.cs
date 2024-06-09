@@ -1,4 +1,7 @@
-﻿namespace cassettePlayerSimulator
+﻿using System.IO;
+using System.Windows.Forms;
+
+namespace cassettePlayerSimulator
 {
     partial class SimulatorForm
     {
@@ -29,6 +32,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            labelLanguage = new Label();
+            comboBoxLanguage = new ComboBox();
             this.buttonImport = new System.Windows.Forms.Button();
             this.labelDebug = new System.Windows.Forms.Label();
             this.timerDebug = new System.Windows.Forms.Timer(this.components);
@@ -56,6 +61,17 @@
             this.trackBarHiss = new System.Windows.Forms.TrackBar();
             this.buttonResetDistortionParameters = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            //
+            labelLanguage.Anchor = AnchorStyles.Right | AnchorStyles.Top;
+            labelLanguage.AutoSize = true;
+            labelLanguage.Location = new System.Drawing.Point(456, 10);
+            labelLanguage.Text = "Language:";
+            //
+            comboBoxLanguage.Anchor = AnchorStyles.Right | AnchorStyles.Top;
+            comboBoxLanguage.Location = new System.Drawing.Point(530, 10);
+            comboBoxLanguage.Size = new System.Drawing.Size(70, 20);
+            comboBoxLanguage.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxLanguage.SelectedIndexChanged += ComboBoxLanguage_SelectedIndexChanged;
             // 
             // buttonImport
             // 
@@ -292,6 +308,8 @@
             this.BackColor = System.Drawing.Color.DarkGray;
             this.Size = new System.Drawing.Size(792, 550);
             this.MinimumSize = new System.Drawing.Size(600, 550);
+            this.Controls.Add(this.labelLanguage);
+            this.Controls.Add(this.comboBoxLanguage);
             this.Controls.Add(this.buttonCreateTape);
             this.Controls.Add(this.listBox);
             this.Controls.Add(this.counter);
@@ -316,6 +334,8 @@
         }
 
         #endregion
+        private Label labelLanguage;
+        private ComboBox comboBoxLanguage;
         private System.Windows.Forms.Button buttonImport;
         private CassetteControl cassetteControl;
         private CassetteButtons cassetteButtons;

@@ -632,10 +632,7 @@ namespace cassettePlayerSimulator
         {
             if (comboBoxLanguage.SelectedItem as string == "PL")
             {
-                using (var file = File.Open("../../../translations/pl.mo", FileMode.Open))
-                {
-                    InitTranslations(file);
-                }
+                InitTranslations(Properties.Resources.lang_pl);
             }
             else
             {

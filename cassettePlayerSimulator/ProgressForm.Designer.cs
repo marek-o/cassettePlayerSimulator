@@ -1,4 +1,6 @@
-﻿namespace cassettePlayerSimulator
+﻿using static cassettePlayerSimulator.Translations;
+
+namespace cassettePlayerSimulator
 {
     partial class ProgressForm
     {
@@ -74,7 +76,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "Operation in progress";
+            this.Text = _("Operation in progress");
             this.ResumeLayout(false);
             this.PerformLayout();
 

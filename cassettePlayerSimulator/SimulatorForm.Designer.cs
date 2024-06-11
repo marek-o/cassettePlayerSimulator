@@ -1,4 +1,7 @@
-﻿namespace cassettePlayerSimulator
+﻿using System.IO;
+using System.Windows.Forms;
+
+namespace cassettePlayerSimulator
 {
     partial class SimulatorForm
     {
@@ -29,6 +32,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            labelLanguage = new Label();
+            comboBoxLanguage = new ComboBox();
             this.buttonImport = new System.Windows.Forms.Button();
             this.labelDebug = new System.Windows.Forms.Label();
             this.timerDebug = new System.Windows.Forms.Timer(this.components);
@@ -56,16 +61,25 @@
             this.trackBarHiss = new System.Windows.Forms.TrackBar();
             this.buttonResetDistortionParameters = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            //
+            labelLanguage.Anchor = AnchorStyles.Right | AnchorStyles.Top;
+            labelLanguage.AutoSize = true;
+            labelLanguage.Location = new System.Drawing.Point(456, 10);
+            //
+            comboBoxLanguage.Anchor = AnchorStyles.Right | AnchorStyles.Top;
+            comboBoxLanguage.Location = new System.Drawing.Point(536, 10);
+            comboBoxLanguage.Size = new System.Drawing.Size(70, 20);
+            comboBoxLanguage.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxLanguage.SelectedIndexChanged += ComboBoxLanguage_SelectedIndexChanged;
             // 
             // buttonImport
             // 
             this.buttonImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonImport.Enabled = false;
-            this.buttonImport.Location = new System.Drawing.Point(608, 33);
+            this.buttonImport.Location = new System.Drawing.Point(612, 33);
             this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(142, 23);
+            this.buttonImport.Size = new System.Drawing.Size(150, 23);
             this.buttonImport.TabIndex = 1;
-            this.buttonImport.Text = "Import into current tape...";
             this.buttonImport.UseVisualStyleBackColor = true;
             this.buttonImport.BackColor = System.Drawing.Color.Transparent;
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
@@ -117,7 +131,7 @@
             this.listBox.FormattingEnabled = true;
             this.listBox.Location = new System.Drawing.Point(456, 62);
             this.listBox.Name = "listBox";
-            this.listBox.Size = new System.Drawing.Size(294, 199);
+            this.listBox.Size = new System.Drawing.Size(306, 199);
             this.listBox.TabIndex = 10;
             // 
             // buttonCreateTape
@@ -125,20 +139,18 @@
             this.buttonCreateTape.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCreateTape.Location = new System.Drawing.Point(456, 33);
             this.buttonCreateTape.Name = "buttonCreateTape";
-            this.buttonCreateTape.Size = new System.Drawing.Size(146, 23);
+            this.buttonCreateTape.Size = new System.Drawing.Size(150, 23);
             this.buttonCreateTape.TabIndex = 12;
-            this.buttonCreateTape.Text = "Create tape...";
             this.buttonCreateTape.UseVisualStyleBackColor = true;
             this.buttonCreateTape.Click += new System.EventHandler(this.buttonCreateTape_Click);
             // 
             // buttonAbout
             // 
             this.buttonAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAbout.Location = new System.Drawing.Point(608, 8);
+            this.buttonAbout.Location = new System.Drawing.Point(612, 8);
             this.buttonAbout.Name = "buttonAbout";
-            this.buttonAbout.Size = new System.Drawing.Size(142, 23);
+            this.buttonAbout.Size = new System.Drawing.Size(150, 23);
             this.buttonAbout.TabIndex = 12;
-            this.buttonAbout.Text = "About...";
             this.buttonAbout.UseVisualStyleBackColor = true;
             this.buttonAbout.Click += new System.EventHandler(this.buttonAbout_Click);
             // 
@@ -164,7 +176,7 @@
             //
             this.slidersPanel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.slidersPanel.Location = new System.Drawing.Point(456, 276);
-            this.slidersPanel.Size = new System.Drawing.Size(300, 183);
+            this.slidersPanel.Size = new System.Drawing.Size(312, 183);
             this.slidersPanel.Controls.Add(label6);
             this.slidersPanel.Controls.Add(trackBarHiss);
             this.slidersPanel.Controls.Add(label5);
@@ -180,10 +192,10 @@
             // 
             // trackBarEffectsVolume
             // 
-            this.trackBarEffectsVolume.Location = new System.Drawing.Point(80, 0);
+            this.trackBarEffectsVolume.Location = new System.Drawing.Point(110, 0);
             this.trackBarEffectsVolume.Maximum = 100;
             this.trackBarEffectsVolume.Name = "trackBarEffectsVolume";
-            this.trackBarEffectsVolume.Size = new System.Drawing.Size(212, 25);
+            this.trackBarEffectsVolume.Size = new System.Drawing.Size(194, 25);
             this.trackBarEffectsVolume.TabIndex = 13;
             this.trackBarEffectsVolume.Value = 50;
             this.trackBarEffectsVolume.Scroll += trackBarEffectsVolume_Scroll;
@@ -195,7 +207,6 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 15);
             this.label1.TabIndex = 14;
-            this.label1.Text = "Effects volume:";
             // 
             // label3
             // 
@@ -203,14 +214,13 @@
             this.label3.Location = new System.Drawing.Point(0, 30);
             this.label3.Size = new System.Drawing.Size(88, 15);
             this.label3.TabIndex = 14;
-            this.label3.Text = "Speed:";
             // 
             // trackBarSpeed
             // 
-            this.trackBarSpeed.Location = new System.Drawing.Point(80, 30);
+            this.trackBarSpeed.Location = new System.Drawing.Point(110, 30);
             this.trackBarSpeed.Minimum = 50;
             this.trackBarSpeed.Maximum = 150;
-            this.trackBarSpeed.Size = new System.Drawing.Size(212, 30);
+            this.trackBarSpeed.Size = new System.Drawing.Size(194, 30);
             this.trackBarSpeed.TabIndex = 13;
             this.trackBarSpeed.Value = 100;
             this.trackBarSpeed.Scroll += trackBarDistortionParameters_Scroll;
@@ -221,13 +231,12 @@
             this.label2.Location = new System.Drawing.Point(0, 60);
             this.label2.Size = new System.Drawing.Size(88, 15);
             this.label2.TabIndex = 14;
-            this.label2.Text = "Wow intensity:";
             // 
             // trackBarWow
             // 
-            this.trackBarWow.Location = new System.Drawing.Point(80, 60);
+            this.trackBarWow.Location = new System.Drawing.Point(110, 60);
             this.trackBarWow.Maximum = 100;
-            this.trackBarWow.Size = new System.Drawing.Size(212, 30);
+            this.trackBarWow.Size = new System.Drawing.Size(194, 30);
             this.trackBarWow.TabIndex = 13;
             this.trackBarWow.Value = 0;
             this.trackBarWow.Scroll += trackBarDistortionParameters_Scroll;
@@ -238,13 +247,12 @@
             this.label4.Location = new System.Drawing.Point(0, 90);
             this.label4.Size = new System.Drawing.Size(88, 15);
             this.label4.TabIndex = 14;
-            this.label4.Text = "Flutter intensity:";
             // 
             // trackBarFlutter
             // 
-            this.trackBarFlutter.Location = new System.Drawing.Point(80, 90);
+            this.trackBarFlutter.Location = new System.Drawing.Point(110, 90);
             this.trackBarFlutter.Maximum = 100;
-            this.trackBarFlutter.Size = new System.Drawing.Size(212, 30);
+            this.trackBarFlutter.Size = new System.Drawing.Size(194, 30);
             this.trackBarFlutter.TabIndex = 13;
             this.trackBarFlutter.Value = 0;
             this.trackBarFlutter.Scroll += trackBarDistortionParameters_Scroll;
@@ -253,11 +261,10 @@
             this.label5.Location = new System.Drawing.Point(0, 120);
             this.label5.Size = new System.Drawing.Size(88, 15);
             this.label5.TabIndex = 14;
-            this.label5.Text = "Distortion:";
             // 
-            this.trackBarDistortion.Location = new System.Drawing.Point(80, 120);
+            this.trackBarDistortion.Location = new System.Drawing.Point(110, 120);
             this.trackBarDistortion.Maximum = 100;
-            this.trackBarDistortion.Size = new System.Drawing.Size(212, 30);
+            this.trackBarDistortion.Size = new System.Drawing.Size(194, 30);
             this.trackBarDistortion.TabIndex = 13;
             this.trackBarDistortion.Value = 0;
             this.trackBarDistortion.Scroll += trackBarDistortionParameters_Scroll;
@@ -266,11 +273,10 @@
             this.label6.Location = new System.Drawing.Point(0, 150);
             this.label6.Size = new System.Drawing.Size(88, 15);
             this.label6.TabIndex = 14;
-            this.label6.Text = "Hiss:";
             // 
-            this.trackBarHiss.Location = new System.Drawing.Point(80, 150);
+            this.trackBarHiss.Location = new System.Drawing.Point(110, 150);
             this.trackBarHiss.Maximum = 100;
-            this.trackBarHiss.Size = new System.Drawing.Size(212, 30);
+            this.trackBarHiss.Size = new System.Drawing.Size(194, 30);
             this.trackBarHiss.TabIndex = 13;
             this.trackBarHiss.Value = 0;
             this.trackBarHiss.Scroll += trackBarDistortionParameters_Scroll;
@@ -279,8 +285,7 @@
             // 
             this.buttonResetDistortionParameters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonResetDistortionParameters.Location = new System.Drawing.Point(456, 461);
-            this.buttonResetDistortionParameters.Size = new System.Drawing.Size(146, 23);
-            this.buttonResetDistortionParameters.Text = "Reset distortion effects";
+            this.buttonResetDistortionParameters.Size = new System.Drawing.Size(150, 23);
             this.buttonResetDistortionParameters.UseVisualStyleBackColor = true;
             this.buttonResetDistortionParameters.Click += new System.EventHandler(this.buttonResetDistortionParameters_Click);
             // 
@@ -290,8 +295,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
             this.BackColor = System.Drawing.Color.DarkGray;
-            this.Size = new System.Drawing.Size(792, 550);
-            this.MinimumSize = new System.Drawing.Size(600, 550);
+            this.Size = new System.Drawing.Size(804, 550);
+            this.MinimumSize = new System.Drawing.Size(612, 550);
+            this.Controls.Add(this.labelLanguage);
+            this.Controls.Add(this.comboBoxLanguage);
             this.Controls.Add(this.buttonCreateTape);
             this.Controls.Add(this.listBox);
             this.Controls.Add(this.counter);
@@ -307,7 +314,6 @@
             this.Icon = global::cassettePlayerSimulator.Properties.Resources.icon;
             this.Name = "SimulatorForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
-            this.Text = "Cassette Player Simulator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SimulatorForm_FormClosing);
             this.Resize += new System.EventHandler(this.SimulatorForm_Resize);
             this.ResumeLayout(false);
@@ -316,6 +322,8 @@
         }
 
         #endregion
+        private Label labelLanguage;
+        private ComboBox comboBoxLanguage;
         private System.Windows.Forms.Button buttonImport;
         private CassetteControl cassetteControl;
         private CassetteButtons cassetteButtons;

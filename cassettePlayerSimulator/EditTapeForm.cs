@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using static cassettePlayerSimulator.Translations;
 
 namespace cassettePlayerSimulator
 {
@@ -13,8 +14,8 @@ namespace cassettePlayerSimulator
 
             if (editMode)
             {
-                Text = "Editing tape";
-                buttonCreate.Text = "Save";
+                Text = _("Editing tape");
+                buttonCreate.Text = _("Save");
                 groupBox.Enabled = false;
             }
 

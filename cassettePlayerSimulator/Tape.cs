@@ -9,6 +9,8 @@ namespace cassettePlayerSimulator
     [Serializable]
     public class TapeList
     {
+        public string Language;
+
         [XmlElement(ElementName = "Tape")]
         public List<Tape> Tapes;
 

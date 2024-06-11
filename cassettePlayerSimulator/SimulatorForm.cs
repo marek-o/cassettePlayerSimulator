@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using Utils;
+using static cassettePlayerSimulator.Translations;
 
 namespace cassettePlayerSimulator
 {
@@ -180,7 +181,7 @@ namespace cassettePlayerSimulator
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error while loading tape", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, _("Error while loading tape"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 music = new SoundMixer.Sample(wav, false, false, false, 0.2f, 1.0f);
@@ -308,6 +309,21 @@ namespace cassettePlayerSimulator
             tapeManager = new TapeManager(listBox);
 
             tapeManager.LoadedTapeSideChanged += TapeManager_LoadedTapeSideChanged;
+
+            comboBoxLanguage.Items.AddRange(new string[] { "EN", "PL" });
+            if (!string.IsNullOrEmpty(tapeManager.Language))
+            { 
+                int langIndex = comboBoxLanguage.Items.IndexOf(tapeManager.Language);
+                if (langIndex >= 0)
+                {
+                    comboBoxLanguage.SelectedIndex = langIndex;
+                }
+            }
+
+            if (comboBoxLanguage.SelectedIndex < 0)
+            {
+                comboBoxLanguage.SelectedIndex = 0;
+            }
         }
 
         private void TapeManager_LoadedTapeSideChanged()
@@ -622,6 +638,36 @@ namespace cassettePlayerSimulator
             trackBarDistortion.Value = 0;
             trackBarHiss.Value = 0;
             UpdateDistortionParameters();
+        }
+
+        private void ComboBoxLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxLanguage.SelectedItem as string == "PL")
+            {
+                InitTranslations(Properties.Resources.lang_pl);
+            }
+            else
+            {
+                InitTranslations();
+            }
+
+            tapeManager.Language = comboBoxLanguage.SelectedItem as string;
+            tapeManager.SaveList();
+
+            labelLanguage.Text = _("Language:");
+            buttonImport.Text = _("Import into current tape...");
+            buttonCreateTape.Text = _("Create tape...");
+            buttonAbout.Text = _("About...");
+            label1.Text = _("Effects volume:");
+            label3.Text = _("Speed:");
+            label2.Text = _("Wow intensity:");
+            label4.Text = _("Flutter intensity:");
+            label5.Text = _("Distortion:");
+            label6.Text = _("Hiss:");
+            buttonResetDistortionParameters.Text = _("Reset distortion effects");
+            Text = _("Cassette Player Simulator");
+            listBox.Invalidate();
+            tapeManager.Retranslate();
         }
     }
 }

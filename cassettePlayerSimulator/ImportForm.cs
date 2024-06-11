@@ -68,11 +68,14 @@ namespace cassettePlayerSimulator
                 {
                     fileLengthSeconds = (int)reader.TotalTime.TotalSeconds;
                 }
+
+                buttonImport.Enabled = true;
             }
             catch (Exception ex)
             {
                 fileLengthSeconds = 0;
                 textBoxFilename.Text = "";
+                buttonImport.Enabled = false;
                 MessageBox.Show(ex.Message, _("Cannot open file"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 

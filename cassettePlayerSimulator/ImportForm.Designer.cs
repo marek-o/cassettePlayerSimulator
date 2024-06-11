@@ -59,6 +59,7 @@ namespace cassettePlayerSimulator
             // buttonImport
             // 
             this.buttonImport.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonImport.Enabled = false;
             this.buttonImport.Location = new System.Drawing.Point(189, 255);
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(75, 23);

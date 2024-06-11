@@ -666,6 +666,8 @@ namespace cassettePlayerSimulator
             label6.Text = _("Hiss:");
             buttonResetDistortionParameters.Text = _("Reset distortion effects");
             Text = _("Cassette Player Simulator");
+            listBox.Invalidate();
+            tapeManager.Retranslate();
         }
     }
 }

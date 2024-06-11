@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-11 18:19+0200\n"
-"PO-Revision-Date: 2024-06-11 18:50+0200\n"
+"PO-Revision-Date: 2024-06-11 19:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -187,7 +187,7 @@ msgstr "Strona B"
 #: TapeManager.cs:379
 #, csharp-format
 msgid "This will remove both tape sides: \"{0}\" and \"{1}\". Are you sure?"
-msgstr "Zostaną usunięte obie strony: \"{0}\" I \"{1}\". Czy jesteś pewien?"
+msgstr "Zostaną usunięte obie strony: \"{0}\" i \"{1}\". Czy jesteś pewien?"
 
 #: TapeManager.cs:381
 msgid "Deleting tape"

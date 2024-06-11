@@ -411,6 +411,14 @@ namespace cassettePlayerSimulator
         private Font normalFont;
         private Font boldFont;
 
+        public void Retranslate()
+        {
+            this.toolStripMenuItemLoadA.Text = _("Load Side A");
+            this.toolStripMenuItemLoadB.Text = _("Load Side B");
+            this.toolStripMenuItemEdit.Text = _("Edit");
+            this.toolStripMenuItemDelete.Text = _("Delete");
+        }
+
         public TapeManager(ListBox listBox)
         {
             this.listBox = listBox;
@@ -429,14 +437,12 @@ namespace cassettePlayerSimulator
             this.toolStripMenuItemLoadB,
             this.toolStripMenuItemEdit,
             this.toolStripMenuItemDelete});
-            this.toolStripMenuItemLoadA.Text = _("Load Side A");
             this.toolStripMenuItemLoadA.Click += ToolStripMenuItemLoadA_Click;
-            this.toolStripMenuItemLoadB.Text = _("Load Side B");
             this.toolStripMenuItemLoadB.Click += ToolStripMenuItemLoadB_Click;
-            this.toolStripMenuItemEdit.Text = _("Edit");
             this.toolStripMenuItemEdit.Click += ToolStripMenuItemEdit_Click;
-            this.toolStripMenuItemDelete.Text = _("Delete");
             this.toolStripMenuItemDelete.Click += ToolStripMenuItemDelete_Click;
+
+            Retranslate();
 
             DpiScaler scaler = new DpiScaler();
 

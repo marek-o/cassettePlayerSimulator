@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-11 18:19+0200\n"
-"PO-Revision-Date: 2024-06-11 19:10+0200\n"
+"POT-Creation-Date: 2024-06-11 20:15+0200\n"
+"PO-Revision-Date: 2024-06-11 20:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -50,7 +50,7 @@ msgstr "Stwórz"
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: EditTapeForm.Designer.cs:200
+#: EditTapeForm.Designer.cs:201
 msgid "Creating empty tape"
 msgstr "Tworzenie pustej taśmy"
 
@@ -86,7 +86,7 @@ msgstr "Długość pliku:"
 msgid "Tape length:"
 msgstr "Długość taśmy:"
 
-#: ImportForm.Designer.cs:193
+#: ImportForm.Designer.cs:194
 msgid "Importing file"
 msgstr "Importowanie pliku"
 
@@ -158,6 +158,14 @@ msgstr "Resetuj efekty zniekształceń"
 msgid "Cassette Player Simulator"
 msgstr "Cassette Player Simulator - symulator magnetofonu"
 
+#: Tape.cs:42
+msgid "Cannot load settings. Click OK to reset."
+msgstr "Nie można załadować ustawień. Kliknij OK aby zresetować."
+
+#: Tape.cs:44 TapeManager.cs:129
+msgid "Error"
+msgstr "Błąd"
+
 #: TapeManager.cs:49
 #, csharp-format
 msgid "Importing {0}..."
@@ -167,10 +175,6 @@ msgstr "Importowanie {0}..."
 #, csharp-format
 msgid "File not found: {0}"
 msgstr "Nie znaleziono pliku: {0}"
-
-#: TapeManager.cs:129
-msgid "Error"
-msgstr "Błąd"
 
 #: TapeManager.cs:158
 msgid "Creating tape..."
@@ -193,18 +197,18 @@ msgstr "Zostaną usunięte obie strony: \"{0}\" i \"{1}\". Czy jesteś pewien?"
 msgid "Deleting tape"
 msgstr "Usuwanie taśmy"
 
-#: TapeManager.cs:432
+#: TapeManager.cs:416
 msgid "Load Side A"
 msgstr "Ładuj stronę A"
 
-#: TapeManager.cs:434
+#: TapeManager.cs:417
 msgid "Load Side B"
 msgstr "Ładuj stronę B"
 
-#: TapeManager.cs:436
+#: TapeManager.cs:418
 msgid "Edit"
 msgstr "Edytuj"
 
-#: TapeManager.cs:438
+#: TapeManager.cs:419
 msgid "Delete"
 msgstr "Usuń"

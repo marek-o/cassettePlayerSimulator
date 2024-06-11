@@ -190,6 +190,7 @@ namespace cassettePlayerSimulator
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = _("Importing file");
             this.Load += new System.EventHandler(this.ImportForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPosition)).EndInit();

@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-09 21:18+0200\n"
-"PO-Revision-Date: 2024-06-09 21:24+0200\n"
+"POT-Creation-Date: 2024-06-11 18:19+0200\n"
+"PO-Revision-Date: 2024-06-11 18:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -15,196 +15,196 @@ msgstr ""
 
 #: AboutForm.Designer.cs:57
 msgid "Close"
-msgstr ""
+msgstr "Zamknij"
 
 #: AboutForm.Designer.cs:75
 msgid "About"
-msgstr ""
+msgstr "O programie"
 
 #: EditTapeForm.Designer.cs:58 EditTapeForm.Designer.cs:69
 #: EditTapeForm.Designer.cs:80 EditTapeForm.Designer.cs:91
 msgid "minutes"
-msgstr ""
+msgstr "minut"
 
 #: EditTapeForm.Designer.cs:105
 msgid "Length"
-msgstr ""
+msgstr "Długość"
 
 #: EditTapeForm.Designer.cs:114
 msgid "Label (side A):"
-msgstr ""
+msgstr "Etykieta (strona A):"
 
 #: EditTapeForm.Designer.cs:123
 msgid "Label (side B):"
-msgstr ""
+msgstr "Etykieta (strona B):"
 
 #: EditTapeForm.Designer.cs:145
 msgid "Select color"
-msgstr ""
+msgstr "Wybierz kolor"
 
 #: EditTapeForm.Designer.cs:156
 msgid "Create"
-msgstr ""
+msgstr "Stwórz"
 
 #: EditTapeForm.Designer.cs:166 ImportForm.Designer.cs:56
 msgid "Cancel"
-msgstr ""
+msgstr "Anuluj"
 
 #: EditTapeForm.Designer.cs:200
 msgid "Creating empty tape"
-msgstr ""
+msgstr "Tworzenie pustej taśmy"
 
 #: EditTapeForm.cs:17
 msgid "Editing tape"
-msgstr ""
+msgstr "Edytowanie taśmy"
 
 #: EditTapeForm.cs:18
 msgid "Save"
-msgstr ""
+msgstr "Zapisz"
 
 #: ImportForm.Designer.cs:66
 msgid "Import"
-msgstr ""
+msgstr "Importuj"
 
 #: ImportForm.Designer.cs:76
 msgid "Input file:"
-msgstr ""
+msgstr "Plik wejściowy:"
 
 #: ImportForm.Designer.cs:84
 msgid "Select"
-msgstr ""
+msgstr "Wybierz"
 
 #: ImportForm.Designer.cs:103
 msgid "Tape position:"
-msgstr ""
+msgstr "Pozycja taśmy:"
 
 #: ImportForm.Designer.cs:112
 msgid "File length:"
-msgstr ""
+msgstr "Długość pliku:"
 
 #: ImportForm.Designer.cs:147
 msgid "Tape length:"
-msgstr ""
+msgstr "Długość taśmy:"
 
 #: ImportForm.Designer.cs:193
 msgid "Importing file"
-msgstr ""
+msgstr "Importowanie pliku"
 
 #: ImportForm.cs:55
 msgid "Audio files"
-msgstr ""
+msgstr "Pliki audio"
 
 #: ImportForm.cs:55
 msgid "All files"
-msgstr ""
+msgstr "Wszystkie pliki"
 
 #: ImportForm.cs:76
 msgid "Cannot open file"
-msgstr ""
+msgstr "Nie mogę otworzyć pliku"
 
 #: ProgressForm.Designer.cs:79
 msgid "Operation in progress"
-msgstr ""
+msgstr "Operacja w toku"
 
 #: SimulatorForm.cs:184
 msgid "Error while loading tape"
 msgstr "Błąd przy ładowaniu taśmy"
 
-#: SimulatorForm.cs:642
+#: SimulatorForm.cs:657
 msgid "Language:"
-msgstr ""
+msgstr "Język:"
 
-#: SimulatorForm.cs:643
+#: SimulatorForm.cs:658
 msgid "Import into current tape..."
-msgstr ""
+msgstr "Importuj do bieżącej taśmy..."
 
-#: SimulatorForm.cs:644
+#: SimulatorForm.cs:659
 msgid "Create tape..."
-msgstr ""
+msgstr "Stwórz taśmę…"
 
-#: SimulatorForm.cs:645
+#: SimulatorForm.cs:660
 msgid "About..."
-msgstr ""
+msgstr "O programie..."
 
-#: SimulatorForm.cs:646
+#: SimulatorForm.cs:661
 msgid "Effects volume:"
-msgstr ""
+msgstr "Głośność efektów:"
 
-#: SimulatorForm.cs:647
+#: SimulatorForm.cs:662
 msgid "Speed:"
-msgstr ""
+msgstr "Szybkość:"
 
-#: SimulatorForm.cs:648
+#: SimulatorForm.cs:663
 msgid "Wow intensity:"
-msgstr ""
+msgstr "Intensywność wow:"
 
-#: SimulatorForm.cs:649
+#: SimulatorForm.cs:664
 msgid "Flutter intensity:"
-msgstr ""
+msgstr "Intensywność flutter:"
 
-#: SimulatorForm.cs:650
+#: SimulatorForm.cs:665
 msgid "Distortion:"
-msgstr ""
+msgstr "Zniekształcenie:"
 
-#: SimulatorForm.cs:651
+#: SimulatorForm.cs:666
 msgid "Hiss:"
-msgstr ""
+msgstr "Szum:"
 
-#: SimulatorForm.cs:652
+#: SimulatorForm.cs:667
 msgid "Reset distortion effects"
-msgstr ""
+msgstr "Resetuj efekty zniekształceń"
 
-#: SimulatorForm.cs:653
+#: SimulatorForm.cs:668
 msgid "Cassette Player Simulator"
-msgstr ""
+msgstr "Cassette Player Simulator - symulator magnetofonu"
 
-#: TapeManager.cs:43
+#: TapeManager.cs:49
 #, csharp-format
 msgid "Importing {0}..."
-msgstr ""
+msgstr "Importowanie {0}..."
 
-#: TapeManager.cs:123
+#: TapeManager.cs:129
 #, csharp-format
 msgid "File not found: {0}"
-msgstr ""
+msgstr "Nie znaleziono pliku: {0}"
 
-#: TapeManager.cs:123
+#: TapeManager.cs:129
 msgid "Error"
-msgstr ""
+msgstr "Błąd"
 
-#: TapeManager.cs:152
+#: TapeManager.cs:158
 msgid "Creating tape..."
-msgstr ""
+msgstr "Tworzenie taśmy..."
 
-#: TapeManager.cs:242
+#: TapeManager.cs:248
 msgid "Side A"
-msgstr ""
+msgstr "Strona A"
 
-#: TapeManager.cs:243
+#: TapeManager.cs:249
 msgid "Side B"
-msgstr ""
+msgstr "Strona B"
 
-#: TapeManager.cs:373
+#: TapeManager.cs:379
 #, csharp-format
 msgid "This will remove both tape sides: \"{0}\" and \"{1}\". Are you sure?"
-msgstr ""
+msgstr "Zostaną usunięte obie strony: \"{0}\" I \"{1}\". Czy jesteś pewien?"
 
-#: TapeManager.cs:375
+#: TapeManager.cs:381
 msgid "Deleting tape"
-msgstr ""
-
-#: TapeManager.cs:426
-msgid "Load Side A"
-msgstr ""
-
-#: TapeManager.cs:428
-msgid "Load Side B"
-msgstr ""
-
-#: TapeManager.cs:430
-msgid "Edit"
-msgstr ""
+msgstr "Usuwanie taśmy"
 
 #: TapeManager.cs:432
+msgid "Load Side A"
+msgstr "Ładuj stronę A"
+
+#: TapeManager.cs:434
+msgid "Load Side B"
+msgstr "Ładuj stronę B"
+
+#: TapeManager.cs:436
+msgid "Edit"
+msgstr "Edytuj"
+
+#: TapeManager.cs:438
 msgid "Delete"
-msgstr ""
+msgstr "Usuń"

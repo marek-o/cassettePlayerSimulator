@@ -62,6 +62,8 @@ namespace cassettePlayerSimulator
         public void Save(string path)
         {
             var serializer = new XmlSerializer(typeof(TapeList));
+            
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
 
             using (var stream = new MemoryStream())
             {

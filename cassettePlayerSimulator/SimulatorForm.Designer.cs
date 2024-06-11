@@ -67,7 +67,7 @@ namespace cassettePlayerSimulator
             labelLanguage.Location = new System.Drawing.Point(456, 10);
             //
             comboBoxLanguage.Anchor = AnchorStyles.Right | AnchorStyles.Top;
-            comboBoxLanguage.Location = new System.Drawing.Point(530, 10);
+            comboBoxLanguage.Location = new System.Drawing.Point(536, 10);
             comboBoxLanguage.Size = new System.Drawing.Size(70, 20);
             comboBoxLanguage.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxLanguage.SelectedIndexChanged += ComboBoxLanguage_SelectedIndexChanged;
@@ -76,9 +76,9 @@ namespace cassettePlayerSimulator
             // 
             this.buttonImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonImport.Enabled = false;
-            this.buttonImport.Location = new System.Drawing.Point(608, 33);
+            this.buttonImport.Location = new System.Drawing.Point(612, 33);
             this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(142, 23);
+            this.buttonImport.Size = new System.Drawing.Size(150, 23);
             this.buttonImport.TabIndex = 1;
             this.buttonImport.UseVisualStyleBackColor = true;
             this.buttonImport.BackColor = System.Drawing.Color.Transparent;
@@ -131,7 +131,7 @@ namespace cassettePlayerSimulator
             this.listBox.FormattingEnabled = true;
             this.listBox.Location = new System.Drawing.Point(456, 62);
             this.listBox.Name = "listBox";
-            this.listBox.Size = new System.Drawing.Size(294, 199);
+            this.listBox.Size = new System.Drawing.Size(306, 199);
             this.listBox.TabIndex = 10;
             // 
             // buttonCreateTape
@@ -139,7 +139,7 @@ namespace cassettePlayerSimulator
             this.buttonCreateTape.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCreateTape.Location = new System.Drawing.Point(456, 33);
             this.buttonCreateTape.Name = "buttonCreateTape";
-            this.buttonCreateTape.Size = new System.Drawing.Size(146, 23);
+            this.buttonCreateTape.Size = new System.Drawing.Size(150, 23);
             this.buttonCreateTape.TabIndex = 12;
             this.buttonCreateTape.UseVisualStyleBackColor = true;
             this.buttonCreateTape.Click += new System.EventHandler(this.buttonCreateTape_Click);
@@ -147,9 +147,9 @@ namespace cassettePlayerSimulator
             // buttonAbout
             // 
             this.buttonAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAbout.Location = new System.Drawing.Point(608, 8);
+            this.buttonAbout.Location = new System.Drawing.Point(612, 8);
             this.buttonAbout.Name = "buttonAbout";
-            this.buttonAbout.Size = new System.Drawing.Size(142, 23);
+            this.buttonAbout.Size = new System.Drawing.Size(150, 23);
             this.buttonAbout.TabIndex = 12;
             this.buttonAbout.UseVisualStyleBackColor = true;
             this.buttonAbout.Click += new System.EventHandler(this.buttonAbout_Click);
@@ -176,7 +176,7 @@ namespace cassettePlayerSimulator
             //
             this.slidersPanel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.slidersPanel.Location = new System.Drawing.Point(456, 276);
-            this.slidersPanel.Size = new System.Drawing.Size(300, 183);
+            this.slidersPanel.Size = new System.Drawing.Size(312, 183);
             this.slidersPanel.Controls.Add(label6);
             this.slidersPanel.Controls.Add(trackBarHiss);
             this.slidersPanel.Controls.Add(label5);
@@ -192,10 +192,10 @@ namespace cassettePlayerSimulator
             // 
             // trackBarEffectsVolume
             // 
-            this.trackBarEffectsVolume.Location = new System.Drawing.Point(80, 0);
+            this.trackBarEffectsVolume.Location = new System.Drawing.Point(110, 0);
             this.trackBarEffectsVolume.Maximum = 100;
             this.trackBarEffectsVolume.Name = "trackBarEffectsVolume";
-            this.trackBarEffectsVolume.Size = new System.Drawing.Size(212, 25);
+            this.trackBarEffectsVolume.Size = new System.Drawing.Size(194, 25);
             this.trackBarEffectsVolume.TabIndex = 13;
             this.trackBarEffectsVolume.Value = 50;
             this.trackBarEffectsVolume.Scroll += trackBarEffectsVolume_Scroll;
@@ -217,10 +217,10 @@ namespace cassettePlayerSimulator
             // 
             // trackBarSpeed
             // 
-            this.trackBarSpeed.Location = new System.Drawing.Point(80, 30);
+            this.trackBarSpeed.Location = new System.Drawing.Point(110, 30);
             this.trackBarSpeed.Minimum = 50;
             this.trackBarSpeed.Maximum = 150;
-            this.trackBarSpeed.Size = new System.Drawing.Size(212, 30);
+            this.trackBarSpeed.Size = new System.Drawing.Size(194, 30);
             this.trackBarSpeed.TabIndex = 13;
             this.trackBarSpeed.Value = 100;
             this.trackBarSpeed.Scroll += trackBarDistortionParameters_Scroll;
@@ -234,9 +234,9 @@ namespace cassettePlayerSimulator
             // 
             // trackBarWow
             // 
-            this.trackBarWow.Location = new System.Drawing.Point(80, 60);
+            this.trackBarWow.Location = new System.Drawing.Point(110, 60);
             this.trackBarWow.Maximum = 100;
-            this.trackBarWow.Size = new System.Drawing.Size(212, 30);
+            this.trackBarWow.Size = new System.Drawing.Size(194, 30);
             this.trackBarWow.TabIndex = 13;
             this.trackBarWow.Value = 0;
             this.trackBarWow.Scroll += trackBarDistortionParameters_Scroll;
@@ -250,9 +250,9 @@ namespace cassettePlayerSimulator
             // 
             // trackBarFlutter
             // 
-            this.trackBarFlutter.Location = new System.Drawing.Point(80, 90);
+            this.trackBarFlutter.Location = new System.Drawing.Point(110, 90);
             this.trackBarFlutter.Maximum = 100;
-            this.trackBarFlutter.Size = new System.Drawing.Size(212, 30);
+            this.trackBarFlutter.Size = new System.Drawing.Size(194, 30);
             this.trackBarFlutter.TabIndex = 13;
             this.trackBarFlutter.Value = 0;
             this.trackBarFlutter.Scroll += trackBarDistortionParameters_Scroll;
@@ -262,9 +262,9 @@ namespace cassettePlayerSimulator
             this.label5.Size = new System.Drawing.Size(88, 15);
             this.label5.TabIndex = 14;
             // 
-            this.trackBarDistortion.Location = new System.Drawing.Point(80, 120);
+            this.trackBarDistortion.Location = new System.Drawing.Point(110, 120);
             this.trackBarDistortion.Maximum = 100;
-            this.trackBarDistortion.Size = new System.Drawing.Size(212, 30);
+            this.trackBarDistortion.Size = new System.Drawing.Size(194, 30);
             this.trackBarDistortion.TabIndex = 13;
             this.trackBarDistortion.Value = 0;
             this.trackBarDistortion.Scroll += trackBarDistortionParameters_Scroll;
@@ -274,9 +274,9 @@ namespace cassettePlayerSimulator
             this.label6.Size = new System.Drawing.Size(88, 15);
             this.label6.TabIndex = 14;
             // 
-            this.trackBarHiss.Location = new System.Drawing.Point(80, 150);
+            this.trackBarHiss.Location = new System.Drawing.Point(110, 150);
             this.trackBarHiss.Maximum = 100;
-            this.trackBarHiss.Size = new System.Drawing.Size(212, 30);
+            this.trackBarHiss.Size = new System.Drawing.Size(194, 30);
             this.trackBarHiss.TabIndex = 13;
             this.trackBarHiss.Value = 0;
             this.trackBarHiss.Scroll += trackBarDistortionParameters_Scroll;
@@ -285,7 +285,7 @@ namespace cassettePlayerSimulator
             // 
             this.buttonResetDistortionParameters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonResetDistortionParameters.Location = new System.Drawing.Point(456, 461);
-            this.buttonResetDistortionParameters.Size = new System.Drawing.Size(146, 23);
+            this.buttonResetDistortionParameters.Size = new System.Drawing.Size(150, 23);
             this.buttonResetDistortionParameters.UseVisualStyleBackColor = true;
             this.buttonResetDistortionParameters.Click += new System.EventHandler(this.buttonResetDistortionParameters_Click);
             // 
@@ -295,8 +295,8 @@ namespace cassettePlayerSimulator
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
             this.BackColor = System.Drawing.Color.DarkGray;
-            this.Size = new System.Drawing.Size(792, 550);
-            this.MinimumSize = new System.Drawing.Size(600, 550);
+            this.Size = new System.Drawing.Size(804, 550);
+            this.MinimumSize = new System.Drawing.Size(612, 550);
             this.Controls.Add(this.labelLanguage);
             this.Controls.Add(this.comboBoxLanguage);
             this.Controls.Add(this.buttonCreateTape);

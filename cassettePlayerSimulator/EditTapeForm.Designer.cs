@@ -124,23 +124,23 @@ namespace cassettePlayerSimulator
             // 
             // textBoxLabelA
             // 
-            this.textBoxLabelA.Location = new System.Drawing.Point(103, 143);
+            this.textBoxLabelA.Location = new System.Drawing.Point(113, 146);
             this.textBoxLabelA.Name = "textBoxLabelA";
-            this.textBoxLabelA.Size = new System.Drawing.Size(225, 20);
+            this.textBoxLabelA.Size = new System.Drawing.Size(215, 20);
             this.textBoxLabelA.TabIndex = 6;
             // 
             // textBoxLabelB
             // 
-            this.textBoxLabelB.Location = new System.Drawing.Point(103, 172);
+            this.textBoxLabelB.Location = new System.Drawing.Point(113, 175);
             this.textBoxLabelB.Name = "textBoxLabelB";
-            this.textBoxLabelB.Size = new System.Drawing.Size(225, 20);
+            this.textBoxLabelB.Size = new System.Drawing.Size(215, 20);
             this.textBoxLabelB.TabIndex = 7;
             // 
             // buttonColor
             // 
             this.buttonColor.Location = new System.Drawing.Point(11, 201);
             this.buttonColor.Name = "buttonColor";
-            this.buttonColor.Size = new System.Drawing.Size(75, 23);
+            this.buttonColor.Size = new System.Drawing.Size(100, 23);
             this.buttonColor.TabIndex = 8;
             this.buttonColor.Text = _("Select color");
             this.buttonColor.UseVisualStyleBackColor = true;
@@ -169,7 +169,7 @@ namespace cassettePlayerSimulator
             // panelColor
             // 
             this.panelColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelColor.Location = new System.Drawing.Point(92, 201);
+            this.panelColor.Location = new System.Drawing.Point(117, 202);
             this.panelColor.Name = "panelColor";
             this.panelColor.Size = new System.Drawing.Size(102, 23);
             this.panelColor.TabIndex = 11;

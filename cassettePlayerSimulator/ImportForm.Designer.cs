@@ -87,7 +87,7 @@ namespace cassettePlayerSimulator
             // 
             // textBoxFilename
             // 
-            this.textBoxFilename.Location = new System.Drawing.Point(95, 9);
+            this.textBoxFilename.Location = new System.Drawing.Point(95, 11);
             this.textBoxFilename.Name = "textBoxFilename";
             this.textBoxFilename.ReadOnly = true;
             this.textBoxFilename.Size = new System.Drawing.Size(251, 20);

@@ -219,9 +219,6 @@ namespace cassettePlayerSimulator
             InitializeComponent();
             DoLayout();
 
-            comboBoxLanguage.Items.AddRange(new string[] { "EN", "PL" });
-            comboBoxLanguage.SelectedIndex = 0;
-
             cassetteButtons.Enabled = false;
 
 #if DEBUG
@@ -312,6 +309,21 @@ namespace cassettePlayerSimulator
             tapeManager = new TapeManager(listBox);
 
             tapeManager.LoadedTapeSideChanged += TapeManager_LoadedTapeSideChanged;
+
+            comboBoxLanguage.Items.AddRange(new string[] { "EN", "PL" });
+            if (!string.IsNullOrEmpty(tapeManager.Language))
+            { 
+                int langIndex = comboBoxLanguage.Items.IndexOf(tapeManager.Language);
+                if (langIndex >= 0)
+                {
+                    comboBoxLanguage.SelectedIndex = langIndex;
+                }
+            }
+
+            if (comboBoxLanguage.SelectedIndex < 0)
+            {
+                comboBoxLanguage.SelectedIndex = 0;
+            }
         }
 
         private void TapeManager_LoadedTapeSideChanged()
@@ -638,6 +650,9 @@ namespace cassettePlayerSimulator
             {
                 InitTranslations();
             }
+
+            tapeManager.Language = comboBoxLanguage.SelectedItem as string;
+            tapeManager.SaveList();
 
             labelLanguage.Text = _("Language:");
             buttonImport.Text = _("Import into current tape...");

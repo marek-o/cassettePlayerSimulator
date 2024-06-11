@@ -17,6 +17,12 @@ namespace cassettePlayerSimulator
 
         private string TapeListFile => Path.Combine(TapesDirectory, "tapes.xml");
 
+        public string Language
+        {
+            get => listOfTapes.Language;
+            set => listOfTapes.Language = value;
+        }
+
         public void PerformImport()
         {
             string inputFileFullPath;

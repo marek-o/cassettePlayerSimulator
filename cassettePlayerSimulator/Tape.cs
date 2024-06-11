@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using System.Drawing;
+using System.Windows.Forms;
+using static cassettePlayerSimulator.Translations;
 
 namespace cassettePlayerSimulator
 {
@@ -25,12 +27,26 @@ namespace cassettePlayerSimulator
 
             if (File.Exists(path))
             {
-                var serializer = new XmlSerializer(typeof(TapeList));
-                using (var stream = new FileStream(path, FileMode.Open))
+                try
                 {
-                    var obj = serializer.Deserialize(stream);
+                    var serializer = new XmlSerializer(typeof(TapeList));
+                    using (var stream = new FileStream(path, FileMode.Open))
+                    {
+                        var obj = serializer.Deserialize(stream);
 
-                    listOfTapes = (TapeList)obj;
+                        listOfTapes = (TapeList)obj;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var result = MessageBox.Show(_("Cannot load settings. Click OK to reset.")
+                        + "\r\n\r\n" + ex.Message,
+                        _("Error"), MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+
+                    if (result == DialogResult.Cancel)
+                    {
+                        throw new Exception("abort");
+                    }
                 }
             }
 

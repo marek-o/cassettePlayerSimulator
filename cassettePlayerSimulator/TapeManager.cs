@@ -156,19 +156,37 @@ namespace cassettePlayerSimulator
                     Tape tape = null;
 
                     ProgressForm progressForm = new ProgressForm(string.Format(_("Creating tape...")));
+                    Exception threadException = null;
+
                     var thread = new Thread(() =>
                     {
-                        tape = CreateTape(form.SideLengthSeconds, form.LabelSideA, form.LabelSideB, form.Color, progressForm);
+                        try
+                        {
+                            tape = CreateTape(form.SideLengthSeconds, form.LabelSideA, form.LabelSideB, form.Color, progressForm);
+                        }
+                        catch (Exception ex)
+                        {
+                            threadException = ex;
+                        }
+
                         progressForm.Finish();
                     });
 
                     thread.Start();
                     progressForm.ShowDialog();
 
-                    listOfTapes.Tapes.Add(tape);
-                    listBox.Items.Add(tape);
+                    if (threadException != null)
+                    {
+                        MessageBox.Show(threadException.Message, _("Error"),
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        listOfTapes.Tapes.Add(tape);
+                        listBox.Items.Add(tape);
 
-                    SaveList();
+                        SaveList();
+                    }
                 }
             }
         }
@@ -194,19 +212,36 @@ namespace cassettePlayerSimulator
             
             byte[] buffer = new byte[Common.WaveFormat.AverageBytesPerSecond * seconds / 100];
 
-            using (var writerA = new NAudio.Wave.WaveFileWriter(pathA, Common.WaveFormat))
-            using (var writerB = new NAudio.Wave.WaveFileWriter(pathB, Common.WaveFormat))
+            try
             {
-                for (int i = 0; i < 100; ++i)
+                using (var writerA = new NAudio.Wave.WaveFileWriter(pathA, Common.WaveFormat))
+                using (var writerB = new NAudio.Wave.WaveFileWriter(pathB, Common.WaveFormat))
                 {
-                    writerA.Write(buffer, 0, buffer.Length);
-                    writerB.Write(buffer, 0, buffer.Length);
-
-                    if (progress != null)
+                    for (int i = 0; i < 100; ++i)
                     {
-                        progress.Report((float)i / 100);
+                        writerA.Write(buffer, 0, buffer.Length);
+                        writerB.Write(buffer, 0, buffer.Length);
+
+                        if (progress != null)
+                        {
+                            progress.Report((float)i / 100);
+                        }
                     }
                 }
+            }
+            catch (Exception)
+            {
+                if (File.Exists(pathA))
+                {
+                    File.Delete(pathA);
+                }
+
+                if (File.Exists(pathB))
+                {
+                    File.Delete(pathB);
+                }
+
+                throw;
             }
 
             Tape tape = new Tape();
